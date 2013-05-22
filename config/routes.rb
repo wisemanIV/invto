@@ -1,4 +1,7 @@
 Jupiter::Application.routes.draw do
+  resources :email_templates
+
+
   resources :emails
 
 

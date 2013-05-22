@@ -40,33 +40,47 @@ class EmailsController < ApplicationController
   # POST /emails
   # POST /emails.json
   def create
+    
+    template = EmailTemplate.where("name = :template", { :template => params[:email][:template].to_s}).first
+    
     Mail.defaults do
       delivery_method :smtp, { :address   => "smtp.sendgrid.net",
                                :port      => 587,
                                :domain    => "yourdomain.com",
-                               :user_name => "yourusername@domain.com",
-                               :password  => "Eimear08",
+                               :user_name => "wisemanIV",
+                               :password  => "gametime",
                                :authentication => 'plain',
                                :enable_starttls_auto => true }
     end
-
-    mail = Mail.deliver do
-      to 'yourRecipient@domain.com'
-      from 'Your Name <name@domain.com>'
-      subject 'This is the subject of your email'
-      text_part do
-        body 'Hello world in text'
-      end
-      html_part do
-        content_type 'text/html; charset=UTF-8'
-        body '<b>Hello world in HTML</b>'
-      end
-    end
     
-    @email = Email.new(params[:email])
+    saved = true ;
+    
+    friends = params[:email][:to].split(/,/)
+    friends.each do |value|
+      
+      @email = Email.new(params[:email])
+      @email.from = 'admin@gametime.com'
+      sub = "#{template.subject} #{@email.toname}"
+
+      mail = Mail.deliver do
+        to value
+        from 'admin@gametime.com'
+        subject sub
+        html_part do
+          content_type 'text/html; charset=UTF-8'
+          body template.body
+        end
+      end
+      
+      if !@email.save
+        saved = false
+        break ;
+      end
+    
+    end
 
     respond_to do |format|
-      if @email.save
+      if saved
         format.html { redirect_to @email, notice: 'Email was successfully created.' }
         format.json { render json: @email, status: :created, location: @email }
       else

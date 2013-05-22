@@ -1,41 +1,44 @@
-<%= form_for(@email) do |f| %>
-  <% if @email.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@email.errors.count, "error") %> prohibited this email from being saved:</h2>
-
-      <ul>
-      <% @email.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<%= form_for @email, :html => { :class => 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= f.label :template, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :template, :class => 'text_field' %>
     </div>
-  <% end %>
+  </div>
+  <div class="control-group">
+    <%= f.label :to, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :to, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :from, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :from, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :toname, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :toname, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :fromname, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :fromname, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :ref, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :ref, :class => 'text_field' %>
+    </div>
+  </div>
 
-  <div class="field">
-    <%= f.label :template %><br />
-    <%= f.text_field :template %>
-  </div>
-  <div class="field">
-    <%= f.label :to %><br />
-    <%= f.text_field :to %>
-  </div>
-  <div class="field">
-    <%= f.label :from %><br />
-    <%= f.text_field :from %>
-  </div>
-  <div class="field">
-    <%= f.label :toname %><br />
-    <%= f.text_field :toname %>
-  </div>
-  <div class="field">
-    <%= f.label :fromname %><br />
-    <%= f.text_field :fromname %>
-  </div>
-  <div class="field">
-    <%= f.label :ref %><br />
-    <%= f.text_field :ref %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                emails_path, :class => 'btn' %>
   </div>
 <% end %>
