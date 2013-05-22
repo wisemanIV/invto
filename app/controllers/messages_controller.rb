@@ -43,12 +43,12 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     
-    account_sid = 'ACb9bd66cc869ba15ab6d19f6cf54bc4d4'
-    auth_token = 'eb2b3afe288a18340fa8e60eb7f105e1'
+    account_sid = 'AC252b94aee1e94cc7bc1fec605b194d6c'
+    auth_token = '51b92a4a1ecc1f2ce5bfff2f878e27bd'
     
     @client = Twilio::REST::Client.new account_sid, auth_token
   
-    from = "+14159929816"
+    from = "+16198221406"
     # send an sms
     saved = true
     

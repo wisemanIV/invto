@@ -1,4 +1,7 @@
 Jupiter::Application.routes.draw do
+  resources :emails
+
+
   resources :messages
 
 
