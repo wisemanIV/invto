@@ -7,6 +7,8 @@ gem 'rails', '3.2.13'
 
 gem 'mail'
 
+gem 'figaro'
+
 gem 'twilio-ruby'
 
 gem 'pg'

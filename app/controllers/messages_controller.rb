@@ -43,8 +43,8 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     
-    account_sid = 'AC252b94aee1e94cc7bc1fec605b194d6c'
-    auth_token = '51b92a4a1ecc1f2ce5bfff2f878e27bd'
+    account_sid = ENV["TWILIO_SID"]
+    auth_token = ENV["TWILIO_TOKEN"]
     
     @client = Twilio::REST::Client.new account_sid, auth_token
   
