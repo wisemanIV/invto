@@ -40,9 +40,7 @@ class EmailsController < ApplicationController
   # POST /emails
   # POST /emails.json
   def create
-    
-    template = EmailTemplate.where("name = :template", { :template => params[:email][:template].to_s}).first
-    
+      
     Mail.defaults do
       delivery_method :smtp, { :address   => "smtp.sendgrid.net",
                                :port      => 587,
@@ -55,15 +53,18 @@ class EmailsController < ApplicationController
     
     saved = true ;
     
-    friends = params[:email][:to].split(/,/)
+    friends = params[:email]
+    
     friends.each do |value|
       
-      @email = Email.new(params[:email])
+      template = EmailTemplate.where("name = :template", { :template => value[:template]}).first
+      
+      @email = Email.new(value)
       @email.from = 'admin@gametime.com'
       sub = "#{template.subject} #{@email.toname}"
 
       mail = Mail.deliver do
-        to value
+        to value[:to]
         from 'admin@gametime.com'
         subject sub
         html_part do
