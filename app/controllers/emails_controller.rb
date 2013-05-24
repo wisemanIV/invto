@@ -53,23 +53,27 @@ class EmailsController < ApplicationController
     
     saved = true ;
     
-    friends = params[:email]
+    emails = params[:email]
     
-    friends.each do |value|
+    emails.each do |value|
+      
+      recipients = value[:to].split(/,/)
       
       template = EmailTemplate.where("name = :template", { :template => value[:template]}).first
       
       @email = Email.new(value)
-      @email.from = 'admin@gametime.com'
-      sub = "#{template.subject} #{@email.toname}"
+      @email.from = 'admin@gametimesf.com'
+      subj = "#{template.subject}"
+      subj = subj.sub("<toname>", value[:toname])
+      bodt = template.body.sub("<toname>", value[:toname])
 
       mail = Mail.deliver do
-        to value[:to]
-        from 'admin@gametime.com'
-        subject sub
+        to recipients
+        from 'admin@gametimesf.com'
+        subject subj
         html_part do
           content_type 'text/html; charset=UTF-8'
-          body template.body
+          body bodt
         end
       end
       
@@ -77,7 +81,7 @@ class EmailsController < ApplicationController
         saved = false
         break ;
       end
-    
+      
     end
 
     respond_to do |format|
