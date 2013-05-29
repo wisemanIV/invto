@@ -1,4 +1,15 @@
 Jupiter::Application.routes.draw do
+
+  resources :clients
+
+  resources :clicks do
+    collection do 
+      get 'add' => 'clicks#create'
+    end
+  end
+  
+  match '/clicks/default/:id' => "clicks#default", :via => :post
+
   resources :email_templates
 
 

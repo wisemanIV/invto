@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  targeturl: MyString
+  defaulturl: MyString
+  client: MyString
+  ref: MyString
+  device: MyString
+  browser: MyString
+  actualurl: MyString
+
+two:
+  targeturl: MyString
+  defaulturl: MyString
+  client: MyString
+  ref: MyString
+  device: MyString
+  browser: MyString
+  actualurl: MyString

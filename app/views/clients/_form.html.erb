@@ -1,0 +1,26 @@
+<%= form_for @client, :html => { :class => 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= f.label :contactemail, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :contactemail, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :urlscheme, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :urlscheme, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :defaulturl, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :defaulturl, :class => 'text_field' %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                clients_path, :class => 'btn' %>
+  </div>
+<% end %>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  contactemail: MyString
+  urlscheme: MyString
+  defaulturl: MyString
+
+two:
+  contactemail: MyString
+  urlscheme: MyString
+  defaulturl: MyString

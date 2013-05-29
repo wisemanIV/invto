@@ -1,0 +1,37 @@
+<h1>Listing clicks</h1>
+
+<table>
+  <tr>
+	<th>Click ID</th>
+    <th>Target URL</th>
+    <th>Default URL</th>
+    <th>Client</th>
+    <th>Ref</th>
+    <th>Device</th>
+    <th>Browser</th>
+    <th>Actual URL</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @clicks.each do |click| %>
+  <tr>
+	<td><%= click.id %></td>
+    <td><%= click.targeturl %></td>
+    <td><%= click.defaulturl %></td>
+    <td><%= click.client %></td>
+    <td><%= click.ref %></td>
+    <td><%= click.device %></td>
+    <td><%= click.browser %></td>
+    <td><%= click.actualurl %></td>
+    <td><%= link_to 'Show', click %></td>
+    <td><%= link_to 'Edit', edit_click_path(click) %></td>
+    <td><%= link_to 'Destroy', click, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Click', new_click_path %>
