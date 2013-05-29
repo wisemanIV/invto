@@ -9,6 +9,8 @@ gem 'mail'
 
 gem 'figaro'
 
+gem "useragent", "~> 0.6.0"
+
 gem 'twilio-ruby'
 
 gem 'pg'

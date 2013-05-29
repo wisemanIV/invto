@@ -1,0 +1,29 @@
+<input style="display:none" id='fake'></input>
+
+<script>
+  
+  $("#fake").click(function(event) {
+          $.ajax({
+              type: 'POST',
+              url: "/clicks/default/<%= @click.id %>",
+			  dataType: 'json',
+              success: function(result) {
+				  alert('did it');
+              }
+          })
+      
+  });
+
+
+	setTimeout(function() {
+		jQuery("#fake").trigger("click");
+        window.location.replace('<%= @click.defaulturl %>');
+    }, 500);
+
+	document.addEventListener( "DOMContentLoaded", function(){ redirectUs; }, false );
+	
+	function redirectUs() {
+		window.location.replace('<%= @click.targeturl %>');
+	}
+	
+</script>

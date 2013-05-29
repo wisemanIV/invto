@@ -11,7 +11,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130522224601) do
+ActiveRecord::Schema.define(:version => 20130529000516) do
+
+  create_table "clicks", :force => true do |t|
+    t.string   "targeturl"
+    t.string   "defaulturl"
+    t.string   "client"
+    t.string   "ref"
+    t.string   "device"
+    t.string   "browser"
+    t.string   "actualurl"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "clients", :force => true do |t|
+    t.string   "contactemail"
+    t.string   "urlscheme"
+    t.string   "defaulturl"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
 
   create_table "email_templates", :force => true do |t|
     t.string   "name"
@@ -37,14 +57,6 @@ ActiveRecord::Schema.define(:version => 20130522224601) do
     t.string   "body"
     t.string   "from"
     t.string   "ref"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "templates", :force => true do |t|
-    t.string   "name"
-    t.string   "subject"
-    t.string   "body"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
