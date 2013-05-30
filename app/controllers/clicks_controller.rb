@@ -49,7 +49,7 @@ class ClicksController < ApplicationController
       end
     end
     @client = Client.find(params[:client])
-    @click = Click.new(:actualurl => 'not set', :device => device, :targeturl => @client.urlscheme, :defaulturl => @client.defaulturl, :client => params[:client], :ref => params[:ref])
+    @click = Click.new(:actualurl => 'not set', :device => device, :targeturl => @client.urlscheme, :defaulturl => @client.defaulturl, :client_id => @client_id, :ref => params[:ref])
     
     respond_to do |format|
     if @click.save

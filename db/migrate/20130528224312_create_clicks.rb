@@ -3,11 +3,11 @@ class CreateClicks < ActiveRecord::Migration
     create_table :clicks do |t|
       t.string :targeturl
       t.string :defaulturl
-      t.string :client
-      t.string :ref
       t.string :device
       t.string :browser
       t.string :actualurl
+      t.string :ref
+      t.references :client, :null => false
 
       t.timestamps
     end

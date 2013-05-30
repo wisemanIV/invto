@@ -48,7 +48,7 @@ class MessagesController < ApplicationController
     
     @client = Twilio::REST::Client.new account_sid, auth_token
   
-    from = "+16198221406"
+    from = ENV["TWILIO_FROM"]
     # send an sms
     saved = true
     

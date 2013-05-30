@@ -1,14 +1,17 @@
 <input style="display:none" id='fake'></input>
 
 <script>
+
+<% if @click.device == 'other' then %>
+	window.location.replace('<%= @click.defaulturl %>');
+<% else %>
   
   $("#fake").click(function(event) {
           $.ajax({
               type: 'POST',
               url: "/clicks/default/<%= @click.id %>",
 			  dataType: 'json',
-              success: function(result) {
-				  alert('did it');
+              success: function() {
               }
           })
       
@@ -25,5 +28,7 @@
 	function redirectUs() {
 		window.location.replace('<%= @click.targeturl %>');
 	}
+	
+<% end %> 	
 	
 </script>

@@ -1,5 +1,11 @@
 <%= form_for @client, :html => { :class => 'form-horizontal' } do |f| %>
   <div class="control-group">
+  <%= f.label :title, :class => 'control-label' %>
+  <div class="controls">
+    <%= f.text_field :title, :class => 'text_field' %>
+  </div>
+</div>
+  <div class="control-group">
     <%= f.label :contactemail, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :contactemail, :class => 'text_field' %>
@@ -15,6 +21,12 @@
     <%= f.label :defaulturl, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_field :defaulturl, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :domain, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :domain, :class => 'text_field' %>
     </div>
   </div>
 
