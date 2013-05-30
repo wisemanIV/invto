@@ -5,6 +5,7 @@ class CreateMessages < ActiveRecord::Migration
       t.string :body
       t.string :from
       t.string :ref
+      t.references :client, :null => false
 
       t.timestamps
     end

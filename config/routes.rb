@@ -1,5 +1,11 @@
 Jupiter::Application.routes.draw do
 
+  resources :users
+
+
+  resources :shareables
+
+
   resources :clients
 
   resources :clicks do
