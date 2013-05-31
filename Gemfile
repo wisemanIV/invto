@@ -18,6 +18,7 @@ gem 'twilio-ruby'
 gem 'pg'
 
 gem "therubyracer"
+gem 'execjs'
 gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem "twitter-bootstrap-rails"
 
