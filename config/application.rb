@@ -9,10 +9,6 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-def after_sign_in_path_for(resource_or_scope)
-   new_client_path
-end
-
 module Jupiter
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -64,6 +60,8 @@ module Jupiter
     config.assets.version = '1.0'
     
     config.autoload_paths += %W(#{config.root}/lib)
+    
+    config.assets.initialize_on_precompile = false
     
     
   end

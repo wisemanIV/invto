@@ -66,4 +66,7 @@ Jupiter::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
   
   config.action_mailer.default_url_options = { :host => 'inv.to' }
+  
+  # replace this with your tracker code
+  GA.tracker = "UA-41352350-1"
 end

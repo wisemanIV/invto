@@ -15,6 +15,8 @@ gem "useragent", "~> 0.6.0"
 
 gem 'twilio-ruby'
 
+gem 'google-analytics-rails'
+
 gem 'pg'
 
 gem "therubyracer"
@@ -37,7 +39,7 @@ end
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
-gem 'bcrypt-ruby', '~> 3.0.0'
+gem 'bcrypt-ruby', '~> 3.0.1'
 
 gem 'devise'
 
