@@ -1,4 +1,6 @@
 class ShareablesController < ApplicationController
+  before_filter :authenticate_user!
+    
   # GET /shareables
   # GET /shareables.json
   def index
