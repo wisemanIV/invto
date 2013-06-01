@@ -1,5 +1,7 @@
+<%= render 'home/usernav' %>
+
 <%- model_class = Client -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human %></h1>
+  <h1>Enter your application details below:</h1>
 </div>
 <%= render :partial => 'form' %>

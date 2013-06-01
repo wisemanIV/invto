@@ -1,4 +1,6 @@
 class ClicksController < ApplicationController
+  before_filter :authenticate_user!
+    
   # GET /clicks
   # GET /clicks.json
   def index

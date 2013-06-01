@@ -1,7 +1,6 @@
 Jupiter::Application.routes.draw do
 
-  resources :users
-
+  devise_for :users, path_names: {sign_in: "login", sign_out: "logout"}
 
   resources :shareables
 
@@ -23,7 +22,7 @@ Jupiter::Application.routes.draw do
 
 
   resources :messages
-  
+
   root :to => "home#index"
 
 

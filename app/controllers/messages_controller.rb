@@ -1,6 +1,8 @@
 require 'twilio-ruby'
 
 class MessagesController < ApplicationController
+  before_filter :authenticate_user!
+    
   # GET /messages
   # GET /messages.json
   def index
