@@ -1,11 +1,8 @@
 Jupiter::Application.routes.draw do
 
-  devise_for :users
-
-  devise_for :users, path_names: {sign_in: "login", sign_out: "logout"}
-
+  devise_for :users, path_names: {sign_in: "login", sign_out: "logout"} 
+   
   resources :shareables
-
 
   resources :clients
 
@@ -18,10 +15,10 @@ Jupiter::Application.routes.draw do
   match '/clicks/default/:id' => "clicks#default", :via => :post
 
   resources :email_templates
-
+  
+  resources :user_profile
 
   resources :emails
-
 
   resources :messages
 

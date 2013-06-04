@@ -19,8 +19,14 @@ class ApplicationController < ActionController::Base
   end
   helper_method :mobile_device?
   
-  
   def after_sign_in_path_for(resource_or_scope)
-     new_client_path
+    "/user_profile#show"
   end
+  
+  def restrict_access
+    authenticate_or_request_with_http_token do |token, options|
+      ApiKey.exists?(access_token: token)
+    end
+  end
+  
 end
