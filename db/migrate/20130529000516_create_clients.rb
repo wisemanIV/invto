@@ -6,6 +6,8 @@ class CreateClients < ActiveRecord::Migration
       t.string :urlscheme
       t.string :defaulturl
       t.string :domain
+      
+      t.references :user, :null => false
 
       t.timestamps
     end

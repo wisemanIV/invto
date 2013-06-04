@@ -8,8 +8,7 @@
   <thead>
     <tr>
       <th><%= model_class.human_attribute_name(:id) %></th>
-	  <th>Client</th>
-      <th>Contact email</th>
+	  <th>Application name</th>
       <th><%= model_class.human_attribute_name(:urlscheme) %></th>
       <th><%= model_class.human_attribute_name(:defaulturl) %></th>
 	  <th><%= model_class.human_attribute_name(:domain) %></th>
@@ -22,7 +21,6 @@
       <tr>
         <td><%= link_to client.id, client_path(client) %></td>
 		<td><%= client.title %></td>
-        <td><%= client.contactemail %></td>
         <td><%= client.urlscheme %></td>
         <td><%= client.defaulturl %></td>
 		<td><%= client.domain %></td>

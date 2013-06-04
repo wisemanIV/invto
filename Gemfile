@@ -43,6 +43,8 @@ gem 'bcrypt-ruby', '~> 3.0.1'
 
 gem 'devise'
 
+gem 'cancan'
+
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 
