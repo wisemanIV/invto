@@ -1,12 +1,24 @@
 <div id="container">
-	<div id="user_nav">
-<% if user_signed_in? %>
-  Logged in as <strong><%= current_user.email %></strong>.
-  <%= link_to 'My account', :controller => :user_profile, :action => :index %> |
-  <%= link_to "Logout", destroy_user_session_path, method: :delete %>
-<% else %>
-  <%= link_to "Sign up", new_user_registration_path %> |
-  <%= link_to "Login", new_user_session_path %>
-<% end %>
-	</div>
+	<div class="navbar">
+	
+	<div class="navbar-inner">
+	  <a class="brand" href=".">
+	    Inviter
+	  </a>
+	  <ul class="nav">
+		  <li><a href="<%= help_docs_path %>">Developers</a></li>
+	
+	<% if user_signed_in? %>
+	<li><a href="<%= clients_path %>">Apps</a></li>
+	<li><a href="<%= user_profiles_path %>">Account</a></li>
+	<li><a href="<%= destroy_user_session_path %>">Logout</a></li>
+
+	<% else %>
+	<li><a href="#">Login</a></li>
+	 
+	<% end %>
+	 </ul>
+ </div>
+	
+  </div>
 </div>

@@ -3,7 +3,8 @@ class ClientsController < ApplicationController
   # GET /clients
   # GET /clients.json
   def index
-    @clients = Client.all
+    
+    @clients = Client.where("user_id = :user_id",{:user_id => current_user.id})
 
     respond_to do |format|
       format.html # index.html.erb

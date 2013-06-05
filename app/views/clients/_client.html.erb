@@ -1,0 +1,32 @@
+<% if !@user.clients.empty? %>
+
+<table>
+  <tr>
+	  <th>Application name</th>
+      <th>URL Scheme</th>
+      <th>Default URL</th>
+	  <th>Domain</th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+  </tr>
+  <tr>
+	<td><%= client.title %></td>
+    <td><%= client.urlscheme %></td>
+    <td><%= client.defaulturl %></td>
+	<td><%= client.domain %></td>
+    <td>
+      <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                  edit_client_path(client), :class => 'btn btn-mini' %>
+      <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                  client_path(client),
+                  :method => :delete,
+                  :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                  :class => 'btn btn-mini btn-danger' %>
+    </td>
+  </tr>
+</table>
+
+<br />
+
+<% else %>
+<p>No applications</p>
+<% end %>

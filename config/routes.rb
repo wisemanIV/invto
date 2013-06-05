@@ -16,7 +16,9 @@ Jupiter::Application.routes.draw do
 
   resources :email_templates
   
-  resources :user_profile
+  resources :user_profiles
+  
+  resources :help_docs
 
   resources :emails
 
