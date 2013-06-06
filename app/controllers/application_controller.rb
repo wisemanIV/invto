@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
   helper_method :mobile_device?
   
   def after_sign_in_path_for(resource_or_scope)
-    "/user_profile#show"
+    "/user_profiles#show"
   end
   
   def restrict_access

@@ -1,5 +1,6 @@
 class Shareable < ActiveRecord::Base
   attr_accessible :client_id, :ref, :input, :shareable
+  validates_presence_of :client_id, :input
   belongs_to :client
   
   BASE_URL = "http://www.inv.to/"

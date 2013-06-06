@@ -1,3 +1,3 @@
 class EmailTemplate < ActiveRecord::Base
-  attr_accessible :body, :name, :subject
+  attr_accessible :body, :name, :subject, :from
 end

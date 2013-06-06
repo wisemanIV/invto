@@ -4,6 +4,7 @@ class CreateEmailTemplates < ActiveRecord::Migration
       t.string :name
       t.string :subject
       t.string :body
+      t.string :from
 
       t.timestamps
     end
