@@ -4,6 +4,7 @@ class ShareablesController < ApplicationController
   # GET /shareables
   # GET /shareables.json
   def index
+    
     @shareables = Shareable.all
 
     respond_to do |format|
@@ -42,7 +43,7 @@ class ShareablesController < ApplicationController
   # POST /shareables
   # POST /shareables.json
   def create
-    @shareable = Shareable.new(params[:shareable])
+    @shareable = Shareable.new(:input => params[:input], :ref => params[:ref], :client_id => params[:client_id])
 
     respond_to do |format|
       if @shareable.save

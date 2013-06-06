@@ -62,15 +62,15 @@ class EmailsController < ApplicationController
       
       template = EmailTemplate.where("name = :template", { :template => value[:template]}).first
       
-      @email = Email.new(value)
-      @email.from = 'admin@gametimesf.com'
+      @email = Email.new(:from => template.from, :email_template_id => template.id, :to => value[:to], :client_id => value[:client_id], :ref => value[:ref])
+      
       subj = "#{template.subject}"
       subj = subj.sub("<toname>", value[:toname])
       bodt = template.body.sub("<toname>", value[:toname])
 
       mail = Mail.deliver do
         to recipients
-        from 'admin@gametimesf.com'
+        from template.from
         subject subj
         html_part do
           content_type 'text/html; charset=UTF-8'

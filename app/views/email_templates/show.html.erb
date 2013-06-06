@@ -10,6 +10,8 @@
   <dd><%= @email_template.subject %></dd>
   <dt><strong><%= model_class.human_attribute_name(:body) %>:</strong></dt>
   <dd><%= @email_template.body %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:from) %>:</strong></dt>
+  <dd><%= @email_template.from %></dd>
 </dl>
 
 <div class="form-actions">

@@ -1,3 +1,4 @@
+<h2>Preparation</h2>
 <p>
 	<ul>
 	<li>	
@@ -12,10 +13,80 @@
 	<li>
 	Step 4. Call the services with your API key in the auth_token parameter
 	</li> 
+</ul>
 </p>
+<h2>Creating short links</h2>
 <p>
 	CURL example calling the URL shortening service:
 </p>
 <p>	
 curl -d "input=http://www.bbc.co.uk" inv.to/shareables?auth_token=$enter your API key$
 </p>
+<p>IOS example for creating a shortened URL:	
+</p>
+<p>
+	-(IBAction) createShortURL:(id) sender
+	{
+	    NSMutableURLRequest *request =
+	    [[NSMutableURLRequest alloc] initWithURL:
+	     [NSURL URLWithString:@"http://localhost:3000/shareables?auth_token=zrNBQ368CmmVWpbiBX6C&client_id=4"]];
+    
+	    [request setHTTPMethod:@"POST"];
+    
+	    NSString *postString = @"input=http://www.fake.com/2";
+    
+	    [request setValue:[NSString
+	                       stringWithFormat:@"%d", [postString length]]
+	   forHTTPHeaderField:@"Content-length"];
+    
+	    [request setHTTPBody:[postString
+	                          dataUsingEncoding:NSUTF8StringEncoding]];
+    
+	    [[NSURLConnection alloc]
+	     initWithRequest:request delegate:self];
+	}
+</p>
+<h2>Sending SMS Messages</h2>
+<p>
+	<ul>
+	<li>	
+	Step 1. From the account page click on the Email Template link
+    </li>
+	<li>
+	Step 2. Create a message template. For SMS just enter a template name and body no subject. 
+	</li> 
+	<li>
+	Step 3. Call the SMS message service with your API key in the auth_token parameter
+	</li> 
+</ul>
+<p>CURL example for calling the SMS message service:
+</p>
+<p>
+	curl -d "to=$enter to phone number$" -d template="generic_sms" -d "client_id=$enter your app id$" -d "ref=12345" inv.to/messages?auth_token=$enter your API key$
+	
+</p>
+<p>IOS example for sending an SMS:	
+</p>
+<p>
+-(IBAction) sendSMS:(id) sender
+{
+    NSMutableURLRequest *request =
+    [[NSMutableURLRequest alloc] initWithURL:
+     [NSURL URLWithString:@"http://inv.to/messages?auth_token=$enter your API key$&client_id=$enter your app id$"]];
+    
+    [request setHTTPMethod:@"POST"];
+    
+    NSString *postString = @"to=$enter to phone number$&body=a test message";
+    
+    [request setValue:[NSString
+                       stringWithFormat:@"%d", [postString length]]
+   forHTTPHeaderField:@"Content-length"];
+    
+    [request setHTTPBody:[postString
+                          dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    [[NSURLConnection alloc]
+     initWithRequest:request delegate:self];
+}
+</p>
+

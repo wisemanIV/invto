@@ -54,26 +54,28 @@ class MessagesController < ApplicationController
     # send an sms
     saved = true
     
-    if params[:message][:body].blank? and !params[:message][:template].blank? then
-      body = EmailTemplate.where("name = :template", { :template => params[:message][:template]}).first.body
-      if !params[:message][:toname].blank? then
-        body = body.sub("<toname>", params[:message][:toname])
+    if params[:body].blank? and !params[:template].blank? then
+      body = EmailTemplate.where("name = :template", { :template => params[:template]}).first.body
+      if !params[:toname].blank? then
+        body = body.sub("<toname>", params[:toname])
       end
     else
-      body = params[:message][:body]
+      body = params[:body]
     end
     
-    friends = params[:message][:to].split(/,/)
+    friends = params[:to].split(/,/)
     friends.each do |value|
-      @message = Message.new(:to => value, :from => from, :body => body, :ref => params[:message][:ref] )
-      @client.account.sms.messages.create(
-        :from => @message.from,
-        :to => @message.to,
-        :body => @message.body
-      )
+      @message = Message.new(:to => value, :from => from, :body => body, :ref => params[:ref], :client_id =>  params[:client_id] )
+      
       if !@message.save
         saved = false
         break ;
+      else 
+        @client.account.sms.messages.create(
+          :from => @message.from,
+          :to => @message.to,
+          :body => @message.body
+        )
       end
     end
 

@@ -11,10 +11,10 @@
 	<% if user_signed_in? %>
 	<li><a href="<%= clients_path %>">Apps</a></li>
 	<li><a href="<%= user_profiles_path %>">Account</a></li>
-	<li><a href="<%= destroy_user_session_path %>">Logout</a></li>
+	<li><a href="/users/logout" data-method="delete">Logout</a></li>
 
 	<% else %>
-	<li><a href="#">Login</a></li>
+	<li><a href="/users/login">Login</a></li>
 	 
 	<% end %>
 	 </ul>
