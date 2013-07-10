@@ -61,6 +61,9 @@ GEM
     json (1.8.0)
     jwt (0.1.8)
       multi_json (>= 1.5)
+    kaminari (0.14.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     less (2.3.1)
       commonjs (~> 0.2.6)
     less-rails (2.3.3)
@@ -134,6 +137,8 @@ GEM
     useragent (0.6.0)
     warden (1.2.1)
       rack (>= 1.0)
+    wice_grid (3.2.1)
+      kaminari (>= 0.13.0)
 
 PLATFORMS
   ruby
@@ -157,3 +162,4 @@ DEPENDENCIES
   twitter-bootstrap-rails
   uglifier (>= 1.0.3)
   useragent (~> 0.6.0)
+  wice_grid (= 3.2.1)

@@ -17,6 +17,8 @@ gem 'twilio-ruby'
 
 gem 'google-analytics-rails'
 
+gem "wice_grid", '3.2.1'
+
 gem 'pg'
 
 gem "therubyracer"

@@ -3,8 +3,8 @@ class CreateShareables < ActiveRecord::Migration
     create_table :shareables do |t|
       t.string :input
       t.string :shareable
-      t.integer :client_id
       t.string :ref
+      t.references :client, :null => false
 
       t.timestamps
     end
