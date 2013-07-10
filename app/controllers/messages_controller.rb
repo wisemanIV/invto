@@ -6,7 +6,9 @@ class MessagesController < ApplicationController
   # GET /messages
   # GET /messages.json
   def index
-    @messages = Message.all
+     
+      @userid = current_user.id
+      @links_grid = initialize_grid(Message.where(:user_id => @userid))
 
     respond_to do |format|
       format.html # index.html.erb
@@ -45,52 +47,42 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     
-    account_sid = ENV["TWILIO_SID"]
-    auth_token = ENV["TWILIO_TOKEN"]
-    
-    @client = Twilio::REST::Client.new account_sid, auth_token
+    message = Message.new(params[:message])
   
     from = ENV["TWILIO_FROM"]
     # send an sms
     saved = true
     
-    if params[:body].blank? and !params[:template].blank? then
-      body = EmailTemplate.where("name = :template", { :template => params[:template]}).first.body
-      if !params[:toname].blank? then
-        body = body.sub("<toname>", params[:toname])
+    if message[:body].blank? and !message[:template].blank? then
+      body = EmailTemplate.where("name = :template", { :template => message[:template]}).first.body
+      if !message[:toname].blank? then
+        body = body.sub("<toname>", message[:toname])
       end
     else
-      body = params[:body]
+      body = message[:body]
     end
     
-    friends = params[:to].split(/,/)
-    friends.each do |value|
-      @message = Message.new(:to => value, :from => from, :body => body, :ref => params[:ref], :client_id =>  params[:client_id] )
+    recipients = message[:to].split(/,/)
+    recipients.each do |value|
+      @message = Message.new(:campaign => message[:campaign], :version => message[:version], :to => value, :from => from, :body => body, :status => "processing", :user_id => current_user.id )
       
       if !@message.save
         saved = false
         break ;
-      else 
-        @client.account.sms.messages.create(
-          :from => @message.from,
-          :to => @message.to,
-          :body => @message.body
-        )
       end
     end
 
       respond_to do |format|
         if saved
-          format.html { redirect_to @message, notice: 'Message was successfully created.' }
+          format.html { redirect_to action: "index", notice: 'Message was successfully created.' }
           format.json { render json: @message, status: :created, location: @message }
         else
           format.html { render action: "new" }
           format.json { render json: @message.errors, status: :unprocessable_entity }
         end
       end
-    
  
-  end
+end
 
   # PUT /messages/1
   # PUT /messages/1.json

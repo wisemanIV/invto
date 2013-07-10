@@ -61,17 +61,19 @@ ActiveRecord::Schema.define(:version => 20130601065223) do
     t.string   "to"
     t.string   "body"
     t.string   "from"
-    t.string   "ref"
-    t.integer  "client_id",  :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "campaign"
+    t.string   "version"
+    t.string   "status",     :default => "initial"
+    t.integer  "user_id",                           :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   create_table "shareables", :force => true do |t|
     t.string   "input"
     t.string   "shareable"
-    t.integer  "client_id"
     t.string   "ref"
+    t.integer  "client_id",  :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

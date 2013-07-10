@@ -4,8 +4,10 @@ class CreateMessages < ActiveRecord::Migration
       t.string :to
       t.string :body
       t.string :from
-      t.string :ref
-      t.references :client, :null => false
+      t.string :campaign
+      t.string :version
+      t.string :status, :default => 'initial'
+      t.references :user, :null => false
 
       t.timestamps
     end
