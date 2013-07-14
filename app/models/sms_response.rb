@@ -7,11 +7,11 @@ class SmsResponse < ActiveRecord::Base
 
 
   def check_opt_out
-    puts "CHECKING FOR OPT OUT - #{Body}"
+    puts "CHECKING FOR OPT OUT - #{:Body}"
   end
   
   def check_help
-    puts "CHECKING FOR HELP REQUESTED - #{Body}"
+    puts "CHECKING FOR HELP REQUESTED - #{:Body}"
   end
   
   def formatted_created_at
