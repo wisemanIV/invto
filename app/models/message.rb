@@ -1,5 +1,5 @@
 class Message < ActiveRecord::Base
-  attr_accessible :body, :from, :to, :status, :campaign, :version, :user_id
+  attr_accessible :body, :from, :to, :status, :campaign, :version, :user_id, :SmsId, :TwilioResponse
   validates_presence_of :body, :from, :to
   belongs_to :client
   

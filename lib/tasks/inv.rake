@@ -9,16 +9,17 @@ namespace :inv do
 
       @client = Twilio::REST::Client.new account_sid, auth_token
 
-      @client.account.sms.messages.create(
+      res = @client.account.sms.messages.create(
       :from => message.from,
       :to => message.to,
       :body => message.body,
       :status_callback => 'http://inv.to/sms/callback'
       )
+      puts "GOT A SID #{res.sid}"
       
-      message.status = 'sent'
-      puts "Message #{message.id} sent"
-      
+      message.SmsId = res.sid
+      message.status = 'twilio'
+    
       message.save
     end
 
