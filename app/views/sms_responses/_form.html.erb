@@ -1,0 +1,69 @@
+<%= form_for(@sms_response) do |f| %>
+  <% if @sms_response.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sms_response.errors.count, "error") %> prohibited this sms_response from being saved:</h2>
+
+      <ul>
+      <% @sms_response.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :SMSId %><br />
+    <%= f.text_field :SMSId %>
+  </div>
+  <div class="field">
+    <%= f.label :AccountSid %><br />
+    <%= f.text_field :AccountSid %>
+  </div>
+  <div class="field">
+    <%= f.label :From %><br />
+    <%= f.text_field :From %>
+  </div>
+  <div class="field">
+    <%= f.label :To %><br />
+    <%= f.text_field :To %>
+  </div>
+  <div class="field">
+    <%= f.label :Body %><br />
+    <%= f.text_field :Body %>
+  </div>
+  <div class="field">
+    <%= f.label :FromCity %><br />
+    <%= f.text_field :FromCity %>
+  </div>
+  <div class="field">
+    <%= f.label :FromState %><br />
+    <%= f.text_field :FromState %>
+  </div>
+  <div class="field">
+    <%= f.label :FromZIP %><br />
+    <%= f.text_field :FromZIP %>
+  </div>
+  <div class="field">
+    <%= f.label :FromCountry %><br />
+    <%= f.text_field :FromCountry %>
+  </div>
+  <div class="field">
+    <%= f.label :ToCity %><br />
+    <%= f.text_field :ToCity %>
+  </div>
+  <div class="field">
+    <%= f.label :ToState %><br />
+    <%= f.text_field :ToState %>
+  </div>
+  <div class="field">
+    <%= f.label :ToZIP %><br />
+    <%= f.text_field :ToZIP %>
+  </div>
+  <div class="field">
+    <%= f.label :ToCountry %><br />
+    <%= f.text_field :ToCountry %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

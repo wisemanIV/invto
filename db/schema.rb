@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130601065223) do
+ActiveRecord::Schema.define(:version => 20130714035932) do
 
   create_table "clicks", :force => true do |t|
     t.string   "targeturl"
@@ -76,6 +76,25 @@ ActiveRecord::Schema.define(:version => 20130601065223) do
     t.integer  "client_id",  :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "sms_responses", :force => true do |t|
+    t.string   "SMSId"
+    t.string   "AccountSid"
+    t.string   "From"
+    t.string   "To"
+    t.string   "Body"
+    t.string   "FromCity"
+    t.string   "FromState"
+    t.string   "FromZIP"
+    t.string   "FromCountry"
+    t.string   "ToCity"
+    t.string   "ToState"
+    t.string   "ToZIP"
+    t.string   "ToCountry"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "user_id"
   end
 
   create_table "users", :force => true do |t|

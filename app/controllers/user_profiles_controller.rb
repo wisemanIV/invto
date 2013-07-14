@@ -1,8 +1,10 @@
 class UserProfilesController < ApplicationController
+  before_filter :authenticate_user!
   # GET /user_profiles
   # GET /user_profiles.json
   def index
-    @user = User.find(current_user.id)
+    
+    @user = User.find(current_user.id) 
 
     respond_to do |format|
       format.html { render action: "show" }

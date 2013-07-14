@@ -1,5 +1,4 @@
 namespace :inv do
-  desc "TODO"
   task :sendsms => :environment do
     
     @messages = Message.where("status <> 'sent'")
@@ -13,7 +12,8 @@ namespace :inv do
       @client.account.sms.messages.create(
       :from => message.from,
       :to => message.to,
-      :body => message.body
+      :body => message.body,
+      :status_callback => 'http://inv.to/sms/callback'
       )
       
       message.status = 'sent'

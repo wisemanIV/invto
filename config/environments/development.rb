@@ -36,4 +36,8 @@ Jupiter::Application.configure do
   config.assets.debug = true
   
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  
+  config.force_ssl = (ENV["ENABLE_HTTPS"] == "yes")
+  config.ssl_options = {:hsts => {:expires => 3600}}
+  
 end
