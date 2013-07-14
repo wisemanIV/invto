@@ -1,15 +1,13 @@
-require 'twilio-ruby'
-
 class MessagesController < ApplicationController
   before_filter :authenticate_user!
     
   # GET /messages
   # GET /messages.json
   def index
-     
-      @userid = current_user.id
-      @links_grid = initialize_grid(Message.where(:user_id => @userid))
-
+    
+    @userid = current_user.id
+    @links_grid = initialize_grid(Message.where(:user_id => @userid))
+      
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @messages }

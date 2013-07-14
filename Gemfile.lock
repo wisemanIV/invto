@@ -40,6 +40,7 @@ GEM
       execjs
     coffee-script-source (1.6.2)
     commonjs (0.2.6)
+    daemon_controller (1.1.4)
     devise (2.2.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -76,6 +77,10 @@ GEM
     mime-types (1.23)
     multi_json (1.7.3)
     orm_adapter (0.4.0)
+    passenger (4.0.8)
+      daemon_controller (>= 1.1.0)
+      rack
+      rake (>= 0.8.1)
     pg (0.15.1)
     polyglot (0.3.3)
     rack (1.4.5)
@@ -104,6 +109,7 @@ GEM
     rdoc (3.12.2)
       json (~> 1.4)
     ref (1.0.4)
+    rvm (1.11.3.8)
     sass (3.2.9)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -154,8 +160,10 @@ DEPENDENCIES
   jquery-rails
   less-rails
   mail
+  passenger (~> 4.0.8)
   pg
   rails (= 3.2.13)
+  rvm
   sass-rails (~> 3.2.3)
   therubyracer
   twilio-ruby

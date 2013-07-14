@@ -1,0 +1,70 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Smsid:</b>
+  <%= @sms_response.SMSId %>
+</p>
+
+<p>
+  <b>Accountsid:</b>
+  <%= @sms_response.AccountSid %>
+</p>
+
+<p>
+  <b>From:</b>
+  <%= @sms_response.From %>
+</p>
+
+<p>
+  <b>To:</b>
+  <%= @sms_response.To %>
+</p>
+
+<p>
+  <b>Body:</b>
+  <%= @sms_response.Body %>
+</p>
+
+<p>
+  <b>Fromcity:</b>
+  <%= @sms_response.FromCity %>
+</p>
+
+<p>
+  <b>Fromstate:</b>
+  <%= @sms_response.FromState %>
+</p>
+
+<p>
+  <b>Fromzip:</b>
+  <%= @sms_response.FromZIP %>
+</p>
+
+<p>
+  <b>Fromcountry:</b>
+  <%= @sms_response.FromCountry %>
+</p>
+
+<p>
+  <b>Tocity:</b>
+  <%= @sms_response.ToCity %>
+</p>
+
+<p>
+  <b>Tostate:</b>
+  <%= @sms_response.ToState %>
+</p>
+
+<p>
+  <b>Tozip:</b>
+  <%= @sms_response.ToZIP %>
+</p>
+
+<p>
+  <b>Tocountry:</b>
+  <%= @sms_response.ToCountry %>
+</p>
+
+
+<%= link_to 'Edit', edit_sms_response_path(@sms_response) %> |
+<%= link_to 'Back', sms_responses_path %>

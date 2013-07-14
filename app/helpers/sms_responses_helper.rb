@@ -1,0 +1,2 @@
+module SmsResponsesHelper
+end

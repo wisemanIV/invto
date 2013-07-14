@@ -1,0 +1,68 @@
+<%- model_class = SmsResponse -%>
+<div class="page-header">
+  <h1>SMS Responses</h1>
+</div>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_message_path,
+            :class => 'btn btn-primary', :style => 'color:white' %>
+			
+<%= grid(@links_grid, :show_filters => :yes)  do |g|
+
+	g.column :name => 'Id', :attribute => 'id' do |sms_response|
+  	  sms_response.id
+	end
+
+	g.column :name => 'SMS Id', :attribute => 'SMSId' do |sms_response|
+		sms_response.SMSId
+	end
+  
+	g.column :name => 'Account Sid', :attribute => 'AccountSid'  do |sms_response|
+		sms_response.AccountSid
+	end
+
+	g.column :name => 'To', :attribute => 'To' do |sms_response|
+		sms_response.To
+	end
+  
+	g.column :name => 'From', :attribute => 'From'  do |sms_response|
+		sms_response.From
+	end
+
+	g.column :name => 'Body', :attribute => 'Body' do |sms_response|
+		sms_response.Body
+	end
+			  
+	g.column :name => 'From City', :attribute => 'FromCity' do |sms_response|
+		sms_response.FromCity
+	end
+	
+	g.column :name => 'From State', :attribute => 'FromState' do |sms_response|
+		sms_response.FromState
+	end
+	
+	g.column :name => 'From ZIP', :attribute => 'FromZIP' do |sms_response|
+		sms_response.FromZIP
+	end
+	
+	g.column :name => 'From Country', :attribute => 'FromCountry' do |sms_response|
+		sms_response.FromCountry
+	end
+			  
+	g.column :name => 'Created', :attribute => 'created_at' do |sms_response|
+		sms_response.formatted_created_at
+	end
+			  
+	g.column :name => 'Updated', :attribute => 'updated_at' do |sms_response|
+		sms_response.formatted_updated_at
+	end
+			  
+	g.column   do |sms_response|
+		link_to(t('.destroy', :default => t("helpers.links.destroy")),
+        sms_response_path(sms_response),
+        :method => :delete)
+	end
+
+end -%>
+
+         
