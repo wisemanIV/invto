@@ -7,6 +7,8 @@
             new_message_path,
             :class => 'btn btn-primary', :style => 'color:white' %>
 			
+<%= link_to("responses", sms_responses_path, class: "btn") %>
+			
 <%= grid(@links_grid, :show_filters => :yes)  do |g|
 
 	g.column :name => 'Id', :attribute => 'id' do |message|
