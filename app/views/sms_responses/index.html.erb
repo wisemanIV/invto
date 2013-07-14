@@ -52,12 +52,6 @@
 	g.column :name => 'Updated', :attribute => 'updated_at' do |sms_response|
 		sms_response.formatted_updated_at
 	end
-			  
-	g.column   do |sms_response|
-		link_to(t('.destroy', :default => t("helpers.links.destroy")),
-        sms_response_path(sms_response),
-        :method => :delete)
-	end
 
 end -%>
 
