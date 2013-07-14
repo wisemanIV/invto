@@ -8,7 +8,7 @@ class CallbackController < ApplicationController
       @sms = SmsResponse.new(:SMSId => params[:SmsSid], :AccountSid => params[:AccountSid], :To => params[:To], :From => params[:From], :Body => params[:Body], :FromCity => params[:FromCity], :FromState => params[:FromState], :FromZIP => params[:FromZIP], :FromCountry => params[:FromCountry])
     else 
       if params[:SmsStatus]=='sent'
-        @message = Message.where(:SmsId => params[:SmsSid])
+        @message = Message.where(:SmsId => params[:SmsSid]).first
         @message.status = 'sent'
         @message.save
       else
