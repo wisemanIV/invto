@@ -14,7 +14,7 @@
 	<li><a href="/users/logout" data-method="delete">Logout</a></li>
 
 	<% else %>
-	<li><%= link_to "Log In", new_user_session_path  %></li>
+	<li><%= link_to "Log In", new_user_session_path(protocol: "https")  %></li>
 	 
 	<% end %>
 	 </ul>
