@@ -47,11 +47,6 @@
 			    message.formatted_updated_at
 			  end
 			  
-			  g.column   do |message|
-			      link_to(t('.destroy', :default => t("helpers.links.destroy")),
-                      message_path(message),
-                      :method => :delete)
-			  end
 
 end -%>
 

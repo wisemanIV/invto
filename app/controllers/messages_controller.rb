@@ -60,9 +60,10 @@ class MessagesController < ApplicationController
       body = message[:body]
     end
     
-    recipients = message[:to].split(/,/)
+    recipients = message[:to].gsub(/\s+|\[|\]|\(|\)|\-|\_/, "") #clean string
+    recipients = recipients.split(/,/)
     recipients.each do |value|
-      @message = Message.new(:campaign => message[:campaign], :version => message[:version], :to => value, :from => from, :body => body, :status => "processing", :user_id => current_user.id )
+      @message = Message.new(:campaign => message[:campaign], :version => message[:version], :to => value, :from => from, :body => body, :status => "submitted", :user_id => current_user.id )
       
       if !@message.save
         saved = false

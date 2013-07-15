@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130714075337) do
+ActiveRecord::Schema.define(:version => 20130715172030) do
 
   create_table "clicks", :force => true do |t|
     t.string   "targeturl"
@@ -69,6 +69,14 @@ ActiveRecord::Schema.define(:version => 20130714075337) do
     t.datetime "updated_at",                            :null => false
     t.string   "SmsId"
     t.string   "TwilioResponse"
+  end
+
+  create_table "recipients", :force => true do |t|
+    t.string   "CountryCode", :default => "+1"
+    t.string   "Phone",                          :null => false
+    t.boolean  "OptOut",      :default => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
   end
 
   create_table "shareables", :force => true do |t|
