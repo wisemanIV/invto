@@ -1,5 +1,8 @@
 Jupiter::Application.routes.draw do
 
+  resources :recipients
+
+
   resources :sms_responses
 
   post '/sms/callback', to: 'callback#create'

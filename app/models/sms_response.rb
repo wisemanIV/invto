@@ -7,7 +7,22 @@ class SmsResponse < ActiveRecord::Base
 
 
   def check_opt_out
+    
     puts "CHECKING FOR OPT OUT - #{:Body}"
+    
+    if !self.Body.blank? && (self.Body.include?('STOP') || self.Body.include?('CANCEL') || self.Body.include?('UNSUBSCRIBE')|| self.Body.include?('QUIT'))
+      from = self.From.gsub(/\s+|\[|\]|\(|\)|\-|\_/, "") #clean string
+      recipient = Recipient.where(:Phone => from).first
+      
+      if recipient.nil? 
+        recipient = Recipient.new(:Phone => from, :OptOut => true)
+      else
+        recipient.OptOut = true 
+      end
+      recipient.save 
+    
+    end
+    
   end
   
   def check_help

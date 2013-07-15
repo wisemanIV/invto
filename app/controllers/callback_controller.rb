@@ -1,4 +1,9 @@
 class CallbackController < ApplicationController
+  private
+
+  def use_https?
+    false
+  end
   
   # POST /sms/callback
   def create
