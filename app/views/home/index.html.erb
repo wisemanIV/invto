@@ -13,13 +13,13 @@
 Run SMS campaigns
 </p>
 <div class="signup-signin">
-<a id="sign_up_btn" class="btn square" href=<%= new_user_registration_path %>>
+<a id="sign_up_btn" class="btn square" href='<%= new_user_registration_path %>'>
 Join now. It's free!
 </a>
 <p>
 Already a member?
 <br>
-<a href="<%= new_user_session_path %>" class="btn square">Sign in</a>
+<%= link_to "Sign In", new_user_session_path(protocol: "https"), :class=>"btn square" %>
 </p>
 </div>
 </div>
