@@ -1,0 +1,36 @@
+<%- model_class = Client -%>
+<div class="page-header">
+  <h1>Apps</h1>
+</div>
+
+<%= link_to t('.new', :default => t("helpers.links.new")),
+            new_client_path,
+            :class => 'btn btn-primary', :style => 'color:white' %>
+			
+<%= grid(@links_grid, :show_filters => :yes)  do |g|
+
+	g.column :name => 'Id', :attribute => 'id' do |client|
+  	  client.id
+	end
+	g.column :name => 'Title', :attribute => 'title' do |client|
+  	  client.title
+	end
+	g.column :name => 'Domain', :attribute => 'domain' do |client|
+  	  client.domain
+	end
+	g.column :name => 'Created At', :attribute => 'created_at' do |client|
+  	  client.created_at
+	end
+	g.column :name => 'Updated At', :attribute => 'updated_at' do |client|
+  	  client.updated_at
+	end
+	g.column do |client|
+	    link_to('Edit', edit_client_path(client))
+	end
+	g.column do |client|
+		link_to('Delete', :controller => 'clients', :method => 'delete')
+	end
+
+end -%>
+
+         

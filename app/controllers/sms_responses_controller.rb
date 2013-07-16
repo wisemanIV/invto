@@ -1,5 +1,6 @@
 class SmsResponsesController < ApplicationController
   before_filter :authenticate_user!
+   load_and_authorize_resource
   # GET /sms_responses
   # GET /sms_responses.json
   def index

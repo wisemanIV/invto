@@ -3,7 +3,8 @@ class Client < ActiveRecord::Base
   has_many :shareable 
   has_many :message 
   has_many :sms_response
+  has_many :recipients
   has_many :email
-  validates_presence_of :urlscheme, :domain
-  belongs_to :user
+  validates_presence_of :domain
+  has_many :users
 end

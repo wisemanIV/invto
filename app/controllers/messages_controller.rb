@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   before_filter :authenticate_user!
+  load_and_authorize_resource
     
   # GET /messages
   # GET /messages.json
@@ -45,6 +46,14 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     
+    client = current_user.client
+    
+    if client.nil? 
+      respond_to do |format|
+        format.html { redirect_to action: "index", notice: 'Cannot create SMS until an application is provisioned on your account.' }
+      end
+    else
+    
     message = Message.new(params[:message])
   
     from = ENV["TWILIO_FROM"]
@@ -80,6 +89,7 @@ class MessagesController < ApplicationController
           format.json { render json: @message.errors, status: :unprocessable_entity }
         end
       end
+    end
  
 end
 

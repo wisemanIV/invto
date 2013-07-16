@@ -1,5 +1,6 @@
 class UserProfilesController < ApplicationController
   before_filter :authenticate_user!
+  skip_authorization_check
   # GET /user_profiles
   # GET /user_profiles.json
   def index
@@ -22,5 +23,6 @@ class UserProfilesController < ApplicationController
       format.json { render json: @user }
     end
   end
+  
   
 end

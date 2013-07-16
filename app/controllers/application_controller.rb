@@ -1,8 +1,15 @@
 class ApplicationController < ActionController::Base
+  rescue_from CanCan::AccessDenied do |exception|
+      redirect_to root_url, :alert => exception.message
+  end
+    
   before_filter :https_redirect
+  check_authorization :unless => :devise_controller?
   
   helper :all
   protect_from_forgery
+  
+
   
   private
   
