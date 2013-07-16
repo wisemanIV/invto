@@ -1,0 +1,35 @@
+<%- model_class = User -%>
+<div class="page-header">
+  <h1>Users</h1>
+</div>
+			
+<%= grid(@links_grid, :show_filters => :yes)  do |g|
+
+	g.column :name => 'Id', :attribute => 'id' do |user|
+  	  user.id
+	end
+	g.column :name => 'Email', :attribute => 'email' do |user|
+  	  user.email
+	end
+	g.column :name => 'Role', :attribute => 'role' do |user|
+  	  user.role
+	end
+	g.column :name => 'Application', :attribute => 'client_id' do |user|
+  	  user.client_id
+	end
+	g.column :name => 'Created At', :attribute => 'created_at' do |user|
+  	  user.created_at
+	end
+	g.column :name => 'Updated At', :attribute => 'updated_at' do |user|
+  	  user.updated_at
+	end
+	g.column do |user|
+	    link_to('Edit', edit_user_registration_path(user))
+	end
+	g.column do |user|
+		link_to('Delete', :controller => 'admin/user_profiles', :method => 'delete')
+	end
+
+end -%>
+
+         

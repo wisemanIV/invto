@@ -1,4 +1,5 @@
 class CallbackController < ApplicationController
+  skip_authorization_check
   private
 
   def use_https?

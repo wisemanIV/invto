@@ -1,5 +1,8 @@
 Jupiter::Application.routes.draw do
 
+  resources :users_clients
+
+
   resources :recipients
 
 
@@ -7,8 +10,8 @@ Jupiter::Application.routes.draw do
 
   post '/sms/callback', to: 'callback#create'
 
-  devise_for :users, path_names: {sign_in: "login", sign_out: "logout"} 
-   
+  devise_for :users, path_names: {sign_in: "login", sign_out: "logout"}, :controllers => { :registrations => "registrations" }
+  
   resources :shareables
 
   resources :clients
@@ -24,6 +27,12 @@ Jupiter::Application.routes.draw do
   resources :email_templates
   
   resources :user_profiles
+  
+  namespace :admin do |admin|
+    resources :user_profiles
+    resources :clients
+    resources :messages
+  end
   
   resources :help_docs
 

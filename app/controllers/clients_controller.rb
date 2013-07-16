@@ -4,7 +4,7 @@ class ClientsController < ApplicationController
   # GET /clients.json
   def index
     
-    @clients = Client.where("user_id = :user_id",{:user_id => current_user.id})
+    @clients = current_user.clients
 
     respond_to do |format|
       format.html # index.html.erb
@@ -27,7 +27,7 @@ class ClientsController < ApplicationController
   # GET /clients/new.json
   def new
     @client = Client.new
-
+  
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @client }
@@ -43,7 +43,6 @@ class ClientsController < ApplicationController
   # POST /clients.json
   def create
     @client = Client.new(params[:client])
-    @client.user_id = current_user.id
 
     respond_to do |format|
       if @client.save
