@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
   ROLES = %w[admin general guest]
   
   def set_role
-    self.role = 'general'
+    self.role = 'default'
   end
   
 end

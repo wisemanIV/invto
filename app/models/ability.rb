@@ -8,14 +8,21 @@ class Ability
     if user.role == "admin"
      # an admin can do everything
       can :manage, :all
+    elsif user.role == 'default'
+      # an editor can do everything to documents and reports
+      can :read, [Shareable, Email, Recipient, Message, Click, EmailTemplate, SmsResponse]
+    # but can only read, create and update charts (ie they cannot
+      # be destroyed or have any other actions from the charts_controller.rb
+      # executed)
+       # an editor can only view the annual report
     elsif user.role == 'general'
       # an editor can do everything to documents and reports
-      can :manage, [Session, Shareable, Email, Message, Click, EmailTemplate]
+      can :read, [Shareable, Email, Recipient, Message, Click, EmailTemplate, SmsResponse]
       # but can only read, create and update charts (ie they cannot
       # be destroyed or have any other actions from the charts_controller.rb
       # executed)
       can [:read, :create, :update], Message
-      # an editor can only view the annual report
+     # an editor can only view the annual report
     elsif user.role == 'guest'
     end
   end
