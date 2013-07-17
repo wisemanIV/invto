@@ -1,6 +1,7 @@
 class RecipientsController < ApplicationController
   before_filter :authenticate_user!
-  
+  load_and_authorize_resource
+   
   # GET /recipients
   # GET /recipients.json
   def index
