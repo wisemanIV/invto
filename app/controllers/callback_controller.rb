@@ -1,10 +1,5 @@
 class CallbackController < ApplicationController
   skip_authorization_check
-  private
-
-  def use_https?
-    false
-  end
   
   # POST /sms/callback
   def create
@@ -29,6 +24,11 @@ class CallbackController < ApplicationController
     end
     
     render nothing: true
+  end
+  
+  private
+  def use_https?
+    false
   end
 
 end
