@@ -1,4 +1,4 @@
-<%= form_for([:admin,@user]) do |f| %>
+<%= form_for([:admin,@user], :url => url_for(:controller => 'admin/user_profiles', :action => 'update')) do |f| %>
 
   <div><%= f.label :email %><br />
   <%= f.email_field :email, :autofocus => true %></div>
