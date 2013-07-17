@@ -2,9 +2,7 @@ Jupiter::Application.routes.draw do
 
   resources :users_clients
 
-
   resources :recipients
-
 
   resources :sms_responses
 
@@ -32,6 +30,7 @@ Jupiter::Application.routes.draw do
     resources :user_profiles
     resources :clients
     resources :messages
+    resources :users
   end
   
   resources :help_docs

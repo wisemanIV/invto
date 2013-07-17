@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   belongs_to :client
-  after_create :set_role
+  before_create :set_role
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
