@@ -1,0 +1,19 @@
+<%= form_for([:admin,@user]) do |f| %>
+
+  <div><%= f.label :email %><br />
+  <%= f.email_field :email, :autofocus => true %></div>
+  
+  <div><%= f.label :role %><br />
+  <%= f.collection_select :role, User::ROLES, :to_s, :humanize %></div>
+  
+  <div><%= f.label 'Application' %><br />
+  <%= f.select( :client_id, Client.all.collect {|a| [a.title, a.id]} ) %></div>
+   
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                clients_path, :class => 'btn' %>
+  </div>
+  
+
+<% end %>

@@ -32,4 +32,6 @@ class RegistrationsController < Devise::RegistrationsController
     user.email != params[:user][:email] ||
       params[:user][:password].present?
   end
+  
+ 
 end

@@ -9,15 +9,15 @@
 			
 <%= grid(@links_grid, :show_filters => :yes)  do |g|
 
-g.column :name => 'Id', :attribute => 'id' do |message|
-  message.id
-end
+	g.column :name => 'Id', :attribute => 'id' do |message|
+ 	   message.id
+	end
 
-g.column :name => 'Campaign', :attribute => 'campaign' do |message|
-	message.campaign
-end
+	g.column :name => 'Campaign', :attribute => 'campaign' do |message|
+		message.campaign
+	end
 
-		  g.column :name => 'Version', :attribute => 'version'  do |message|
+	g.column :name => 'Version', :attribute => 'version'  do |message|
 		    message.version
 		  end
 
