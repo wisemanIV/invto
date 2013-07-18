@@ -44,6 +44,9 @@
 		  g.column :name => 'Updated', :attribute => 'updated_at' do |message|
 		    message.formatted_updated_at
 		  end
+	  	g.column do |message|
+	  		link_to('Delete', :controller => 'messages', :method => 'delete')
+	  	end
 
 end -%>
 

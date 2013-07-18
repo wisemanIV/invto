@@ -3,7 +3,7 @@
   <h1>SMS Responses</h1>
 </div>
 			
-<%= grid(@links_grid, :show_filters => :yes)  do |g|
+<%= grid(@links_grid)  do |g|
 
 	g.column :name => 'Id', :attribute => 'id' do |sms_response|
   	  sms_response.id

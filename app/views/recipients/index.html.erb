@@ -1,27 +1,29 @@
-<h1>Listing recipients</h1>
+<%- model_class = Recipient -%>
+<div class="page-header">
+  <h1>Recipients</h1>
+</div>
 
-<table>
-  <tr>
-    <th>Countrycode</th>
-    <th>Phone</th>
-    <th>Optout</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= grid(@links_grid)  do |g|
 
-<% @recipients.each do |recipient| %>
-  <tr>
-    <td><%= recipient.CountryCode %></td>
-    <td><%= recipient.Phone %></td>
-    <td><%= recipient.OptOut %></td>
-    <td><%= link_to 'Show', recipient %></td>
-    <td><%= link_to 'Edit', edit_recipient_path(recipient) %></td>
-    <td><%= link_to 'Destroy', recipient, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+	g.column :name => 'Id', :attribute => 'id' do |recipient|
+  	  recipient.id
+	end
 
-<br />
+	g.column :name => 'Phone', :attribute => 'Phone' do |recipient|
+		recipient.Phone
+	end
+  
+	g.column :name => 'Opted Out', :attribute => 'OptOut'  do |recipient|
+		recipient.OptOut
+	end
+			  
+	g.column :name => 'Created', :attribute => 'created_at' do |recipient|
+		recipient.formatted_created_at
+	end
+			  
+	g.column :name => 'Updated', :attribute => 'updated_at' do |recipient|
+		recipient.formatted_updated_at
+	end		  
 
-<%= link_to 'New Recipient', new_recipient_path %>
+end -%>
+

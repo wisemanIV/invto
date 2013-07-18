@@ -46,7 +46,7 @@ class MessagesController < ApplicationController
   # POST /messages.json
   def create
     
-    client = current_user.client
+    client = Client.find(current_user.client_id)
     
     if client.nil? 
       respond_to do |format|
@@ -69,10 +69,17 @@ class MessagesController < ApplicationController
       body = message[:body]
     end
     
-    recipients = message[:to].gsub(/\s+|\[|\]|\(|\)|\-|\_/, "") #clean string
+    recipients = Message.clean_phone_number(message[:to]) 
     recipients = recipients.split(/,/)
     recipients.each do |value|
-      @message = Message.new(:campaign => message[:campaign], :version => message[:version], :to => value, :from => from, :body => body, :status => "submitted", :user_id => current_user.id )
+      
+      if Message.is_valid_phone(value)
+        status = "submitted"
+      else 
+        status = "invalid phone"
+      end
+      
+      @message = Message.new(:campaign => message[:campaign], :version => message[:version], :to => value, :from => from, :body => body, :status => status, :user_id => current_user.id, :client_id => client.id )
       
       if !@message.save
         saved = false
