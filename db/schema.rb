@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130716044341) do
+ActiveRecord::Schema.define(:version => 20130718214212) do
 
   create_table "clicks", :force => true do |t|
     t.string   "targeturl"
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20130716044341) do
     t.boolean  "OptOut",      :default => false
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
+    t.integer  "client_id"
   end
 
   create_table "shareables", :force => true do |t|

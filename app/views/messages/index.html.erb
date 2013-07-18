@@ -9,7 +9,7 @@
 			
 <%= link_to("responses", sms_responses_path, class: "btn") %>
 			
-<%= grid(@links_grid, :show_filters => :yes)  do |g|
+<%= grid(@links_grid)  do |g|
 
 	g.column :name => 'Id', :attribute => 'id' do |message|
   	  message.id
