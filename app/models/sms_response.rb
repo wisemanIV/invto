@@ -14,13 +14,19 @@ class SmsResponse < ActiveRecord::Base
       from = Message.clean_phone_number(self.From)
       recipient = Recipient.where(:Phone => from).first
       
-      if recipient.nil? 
-        recipient = Recipient.new(:Phone => from, :OptOut => true, :client_id => current_user.client_id)
+      client = ClientNumber.where(:phone => self.To).first.id
+      
+      if client.nil? 
+        puts "ERROR: CLIENT NOT RECOGNIZED #{self.To}"
       else
-        recipient.OptOut = true 
-      end
-      recipient.save 
-    
+         client = client.first.id
+         if recipient.nil? 
+           recipient = Recipient.new(:Phone => from, :OptOut => true, :client_id => client)
+         else
+           recipient.OptOut = true 
+         end
+         recipient.save 
+       end
     end
     
   end

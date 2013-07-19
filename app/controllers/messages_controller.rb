@@ -7,7 +7,7 @@ class MessagesController < ApplicationController
   def index
     
     @userid = current_user.id
-    @links_grid = initialize_grid(Message.where(:user_id => @userid))
+    @links_grid = initialize_grid(Message.where(:client_id => current_user.client_id))
       
     respond_to do |format|
       format.html # index.html.erb

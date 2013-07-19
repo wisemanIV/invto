@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130718214212) do
+ActiveRecord::Schema.define(:version => 20130719001746) do
 
   create_table "clicks", :force => true do |t|
     t.string   "targeturl"
@@ -21,6 +21,13 @@ ActiveRecord::Schema.define(:version => 20130718214212) do
     t.string   "actualurl"
     t.string   "ref"
     t.integer  "client_id",  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "client_numbers", :force => true do |t|
+    t.integer  "client_id"
+    t.string   "phone"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
