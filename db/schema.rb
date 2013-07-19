@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130719001746) do
+ActiveRecord::Schema.define(:version => 20130719005701) do
 
   create_table "clicks", :force => true do |t|
     t.string   "targeturl"
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20130719001746) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.integer  "user_id"
+    t.integer  "client_id"
   end
 
   create_table "users", :force => true do |t|

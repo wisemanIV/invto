@@ -1,7 +1,7 @@
 class SmsResponse < ActiveRecord::Base
-  attr_accessible :AccountSid, :Body, :From, :FromCity, :FromCountry, :FromState, :FromZIP, :SMSId, :To, :ToCity, :ToCountry, :ToState, :ToZIP, :user_id
+  attr_accessible :AccountSid, :Body, :From, :FromCity, :FromCountry, :FromState, :FromZIP, :SMSId, :To, :ToCity, :ToCountry, :ToState, :ToZIP, :client_id
   belongs_to :client, :dependent => :destroy
-  validates_presence_of :AccountSid, :SMSId
+  validates_presence_of :AccountSid, :SMSId, :client_id
   before_save :check_opt_out
   before_save :check_help
 

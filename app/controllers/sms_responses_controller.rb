@@ -5,7 +5,9 @@ class SmsResponsesController < ApplicationController
   # GET /sms_responses.json
   def index
     
-    @links_grid = initialize_grid(SmsResponse)
+    @user = User.find(current_user.id)
+    
+    @links_grid = initialize_grid(SmsResponse.where(:client_id => @user.client_id))
 
     respond_to do |format|
       format.html # index.html.erb
