@@ -56,7 +56,7 @@ class MessagesController < ApplicationController
     
     message = Message.new(params[:message])
   
-    from = ENV["TWILIO_FROM"]
+    from = ClientNumber.find(client.id).phone
     # send an sms
     saved = true
     
