@@ -1,0 +1,25 @@
+<h1>Client Numbers</h1>
+
+<table>
+  <tr>
+    <th>Client</th>
+    <th>Phone</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @client_numbers.each do |client_number| %>
+  <tr>
+    <td><%= client_number.client_id %></td>
+    <td><%= client_number.phone %></td>
+    <td><%= link_to 'Show', client_number %></td>
+    <td><%= link_to 'Edit', edit_client_number_path(client_number) %></td>
+    <td><%= link_to 'Destroy', client_number, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Client number', new_client_number_path %>

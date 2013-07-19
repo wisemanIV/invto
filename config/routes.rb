@@ -1,5 +1,8 @@
 Jupiter::Application.routes.draw do
 
+  resources :client_numbers
+
+
   resources :users_clients
 
   resources :recipients

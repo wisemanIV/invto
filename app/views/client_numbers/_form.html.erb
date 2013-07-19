@@ -1,0 +1,25 @@
+<%= form_for(@client_number) do |f| %>
+  <% if @client_number.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@client_number.errors.count, "error") %> prohibited this client_number from being saved:</h2>
+
+      <ul>
+      <% @client_number.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div><%= f.label 'Application' %><br />
+  <%= f.select( :client_id, Client.all.collect {|a| [a.title, a.id]} ) %></div>
+   
+ 
+  <div class="field">
+    <%= f.label :phone %><br />
+    <%= f.text_field :phone %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

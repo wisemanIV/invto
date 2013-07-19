@@ -5,6 +5,7 @@ class Client < ActiveRecord::Base
   has_many :sms_response
   has_many :recipients
   has_many :email
+  has_many :client_numbers
   validates_presence_of :domain
   has_many :users
 end
