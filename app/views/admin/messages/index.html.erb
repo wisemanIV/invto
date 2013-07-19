@@ -1,16 +1,20 @@
 <%- model_class = Message -%>
 <div class="page-header">
-  <h1>Apps</h1>
+  <h1>SMS Messages</h1>
 </div>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_client_path,
             :class => 'btn btn-primary', :style => 'color:white' %>
 			
-<%= grid(@links_grid, :show_filters => :yes)  do |g|
+<%= grid(@links_grid)  do |g|
 
 	g.column :name => 'Id', :attribute => 'id' do |message|
  	   message.id
+	end
+	
+	g.column :name => 'Client Id', :attribute => 'client_id' do |message|
+ 	   message.client_id
 	end
 
 	g.column :name => 'Campaign', :attribute => 'campaign' do |message|
@@ -35,6 +39,10 @@
 		  
 		  g.column :name => 'Status', :attribute => 'status' do |message|
 		    message.status
+		  end
+		  
+		  g.column :name => 'Created By', :attribute => 'user_id' do |message|
+		    message.user_id
 		  end
 		  
 		  g.column :name => 'Created', :attribute => 'created_at' do |message|
