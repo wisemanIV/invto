@@ -19,6 +19,8 @@ gem "useragent", "~> 0.6.0"
 
 gem 'twilio-ruby'
 
+gem 'delayed_job_active_record'
+
 gem 'google-analytics-rails'
 
 gem "wice_grid", '3.2.1'

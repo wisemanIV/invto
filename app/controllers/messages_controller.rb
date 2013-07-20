@@ -47,7 +47,7 @@ class MessagesController < ApplicationController
   def create
     
     client = Client.find(current_user.client_id)
-    
+
     if client.nil? 
       respond_to do |format|
         format.html { redirect_to action: "index", notice: 'Cannot create SMS until an application is provisioned on your account.' }
@@ -55,8 +55,7 @@ class MessagesController < ApplicationController
     else
     
     message = Message.new(params[:message])
-  
-    from = ClientNumber.find(client.id).phone
+
     # send an sms
     saved = true
     
@@ -79,11 +78,13 @@ class MessagesController < ApplicationController
         status = "invalid phone"
       end
       
-      @message = Message.new(:campaign => message[:campaign], :version => message[:version], :to => value, :from => from, :body => body, :status => status, :user_id => current_user.id, :client_id => client.id )
+      @message = Message.new(:campaign => message[:campaign], :version => message[:version], :to => value, :body => body, :status => status, :user_id => current_user.id, :client_id => client.id )
       
       if !@message.save
         saved = false
         break ;
+      else
+        @message.delay.send_sms!
       end
     end
 
