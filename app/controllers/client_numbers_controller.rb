@@ -4,7 +4,9 @@ class ClientNumbersController < ApplicationController
   # GET /client_numbers
   # GET /client_numbers.json
   def index
-    @client_numbers = ClientNumber.all
+  
+    @links_grid = initialize_grid(ClientNumber)
+    
 
     respond_to do |format|
       format.html # index.html.erb

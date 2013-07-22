@@ -12,7 +12,7 @@ class CallbackController < ApplicationController
       if client.nil? 
         puts "ERROR: CLIENT NOT RECOGNIZED #{params[:To]}"
       else
-        client = client.first.id
+        client = client.first.client_id
         @sms = SmsResponse.new(:SMSId => params[:SmsSid], :AccountSid => params[:AccountSid], :To => params[:To], :From => params[:From], :Body => params[:Body], :FromCity => params[:FromCity], :FromState => params[:FromState], :FromZIP => params[:FromZIP], :FromCountry => params[:FromCountry], :client_id => client)
       end
     else 

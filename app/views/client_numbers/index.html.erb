@@ -1,25 +1,34 @@
 <h1>Client Numbers</h1>
 
-<table>
-  <tr>
-    <th>Client</th>
-    <th>Phone</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @client_numbers.each do |client_number| %>
-  <tr>
-    <td><%= client_number.client_id %></td>
-    <td><%= client_number.phone %></td>
-    <td><%= link_to 'Show', client_number %></td>
-    <td><%= link_to 'Edit', edit_client_number_path(client_number) %></td>
-    <td><%= link_to 'Destroy', client_number, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
 <%= link_to 'New Client number', new_client_number_path %>
+
+<%= grid(@links_grid)  do |g|
+
+	g.column :name => 'Id', :attribute => 'id' do |client_number|
+  	  client_number.id
+	end
+
+	g.column :name => 'Client Id', :attribute => 'client_id' do |client_number|
+		client_number.client_id
+	end
+  
+	g.column :name => 'Phone', :attribute => 'phone'  do |client_number|
+		client_number.phone
+	end
+			  
+	g.column :name => 'Created', :attribute => 'created_at' do |client_number|
+		client_number.formatted_created_at
+	end
+			  
+	g.column :name => 'Updated', :attribute => 'updated_at' do |client_number|
+		client_number.formatted_updated_at
+	end
+	
+	g.column do |client_number|
+	    link_to('Edit', edit_client_number_path(client_number))
+	end
+	g.column do |client_number|
+		link_to('Delete', client_number_path(client_number), :confirm => "Are you sure?", :method => :delete)
+	end
+
+end -%>
