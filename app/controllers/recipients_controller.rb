@@ -4,7 +4,8 @@ class RecipientsController < ApplicationController
    
   # GET /recipients
   # GET /recipients.json
-  def index
+  def index  
+    
     @user = User.find(current_user.id)
     
     @links_grid = initialize_grid(Recipient.where(:client_id => @user.client_id))
