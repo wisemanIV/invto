@@ -42,7 +42,7 @@ class SmsResponse < ActiveRecord::Base
       if client.nil? 
         puts "ERROR: CLIENT NOT RECOGNIZED #{self.To}"
       else
-         client = client.first.id
+         client = client.first.client_id
          if recipient.nil? 
            recipient = Recipient.new(:CountryCode => cc, :Phone => from, :OptOut => true, :client_id => client)
          else
