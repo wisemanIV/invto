@@ -21,22 +21,24 @@ gem 'twilio-ruby'
 
 gem 'delayed_job_active_record'
 
+gem 'jquery-ui-rails'
+
 gem 'google-analytics-rails'
 
-gem "wice_grid", '3.2.1'
+gem "wice_grid"
 
 gem 'pg'
 
 gem "therubyracer"
 gem 'execjs'
-gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
+gem "less-rails"
 gem "twitter-bootstrap-rails"
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails'
+  gem 'coffee-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
