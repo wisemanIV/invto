@@ -37,7 +37,7 @@ class SmsResponse < ActiveRecord::Base
       from = Message.less_country_code(self.From)
       recipient = Recipient.where(:Phone => from).first
       
-      client = ClientNumber.where(:phone => self.To).first.id
+      client = ClientNumber.where(:phone => self.To)
       
       if client.nil? 
         puts "ERROR: CLIENT NOT RECOGNIZED #{self.To}"
