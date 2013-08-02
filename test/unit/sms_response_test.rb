@@ -25,7 +25,10 @@ class SmsResponseTest < ActiveSupport::TestCase
   
   def initialize_test
     @client = FactoryGirl.create(:client)
+    @client_number = FactoryGirl.create(:client_number, :client_id => @client.id)
+    
     @sms_response = FactoryGirl.create(:sms_response, :client_id => @client.id)
     
+    @sms_response_opt_out = FactoryGirl.create(:sms_response, :client_id => @client.id, :Body => "Stop")
   end
 end

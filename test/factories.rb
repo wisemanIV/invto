@@ -13,4 +13,8 @@ FactoryGirl.define do
   factory :client do
     domain "www.inv.to"
   end
+  factory :client_number do
+    phone '+14154200068'
+  end
+
 end
