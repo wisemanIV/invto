@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>To:</b>
+  <%= @sms_archive.to %>
+</p>
+
+<p>
+  <b>Body:</b>
+  <%= @sms_archive.body %>
+</p>
+
+<p>
+  <b>From:</b>
+  <%= @sms_archive.from %>
+</p>
+
+<p>
+  <b>:</b>
+  <%= @sms_archive. %>
+</p>
+
+<p>
+  <b>Version:</b>
+  <%= @sms_archive.version %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @sms_archive.status %>
+</p>
+
+<p>
+  <b>Sms:</b>
+  <%= @sms_archive.sms_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_sms_archive_path(@sms_archive) %> |
+<%= link_to 'Back', sms_archives_path %>

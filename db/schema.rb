@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130802090417) do
+ActiveRecord::Schema.define(:version => 20130802185252) do
 
   create_table "clicks", :force => true do |t|
     t.string   "targeturl"
@@ -113,6 +113,22 @@ ActiveRecord::Schema.define(:version => 20130802090417) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "sms_archives", :force => true do |t|
+    t.string   "to"
+    t.string   "body"
+    t.string   "from"
+    t.string   "campaign"
+    t.string   "version"
+    t.string   "status"
+    t.string   "sms_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.datetime "entered_date"
+    t.datetime "processed_date"
+  end
+
+  add_index "sms_archives", ["sms_id"], :name => "index_sms_archives_on_sms_id"
 
   create_table "sms_responses", :force => true do |t|
     t.string   "SMSId"

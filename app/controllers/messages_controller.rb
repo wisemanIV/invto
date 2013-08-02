@@ -75,8 +75,8 @@ class MessagesController < ApplicationController
       body = message[:body]
     end
     
-    recipients = Message.clean_phone_number(message[:to]) 
-    recipients = recipients.split(/,/)
+    recipients = Message.get_message_array(message[:to])
+    
     recipients.each do |value|
       
       if Message.is_valid_phone(value)

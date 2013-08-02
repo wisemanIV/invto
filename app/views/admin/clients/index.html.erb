@@ -7,7 +7,7 @@
             new_client_path,
             :class => 'btn btn-primary', :style => 'color:white' %>
 			
-<%= grid(@links_grid, :show_filters => :yes)  do |g|
+<%= grid(@links_grid, :show_filters => :always)  do |g|
 
 	g.column :name => 'Id', :attribute => 'id' do |client|
   	  client.id
@@ -18,10 +18,10 @@
 	g.column :name => 'Domain', :attribute => 'domain' do |client|
   	  client.domain
 	end
-	g.column :name => 'Created At', :attribute => 'created_at' do |client|
+	g.column :name => 'Created At', :attribute => 'created_at', filter: false do |client|
   	  client.created_at
 	end
-	g.column :name => 'Updated At', :attribute => 'updated_at' do |client|
+	g.column :name => 'Updated At', :attribute => 'updated_at', filter: false do |client|
   	  client.updated_at
 	end
 	g.column do |client|

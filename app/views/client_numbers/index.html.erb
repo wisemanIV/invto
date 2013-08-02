@@ -1,6 +1,6 @@
 <h1>Client Numbers</h1>
 
-<%= link_to 'New Client number', new_client_number_path %>
+<%= link_to 'New Client number', new_client_number_path, class: "btn" %>
 
 <%= grid(@links_grid)  do |g|
 
@@ -16,11 +16,11 @@
 		client_number.phone
 	end
 			  
-	g.column :name => 'Created', :attribute => 'created_at' do |client_number|
+	g.column :name => 'Created', :attribute => 'created_at', filter: false do |client_number|
 		client_number.formatted_created_at
 	end
 			  
-	g.column :name => 'Updated', :attribute => 'updated_at' do |client_number|
+	g.column :name => 'Updated', :attribute => 'updated_at', filter: false do |client_number|
 		client_number.formatted_updated_at
 	end
 	
