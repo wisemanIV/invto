@@ -3,7 +3,7 @@
   <h1>Recipients</h1>
 </div>
 
-<%= grid(@links_grid)  do |g|
+<%= grid(@links_grid, :show_filters => :always)  do |g|
 
 	g.column :name => 'Id', :attribute => 'id' do |recipient|
   	  recipient.id
@@ -13,15 +13,15 @@
 		recipient.Phone
 	end
   
-	g.column :name => 'Opted Out', :attribute => 'OptOut'  do |recipient|
+	g.column :name => 'Opted Out', :attribute => 'OptOut', custom_filter: ['true', 'false'], auto_reload: true do |recipient|
 		recipient.OptOut
 	end
 			  
-	g.column :name => 'Created', :attribute => 'created_at' do |recipient|
+	g.column :name => 'Created', :attribute => 'created_at', filter: false do |recipient|
 		recipient.formatted_created_at
 	end
 			  
-	g.column :name => 'Updated', :attribute => 'updated_at' do |recipient|
+	g.column :name => 'Updated', :attribute => 'updated_at', filter: false do |recipient|
 		recipient.formatted_updated_at
 	end		  
 

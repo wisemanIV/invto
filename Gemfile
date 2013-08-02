@@ -44,6 +44,15 @@ group :assets do
   
 end
 
+group :test do
+  gem 'faker' 
+  gem 'capybara' 
+  gem 'launchy' 
+  gem 'factory_girl_rails', "~> 4.2.0"
+  gem "database_cleaner", "~> 1.0.1"
+  gem "rest-client"
+end 
+
 gem 'jquery-rails'
 
 gem "jquery-ui-rails", "~> 4.0.3"

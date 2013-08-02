@@ -15,7 +15,12 @@ class Message < ActiveRecord::Base
   end
   
   def self.clean_phone_number(phone)
-    phone.gsub(/\s+|\[|\]|\(|\)|\-|\_|\.|\,|\{|\}|\@|\~|\<|\>|\?|\\|\/|\#|\!|\%|\*|\&/, "") #clean string
+    phone.gsub(/\s+|\[|\]|\(|\)|\-|\_|\.|\{|\}|\@|\~|\<|\>|\?|\\|\/|\#|\!|\%|\*|\&/, "") #clean string
+  end
+  
+  def self.get_message_array(str)
+    str = Message.clean_phone_number(str) 
+    str.split(/,/)
   end
   
   def self.get_country_code(phone)
@@ -29,6 +34,12 @@ class Message < ActiveRecord::Base
   
   def self.less_country_code(phone)
     phone.strip.gsub(/^\+\d/,"")
+  end
+  
+  def self.handle_sms_sent(sms_id)
+    @message = Message.where(:SmsId => sms_id).first
+    @message.status = 'sent'
+    @message.save
   end
   
   def send_sms!
@@ -50,7 +61,7 @@ class Message < ActiveRecord::Base
 
           begin
             @client = Twilio::REST::Client.new account_sid, auth_token
-            from = ClientNumber.where(:client_id => self.client_id).order('random()').first.phone
+            from = ClientNumber.get_number(self.client_id)
 
             res = @client.account.sms.messages.create(
             :from => from,

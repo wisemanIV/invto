@@ -1,5 +1,8 @@
 Jupiter::Application.routes.draw do
 
+  resources :sms_archives
+
+
   resources :client_numbers
 
 

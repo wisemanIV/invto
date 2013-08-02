@@ -17,7 +17,7 @@ class MessageTest < ActiveSupport::TestCase
     assert_equal Message.clean_phone_number('415-420-0068'), "4154200068"
     assert_equal Message.clean_phone_number('+1 4154200068'), "+14154200068"
     assert_equal Message.clean_phone_number('415-[420] 0068'), "4154200068"
-    assert_equal Message.clean_phone_number('+1 415,420.0068'), "+14154200068"
+    assert_equal Message.clean_phone_number('+1 415.420.0068'), "+14154200068"
     assert_equal Message.clean_phone_number('415.420.0 0 6 8'), "4154200068"
     assert_equal Message.clean_phone_number('#415 420*0068'), "4154200068"
     assert_equal Message.clean_phone_number(' +1415420-0068 '), "+14154200068"

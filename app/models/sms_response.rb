@@ -6,6 +6,26 @@ class SmsResponse < ActiveRecord::Base
   before_save :check_opt_out
   before_save :check_help
 
+  def self.handle_sms_response(arr)
+    
+    to = Message.clean_phone_number(arr[:To])
+    from = Message.clean_phone_number(arr[:From])
+    client = ClientNumber.where(:phone => to)
+    
+    if client.nil? 
+      puts "ERROR: CLIENT NOT RECOGNIZED #{params[:To]}"
+    else
+      client = client.first.client_id
+    
+      @sms = SmsResponse.new(:SMSId => arr[:SmsSid], :AccountSid => arr[:AccountSid], :To => to, :From => from, :Body => arr[:Body], :FromCity => arr[:FromCity], :FromState => arr[:FromState], :FromZIP => arr[:FromZIP], :FromCountry => arr[:FromCountry], :client_id => client)
+    
+      if @sms.nil? || !@sms.save then
+        puts "CALLBACK ERROR!"
+        puts @sms.errors.full_messages
+      end
+    end
+  
+  end
 
   def check_opt_out
     

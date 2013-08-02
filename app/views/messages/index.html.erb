@@ -3,13 +3,19 @@
   <h1>SMS Messages</h1>
 </div>
 
+
 <div>
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_message_path,
             :class => 'btn btn-primary', :style => 'color:white' %>
 			
 <%= link_to("responses", sms_responses_path, class: "btn") %>
+	</div>
+	
+<div style="float:right;width: 100px;margin-top: -26px; ">
+<%= link_to("opted-out", recipients_path, class: "btn") %>
 </div>
+
 </br>
 
 <%= render :partial => 'messages_grid' %>
