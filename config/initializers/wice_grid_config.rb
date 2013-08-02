@@ -41,7 +41,7 @@ if defined?(Wice::Defaults)
   Wice::Defaults::SHOW_FILTER = :always
 
   # A boolean value specifying if a change in a filter triggers reloading of the grid.
-  Wice::Defaults::AUTO_RELOAD = true
+  Wice::Defaults::AUTO_RELOAD = false
 
 
   # SQL operator used for matching strings in string filters.

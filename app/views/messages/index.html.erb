@@ -3,52 +3,15 @@
   <h1>SMS Messages</h1>
 </div>
 
+<div>
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_message_path,
             :class => 'btn btn-primary', :style => 'color:white' %>
 			
 <%= link_to("responses", sms_responses_path, class: "btn") %>
-			
-<%= grid(@links_grid)  do |g|
+</div>
+</br>
 
-	g.column :name => 'Id', :attribute => 'id' do |message|
-  		message.id
-	end
-
-	g.column :name => 'Campaign', :attribute => 'campaign' do |message|
-		message.campaign
-	end
-  
-	g.column :name => 'Version', :attribute => 'version'  do |message|
-		message.version
-	end
-
-	g.column :name => 'To', :attribute => 'to' do |message|
-		message.to
-	end
-  
-	g.column :name => 'From', :attribute => 'from'  do |message|
-		message.from
-	end
-
-	g.column :name => 'Body', :attribute => 'body' do |message|
-		message.body
-	end
-			  
-	g.column :name => 'Status', :attribute => 'status', :custom_filter => :auto, auto_reload: true do |message|
-		message.status
-	end
-			  
-	g.column :name => 'Created', :attribute => 'created_at', filter: false do |message|
-		message.formatted_created_at
-			  end
-			  
-	g.column :name => 'Updated', :attribute => 'updated_at', filter: false do |message|
-		message.formatted_updated_at
-	end
-			  
-
-end -%>
-
+<%= render :partial => 'messages_grid' %>
          
     

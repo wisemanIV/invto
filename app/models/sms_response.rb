@@ -1,4 +1,5 @@
 class SmsResponse < ActiveRecord::Base
+  include FormatterModule
   attr_accessible :AccountSid, :Body, :From, :FromCity, :FromCountry, :FromState, :FromZIP, :SMSId, :To, :ToCity, :ToCountry, :ToState, :ToZIP, :client_id
   belongs_to :client, :dependent => :destroy
   validates_presence_of :AccountSid, :SMSId, :client_id
@@ -10,8 +11,10 @@ class SmsResponse < ActiveRecord::Base
     
     puts "CHECKING FOR OPT OUT - #{:Body}"
     
-    if !self.Body.blank? && (self.Body.include?('STOP') || self.Body.include?('CANCEL') || self.Body.include?('UNSUBSCRIBE')|| self.Body.include?('QUIT'))
-      from = Message.clean_phone_number(self.From)
+    if self.opt_out_request(:Body) then
+     
+      cc = Message.get_country_code(self.From)
+      from = Message.less_country_code(self.From)
       recipient = Recipient.where(:Phone => from).first
       
       client = ClientNumber.where(:phone => self.To).first.id
@@ -21,7 +24,7 @@ class SmsResponse < ActiveRecord::Base
       else
          client = client.first.id
          if recipient.nil? 
-           recipient = Recipient.new(:Phone => from, :OptOut => true, :client_id => client)
+           recipient = Recipient.new(:CountryCode => cc, :Phone => from, :OptOut => true, :client_id => client)
          else
            recipient.OptOut = true 
          end
@@ -31,17 +34,12 @@ class SmsResponse < ActiveRecord::Base
     
   end
   
+  def self.opt_out_request(msg)
+     !msg.blank? && (msg.downcase.include?('STOP'.downcase) || msg.downcase.include?('CANCEL'.downcase) || msg.downcase.include?('UNSUBSCRIBE'.downcase)|| msg.downcase.include?('QUIT'.downcase))
+  end
+  
   def check_help
     puts "CHECKING FOR HELP REQUESTED - #{:Body}"
   end
-  
-  def formatted_created_at
-    datetime = created_at.in_time_zone("Pacific Time (US & Canada)")
-    datetime.strftime('%m/%d/%y %H:%M:%S')
-  end
-  
-  def formatted_updated_at
-    datetime = updated_at.in_time_zone("Pacific Time (US & Canada)")
-    datetime.strftime('%m/%d/%y %H:%M:%S')
-  end
+
 end

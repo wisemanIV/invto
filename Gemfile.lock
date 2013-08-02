@@ -160,21 +160,20 @@ PLATFORMS
 DEPENDENCIES
   bcrypt-ruby (~> 3.0.1)
   cancan
-  coffee-rails
+  coffee-rails (~> 3.2.1)
   delayed_job_active_record
   devise
-  execjs
   figaro
   google-analytics-rails
   jquery-rails
-  jquery-ui-rails
+  jquery-ui-rails (~> 4.0.3)
   less-rails
   mail
   passenger (~> 4.0.8)
   pg
   rails (= 3.2.13)
   rvm
-  sass-rails
+  sass-rails (~> 3.2.3)
   therubyracer
   twilio-ruby
   twitter-bootstrap-rails
