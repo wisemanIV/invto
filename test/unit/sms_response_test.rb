@@ -2,6 +2,8 @@ require 'test_helper'
 
 class SmsResponseTest < ActiveSupport::TestCase
   
+  setup :initialize_test
+  
   test "opt out request" do 
     assert SmsResponse.opt_out_request("Stop")
     assert SmsResponse.opt_out_request("STOP")
@@ -19,5 +21,11 @@ class SmsResponseTest < ActiveSupport::TestCase
     assert SmsResponse.opt_out_request("i quiT!!!")
     assert SmsResponse.opt_out_request("stop it!!")
     assert SmsResponse.opt_out_request("can you unsubscribe me?!")
+  end
+  
+  def initialize_test
+    @client = FactoryGirl.create(:client)
+    @sms_response = FactoryGirl.create(:sms_response, :client_id => @client.id)
+    
   end
 end

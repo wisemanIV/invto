@@ -31,7 +31,7 @@ class SmsResponse < ActiveRecord::Base
     
     puts "CHECKING FOR OPT OUT - #{:Body}"
     
-    if SmsResponse.opt_out_request(:Body) then
+    if SmsResponse.opt_out_request(self.Body) then
      
       cc = Message.get_country_code(self.From)
       from = Message.less_country_code(self.From)
