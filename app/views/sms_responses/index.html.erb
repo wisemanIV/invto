@@ -3,7 +3,7 @@
   <h1>SMS Responses</h1>
 </div>
 			
-<%= grid(@links_grid)  do |g|
+<%= grid(@links_grid, :show_filters => :always)  do |g|
 
 	g.column :name => 'Id', :attribute => 'id' do |sms_response|
   	  sms_response.id
@@ -45,11 +45,11 @@
 		sms_response.FromCountry
 	end
 			  
-	g.column :name => 'Created', :attribute => 'created_at' do |sms_response|
+	g.column :name => 'Created', :attribute => 'created_at', filter: false do |sms_response|
 		sms_response.formatted_created_at
 	end
 			  
-	g.column :name => 'Updated', :attribute => 'updated_at' do |sms_response|
+	g.column :name => 'Updated', :attribute => 'updated_at', filter: false do |sms_response|
 		sms_response.formatted_updated_at
 	end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130720035510) do
+ActiveRecord::Schema.define(:version => 20130802090417) do
 
   create_table "clicks", :force => true do |t|
     t.string   "targeturl"
@@ -93,6 +93,8 @@ ActiveRecord::Schema.define(:version => 20130720035510) do
     t.string   "TwilioResponse"
     t.integer  "client_id"
   end
+
+  add_index "messages", ["SmsId"], :name => "index_messages_on_SmsId", :unique => true
 
   create_table "recipients", :force => true do |t|
     t.string   "CountryCode", :default => "+1"

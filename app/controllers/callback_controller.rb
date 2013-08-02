@@ -7,13 +7,14 @@ class CallbackController < ApplicationController
     
     if params[:SmsStatus].blank? || params[:SmsStatus]=='received'
       to = Message.clean_phone_number(params[:To])
+      from = Message.clean_phone_number(params[:From])
       client = ClientNumber.where(:phone => to)
       
       if client.nil? 
         puts "ERROR: CLIENT NOT RECOGNIZED #{params[:To]}"
       else
         client = client.first.client_id
-        @sms = SmsResponse.new(:SMSId => params[:SmsSid], :AccountSid => params[:AccountSid], :To => params[:To], :From => params[:From], :Body => params[:Body], :FromCity => params[:FromCity], :FromState => params[:FromState], :FromZIP => params[:FromZIP], :FromCountry => params[:FromCountry], :client_id => client)
+        @sms = SmsResponse.new(:SMSId => params[:SmsSid], :AccountSid => params[:AccountSid], :To => to, :From => from, :Body => params[:Body], :FromCity => params[:FromCity], :FromState => params[:FromState], :FromZIP => params[:FromZIP], :FromCountry => params[:FromCountry], :client_id => client)
       end
     else 
       if params[:SmsStatus]=='sent'
