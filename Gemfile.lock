@@ -64,6 +64,9 @@ GEM
     jquery-rails (2.2.1)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-ui-rails (4.0.3)
+      jquery-rails
+      railties (>= 3.1.0)
     json (1.8.0)
     jwt (0.1.8)
       multi_json (>= 1.5)
@@ -157,23 +160,24 @@ PLATFORMS
 DEPENDENCIES
   bcrypt-ruby (~> 3.0.1)
   cancan
-  coffee-rails (~> 3.2.1)
+  coffee-rails
   delayed_job_active_record
   devise
   execjs
   figaro
   google-analytics-rails
   jquery-rails
+  jquery-ui-rails
   less-rails
   mail
   passenger (~> 4.0.8)
   pg
   rails (= 3.2.13)
   rvm
-  sass-rails (~> 3.2.3)
+  sass-rails
   therubyracer
   twilio-ruby
   twitter-bootstrap-rails
   uglifier (>= 1.0.3)
   useragent (~> 0.6.0)
-  wice_grid (= 3.2.1)
+  wice_grid
