@@ -1,13 +1,17 @@
 class SmsArchivesController < ApplicationController
+  before_filter :authenticate_user!
+  load_and_authorize_resource
   # GET /sms_archives
   # GET /sms_archives.json
   def index
-    @sms_archives = SmsArchive.all
-
+  
+    @userid = current_user.id
+    @links_grid = initialize_grid(SmsArchive.where(:client_id => current_user.client_id))
+      
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @sms_archives }
     end
+    
   end
 
   # GET /sms_archives/1

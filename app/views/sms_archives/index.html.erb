@@ -1,34 +1,57 @@
-<h1>Listing sms_archives</h1>
+<%- model_class = SmsArchive -%>
+<div class="page-header">
+  <h1>SMS archives</h1>
+</div>
 
-<table>
-  <tr>
-    <th>To</th>
-    <th>Body</th>
-    <th>From</th>
-    <th></th>
-    <th>Version</th>
-    <th>Status</th>
-    <th>Sms</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
 
-<% @sms_archives.each do |sms_archive| %>
-  <tr>
-    <td><%= sms_archive.to %></td>
-    <td><%= sms_archive.body %></td>
-    <td><%= sms_archive.from %></td>
-    <td><%= sms_archive. %></td>
-    <td><%= sms_archive.version %></td>
-    <td><%= sms_archive.status %></td>
-    <td><%= sms_archive.sms_id %></td>
-    <td><%= link_to 'Show', sms_archive %></td>
-    <td><%= link_to 'Edit', edit_sms_archive_path(sms_archive) %></td>
-    <td><%= link_to 'Destroy', sms_archive, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+<%= grid(@links_grid, :show_filters => :always)  do |g|
+
+	g.column :name => 'Id', :attribute => 'id' do |sms_archive|
+  		sms_archive.id
+	end
+
+	g.column :name => 'Campaign', :attribute => 'campaign' , :custom_filter => :auto, auto_reload: true do |sms_archive|
+		sms_archive.campaign
+	end
+  
+	g.column :name => 'Version', :attribute => 'version'  do |sms_archive|
+		sms_archive.version
+	end
+
+	g.column :name => 'To', :attribute => 'to' do |sms_archive|
+		sms_archive.to
+	end
+  
+	g.column :name => 'From', :attribute => 'from'  do |sms_archive|
+		sms_archive.from
+	end
+
+	g.column :name => 'Body', :attribute => 'body' do |sms_archive|
+		sms_archive.body
+	end
+			  
+	g.column :name => 'Status', :attribute => 'status', :custom_filter => :auto, auto_reload: true do |sms_archive|
+		sms_archive.status
+	end
+	
+	g.column :name => 'Entered at', :attribute => 'created_at', filter: false do |sms_archive|
+		sms_archive.entered_date
+	end
+			  
+	g.column :name => 'Processed at', :attribute => 'updated_at', filter: false do |sms_archive|
+		sms_archive.processed_date
+	end
+			  
+	g.column :name => 'Created', :attribute => 'created_at', filter: false do |sms_archive|
+		sms_archive.formatted_created_at
+	end
+			  
+	g.column :name => 'Updated', :attribute => 'updated_at', filter: false do |sms_archive|
+		sms_archive.formatted_updated_at
+	end
+			  
+
+end -%>
 
 <br />
 
