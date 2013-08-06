@@ -41,7 +41,7 @@
 			});
 
 			Twilio.Device.disconnect(function (conn) {
-				$('#status').html('Recording ended<br/><a href="show_recordings.php">view recording list</a>');
+				$('#status').html('Recording ended<br/><a href="/recordings">view recording list</a>');
 				$('#status').css('color', 'black');
 				toggleCallStatus();
 			});

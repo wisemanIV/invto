@@ -30,9 +30,13 @@ class RecordingsController < ApplicationController
     
   end
   
-  def complete 
-    puts "ENDED"
-    puts "params"
+  def complete
+    
+    @recording = Recording.new(:tag => "A test message", :url => params["RecordingUrl"], :user_id => 1, :client_id => 1)
+    @recording.save
+    
+    redirect_to action: 'index'
+    
   end
   
   
