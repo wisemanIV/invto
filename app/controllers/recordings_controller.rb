@@ -1,5 +1,9 @@
+require 'twilio-ruby'
+
 class RecordingsController < ApplicationController
    skip_authorization_check
+   
+   respond_to :html, :xml
   
   def new
     
@@ -16,11 +20,14 @@ class RecordingsController < ApplicationController
  
  
   def handle
-    Twilio::TwiML::Response.new do |r|
+    @response = Twilio::TwiML::Response.new do |r|
       r.Say 'Listen to your monkey howl.'
       r.Record :maxLength => '30', :action => '/recordings/complete', :method => 'get'
       r.Say 'Goodbye.'
-    end.text
+    end
+
+    render :text => @response.text, :type => :builder, :layout => false
+    
   end
   
   def complete 
