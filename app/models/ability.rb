@@ -21,7 +21,7 @@ class Ability
       # but can only read, create and update charts (ie they cannot
       # be destroyed or have any other actions from the charts_controller.rb
       # executed)
-      can [:read, :create, :update], Message
+      can [:read, :create, :update], [Message, Recording]
      # an editor can only view the annual report
     elsif user.role == 'guest'
     end
