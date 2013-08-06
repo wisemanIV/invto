@@ -1,11 +1,20 @@
+require 'api_constraints'
+
 Jupiter::Application.routes.draw do
 
-  resources :recordings do
-    collection do 
-      get 'handle' => 'recordings#handle'
+  resources :recordings 
+  
+  namespace :api, defaults: {format: 'json'} do
+    resources :recordings do
+      collection do 
+        get 'handle' => 'recordings#handle'
+      end
+      collection do 
+        get 'complete' => 'recordings#complete'
+      end
     end
-    collection do 
-      get 'complete' => 'recordings#complete'
+    scope module: :v1, constraints: ApiConstraints.new(version: 1) do
+     
     end
   end
 
