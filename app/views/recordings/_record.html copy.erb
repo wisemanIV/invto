@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>
+			Twilio Client Call
+		</title>
+		<!-- @start snippet -->
+		<script type="text/javascript" src="//static.twilio.com/libs/twiliojs/1.1/twilio.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+		<script type="text/javascript">
+ 
+		    Twilio.Device.setup("<%= token %>", {debug: true});
+ 
+		      Twilio.Device.ready(function (device) {
+		        $("#log").text("Ready");
+		      });
+ 
+		      Twilio.Device.error(function (error) {
+		        $("#log").text("Error: " + error.message);
+		      });
+ 
+		      Twilio.Device.connect(function (conn) {
+		        $("#log").text("Successfully established call");
+		      });
+ 
+		      Twilio.Device.disconnect(function (conn) {
+		        $("#log").text("Call ended");
+		      });
+			
+			function toggleCallStatus(){
+				$('#call').toggle();
+				$('#hangup').toggle();
+			}
+			
+		</script>
+		<!-- @end snippet -->
+
+	</head>
+	<body>
+		<div align="center">
+		<!-- @start snippet -->
+			<h3>Create a Recording</h3>
+			<input type="button" id="call" value="Begin Recording"/>
+			<input type="button" id="hangup" value="Stop Recording" style="display:none;"/>
+			<div id="status">
+				Offline
+			</div>
+		<!-- @end snippet -->
+		</div>
+
+	</body>
+</html>
