@@ -1,7 +1,13 @@
 Jupiter::Application.routes.draw do
 
-  resources :recordings
-
+  resources :recordings do
+    collection do 
+      get 'handle' => 'recordings#handle'
+    end
+    collection do 
+      get 'complete' => 'recordings#complete'
+    end
+  end
 
   resources :sms_archives
 
