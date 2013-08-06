@@ -15,16 +15,17 @@ class RecordingsController < ApplicationController
   end
  
  
-  def handle_r
+  def handle
     Twilio::TwiML::Response.new do |r|
       r.Say 'Listen to your monkey howl.'
-      r.Record :maxLength => '30', :action => '/recordings/record_complete', :method => 'get'
+      r.Record :maxLength => '30', :action => '/recordings/complete', :method => 'get'
       r.Say 'Goodbye.'
     end.text
   end
   
-  def record_complete 
+  def complete 
     puts "ENDED"
+    puts "params"
   end
   
   
