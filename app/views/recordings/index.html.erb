@@ -1,21 +1,34 @@
-<h1>Listing recordings</h1>
+<%- model_class = Recording -%>
+<h1>All recordings</h1>
 
-<table>
-  <tr>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<%= grid(@links_grid, :show_filters => :always)  do |g|
 
-<% @recordings.each do |recording| %>
-  <tr>
-    <td><%= link_to 'Show', recording %></td>
-    <td><%= link_to 'Edit', edit_recording_path(recording) %></td>
-    <td><%= link_to 'Destroy', recording, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+	g.column :name => 'Id', :attribute => 'id' do |recording|
+  		recording.id
+	end
 
-<br />
+	g.column :name => 'Tag', :attribute => 'tag' do |recording|
+		recording.tag
+	end
+  
+	g.column :name => 'Recording', :attribute => 'url'  do |recording|
+		link_to('Listen to Recording', recording.url)
+	end
+
+	g.column :name => 'Created by', :attribute => 'user_id' do |recording|
+		recording.user_id
+	end
+			  
+	g.column :name => 'Created', :attribute => 'created_at', filter: false do |recording|
+		recording.formatted_created_at
+	end
+			  
+	g.column :name => 'Updated', :attribute => 'updated_at', filter: false do |recording|
+		recording.formatted_updated_at
+	end
+			  
+
+end -%>
+
 
 <%= link_to 'New Recording', new_recording_path %>
