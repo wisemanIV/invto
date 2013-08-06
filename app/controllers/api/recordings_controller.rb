@@ -9,7 +9,7 @@ module Api
       def handle
         @response = Twilio::TwiML::Response.new do |r|
           r.Say 'Please record your message after the tone. Go Stella Dot!'
-          r.Record :maxLength => '30', :action => '/recordings/complete', :method => 'get'
+          r.Record :maxLength => '30', :action => '/api/recordings/complete', :method => 'get'
           r.Say 'Goodbye.'
         end
 

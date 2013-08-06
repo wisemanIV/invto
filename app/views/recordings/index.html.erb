@@ -1,6 +1,8 @@
 <%- model_class = Recording -%>
 <h1>All recordings</h1>
 
+<%= link_to 'New Recording', new_recording_path %>
+
 <%= grid(@links_grid, :show_filters => :always)  do |g|
 
 	g.column :name => 'Id', :attribute => 'id' do |recording|
@@ -29,6 +31,3 @@
 			  
 
 end -%>
-
-
-<%= link_to 'New Recording', new_recording_path %>
