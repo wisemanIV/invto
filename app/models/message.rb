@@ -66,7 +66,7 @@ class Message < ActiveRecord::Base
               :campaign_id => ENV["MOGREET_MMS_CAMPAIGN_ID"], 
               :to          => self.to, 
               :message     => self.body, 
-              :content_url => self.attachment_url
+              :content_url => self.attachment_url,
               :callback    => "http://inv.to/api/sms/callback"
             )
             self.SmsId = res.message_id
