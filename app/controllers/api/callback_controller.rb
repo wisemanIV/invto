@@ -6,5 +6,6 @@ module Api
     def create
       puts "CALLBACK INITIATED"
       puts "#{params}"
+    end
   end
 end
