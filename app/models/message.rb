@@ -67,6 +67,7 @@ class Message < ActiveRecord::Base
               :to          => self.to, 
               :message     => self.body, 
               :content_url => self.attachment_url
+              :callback    => "http://inv.to/api/sms/callback"
             )
             self.SmsId = res.message_id
             self.status = 'processing'
