@@ -1,4 +1,4 @@
-<%= form_for @message, :html => { :class => 'form-horizontal', 'data-type' => 'json'} do |f| %>
+<%= form_for @message, :html => { :class => 'form-horizontal', 'data-type' => 'json', :multipart => true } do |f| %>
 <div class="control-group">
   <%= f.label "Campaign (Optional)", :class => 'control-label' %>
   <div class="controls">
@@ -6,18 +6,29 @@
   </div>
 </div>
 <div class="control-group">
-  <%= f.label "Version (Optional)", :class => 'control-label' %>
-  <div class="controls">
-    <%= f.text_field :version %>
-  </div>
+	<%= f.label "Version (Optional)", :class => 'control-label' %>
+	<div class="controls">
+    	<%= f.text_field :version %>
+  	</div>
 </div>
-  <div class="control-group">
+<div class="control-group">
+	<%= f.label "Attachment", :class => 'control-label'%>
+	<div class="controls">
+		<%= image_tag(@message.attachment.thumb.url) if @message.attachment? %>
+		<%= f.file_field :attachment, :style => "font-size: 14px" %>
+		<p>
+		    <%= f.label :remote_attachment_url, "or image URL" %>
+		    <%= f.text_field :remote_attachment_url %>
+		  </p>
+ 	</div>
+</div>
+<div class="control-group">
     <%= f.label :to, :class => 'control-label' %>
-    <div class="controls">
-      <%= f.text_area :to, :cols => 15, :rows => 7, :style => "font-size: 12px" %>
+	<div class="controls">
+    	<%= f.text_area :to, :cols => 15, :rows => 7, :style => "font-size: 12px" %>
     </div>
-  </div>
-  <div class="control-group">
+</div>
+<div class="control-group">
     <%= f.label :body, :class => 'control-label' %>
     <div class="controls">
       <%= f.text_area :body, :cols => 15, :rows => 7, :maxlength=>"160", :style => "font-size: 12px" %>

@@ -51,7 +51,7 @@ class MessagesController < ApplicationController
 
   # POST /messages
   # POST /messages.json
-  def create
+  def create 
     
     client = Client.find(current_user.client_id)
 
@@ -64,7 +64,7 @@ class MessagesController < ApplicationController
     message = Message.new(params[:message])
 
     # send an sms
-    saved = true
+    saved = true  
     
     if message[:body].blank? and !message[:template].blank? then
       body = EmailTemplate.where("name = :template", { :template => message[:template]}).first.body
@@ -85,13 +85,14 @@ class MessagesController < ApplicationController
         status = "invalid phone"
       end
       
-      @message = Message.new(:campaign => message[:campaign], :version => message[:version], :to => value, :body => body, :status => status, :user_id => current_user.id, :client_id => client.id )
+      @message = Message.new(:attachment => params[:message][:attachment], :campaign => message[:campaign], :version => message[:version], :to => value, :body => body, :status => status, :user_id => current_user.id, :client_id => client.id )
       
       if !@message.save
         saved = false
         break ;
       else
         @message.delay.send_sms!
+        
       end
     end
 

@@ -23,6 +23,10 @@
 	g.column :name => 'Body', :attribute => 'body' do |message|
 		message.body
 	end
+	
+	g.column :name => 'Attachment', :attribute => 'attachment' do |message|
+		link_to(image_tag(message.attachment.thumb.url), message.attachment_url) if message.attachment?
+	end
 			  
 	g.column :name => 'Status', :attribute => 'status', :custom_filter => :auto, auto_reload: true do |message|
 		message.status
