@@ -5,7 +5,7 @@ Jupiter::Application.routes.draw do
   resources :recordings 
   
   namespace :api, defaults: {format: 'json'} do
-    get '/sms/callback', to: 'callback#create'
+    post '/sms/callback', to: 'callback#create'
     resources :recordings do
       collection do 
         get 'handle' => 'recordings#handle'
