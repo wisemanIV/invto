@@ -50,7 +50,6 @@ group :test do
   gem 'launchy' 
   gem 'factory_girl_rails', "~> 4.2.0"
   gem "database_cleaner", "~> 1.0.1"
-  gem "rest-client"
 end 
 
 gem 'jquery-rails'
@@ -62,4 +61,14 @@ gem 'bcrypt-ruby', '~> 3.0.1'
 
 gem 'devise'
 
+gem 'mogreet'
+
 gem 'cancan'
+
+gem 'carrierwave'
+
+gem "mini_magick"
+
+gem "fog"
+
+gem "rest-client", "~> 1.6.7"

@@ -2,9 +2,10 @@ require 'twilio-ruby'
 
 class Message < ActiveRecord::Base
   include FormatterModule
-  attr_accessible :body, :from, :to, :status, :campaign, :version, :user_id, :SmsId, :TwilioResponse, :client_id
+  attr_accessible :body, :remote_attachment_url, :from, :to, :status, :attachment, :campaign, :version, :user_id, :SmsId, :TwilioResponse, :client_id
   validates_presence_of :body, :to, :user_id, :client_id
   belongs_to :client, :dependent => :destroy
+  mount_uploader :attachment, AttachmentUploader
   
   def self.is_valid_phone(phone)
     
@@ -56,32 +57,52 @@ class Message < ActiveRecord::Base
           self.status = 'opted out'
           self.save!
         else
-          account_sid = ENV["TWILIO_SID"]
-          auth_token = ENV["TWILIO_TOKEN"]
-
-          begin
-            @client = Twilio::REST::Client.new account_sid, auth_token
-            from = ClientNumber.get_number(self.client_id)
-
-            res = @client.account.sms.messages.create(
-            :from => from,
-            :to => self.to,
-            :body => self.body,
-            :status_callback => ENV["CALLBACK_URL"]
-            )
-          rescue Twilio::REST::RequestError
-            puts "TWILIO CLIENT ERROR"
-            self.status = 'twilio api error'
-            self.save!
-          end
+          
+          if self.attachment? 
+            
+            client = Mogreet::Client.new(ENV["MOGREET_CLIENT_ID"], ENV["MOGREET_SECRET_TOKEN"])
   
-          puts "GOT A SID #{res.sid}"
+            res = client.transaction.send(
+              :campaign_id => ENV["MOGREET_MMS_CAMPAIGN_ID"], 
+              :to          => self.to, 
+              :message     => self.body, 
+              :content_url => self.attachment_url
+            )
+            self.SmsId = res.message_id
+            self.status = 'processing'
 
-          self.SmsId = res.sid
-          self.status = 'processing'
-          self.from = from 
+            self.save!
+            
+          else
+            
+            account_sid = ENV["TWILIO_SID"]
+            auth_token = ENV["TWILIO_TOKEN"]
 
-          self.save!
+            begin
+              @client = Twilio::REST::Client.new account_sid, auth_token
+              from = ClientNumber.get_number(self.client_id)
+
+              res = @client.account.sms.messages.create(
+              :from => from,
+              :to => self.to,
+              :body => self.body,
+              :status_callback => ENV["CALLBACK_URL"]
+              )
+            rescue Twilio::REST::RequestError
+              puts "TWILIO CLIENT ERROR"
+              self.status = 'twilio api error'
+              self.save!
+            end
+  
+            puts "GOT A SID #{res.sid}"
+
+            self.SmsId = res.sid
+            self.status = 'processing'
+            self.from = from 
+
+            self.save!
+            
+          end
         end
       rescue Exception => e
         puts "ERROR PROCESSING MESSAGE #{self.to}" 
