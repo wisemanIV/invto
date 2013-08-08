@@ -43,6 +43,17 @@ class Message < ActiveRecord::Base
     @message.save
   end
   
+  def self.archive
+    @messages = Message.where("status = 'sent'")
+  
+    @messages.each do |message|
+      @archive = SmsArchive.new(:campaign => message.campaign, :version => message.version, :from => message.from, :to => message.to, :body => message.body, :status => message.status, :user_id => message.user_id, :sms_id => message.SmsId, :client_id => message.client_id, :processed_date => message.updated_at, :entered_date => message.created_at)
+      if @archive.save then
+        message.delete
+      end
+    end
+  end
+  
   def send_sms!
    
     if self.status == 'submitted'
@@ -50,9 +61,8 @@ class Message < ActiveRecord::Base
       self.save!
 
       begin 
-        @opt_out = Recipient.where(:OptOut => true, :Phone => self.to).first
-
-        if !@opt_out.nil?
+       
+        if !@Recipient.opted_out?(self.to)
           puts "CANNOT SEND - PHONE IS OPTED OUT #{self.to}"
           self.status = 'opted out'
           self.save!
@@ -67,7 +77,7 @@ class Message < ActiveRecord::Base
               :to          => self.to, 
               :message     => self.body, 
               :content_url => self.attachment_url,
-              :callback    => "http://inv.to/api/sms/callback"
+              :callback    => ENV["MOGREET_CALLBACK_URL"]
             )
             self.SmsId = res.message_id
             self.status = 'processing'

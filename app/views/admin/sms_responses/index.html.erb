@@ -9,6 +9,14 @@
   	  sms_response.id
 	end
 
+	g.column :name => 'SMS Id', :attribute => 'SMSId' do |sms_response|
+		sms_response.SMSId
+	end
+  
+	g.column :name => 'Account Sid', :attribute => 'AccountSid'  do |sms_response|
+		sms_response.AccountSid
+	end
+
 	g.column :name => 'To', :attribute => 'To' do |sms_response|
 		sms_response.To
 	end

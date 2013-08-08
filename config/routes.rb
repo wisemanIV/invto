@@ -1,10 +1,13 @@
 require 'api_constraints'
 
-Jupiter::Application.routes.draw do
-
-  resources :recordings 
+Jupiter::Application.routes.draw do 
   
   namespace :api, defaults: {format: 'json'} do
+    scope module: :v1, constraints: ApiConstraints.new(version: 1) do
+        resources :shareables, path: '/shareable', only: [:create] 
+        devise_for :users, path_names: {sign_in: "login", sign_out: "logout"}
+    end
+    
     post '/sms/callback', to: 'callback#create'
     resources :recordings do
       collection do 
@@ -14,58 +17,64 @@ Jupiter::Application.routes.draw do
         get 'complete' => 'recordings#complete'
       end
     end
-    scope module: :v1, constraints: ApiConstraints.new(version: 1) do
-     
-    end
-  end
-
-  resources :sms_archives
-
-
-  resources :client_numbers
-
-
-  resources :users_clients
-
-  resources :recipients
-
-  resources :sms_responses
-
-  post '/sms/callback', to: 'callback#create'
-
-  devise_for :users, path_names: {sign_in: "login", sign_out: "logout"}, :controllers => { :registrations => "registrations" }
-  
-  resources :shareables
-
-  resources :clients
-
-  resources :clicks do
-    collection do 
-      get 'add' => 'clicks#create'
-    end
   end
   
-  match '/clicks/default/:id' => "clicks#default", :via => :post
+  scope '/a' do
+    
+    resources :help_docs
 
-  resources :email_templates
+    resources :emails
+
+    resources :messages
+    
+    resources :recordings
+
+    resources :sms_archives
+
+    resources :client_numbers
+
+    resources :users_clients
+
+    resources :recipients
+
+    resources :sms_responses
+
+    post '/sms/callback', to: 'callback#create'
+
+    devise_for :users, path_names: {sign_in: "login", sign_out: "logout"}
+    
+    resources :shareables
+
+    resources :clients
+
+    resources :clicks do
+      collection do 
+        get '/' => 'clicks#create'
+      end
+    end
   
-  resources :user_profiles
+    match '/clicks/default/:id' => "clicks#default", :via => :post
+
+    resources :email_templates
+  
+    resources :user_profiles
+  end
   
   namespace :admin do |admin|
     resources :user_profiles
     resources :clients
     resources :messages
     resources :users
+    resources :sms_responses
   end
-  
-  resources :help_docs
 
-  resources :emails
+  get '*short' => 'api::clicks#create', short: /\w{6}/
 
-  resources :messages
 
   root :to => "home#index"
-
+  
+  #get '*short', to: 'api::clicks'
+  
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

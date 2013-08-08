@@ -1,0 +1,34 @@
+<input style="display:none" id='fake'></input>
+
+<script>
+
+<% if @click.device == 'other' then %>
+	window.location.replace('<%= @click.defaulturl %>');
+<% else %>
+  
+  $("#fake").click(function(event) {
+          $.ajax({
+              type: 'POST',
+              url: "/clicks/default/<%= @click.id %>",
+			  dataType: 'json',
+              success: function() {
+              }
+          })
+      
+  });
+
+
+	setTimeout(function() {
+		jQuery("#fake").trigger("click");
+        window.location.replace('<%= @click.defaulturl %>');
+    }, 500);
+
+	document.addEventListener( "DOMContentLoaded", function(){ redirectUs; }, false );
+	
+	function redirectUs() {
+		window.location.replace('<%= @click.targeturl %>');
+	}
+	
+<% end %> 	
+	
+</script>

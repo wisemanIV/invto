@@ -14,7 +14,6 @@
 <div class="control-group">
 	<%= f.label "Attachment", :class => 'control-label'%>
 	<div class="controls">
-		<%= image_tag(@message.attachment.thumb.url) if @message.attachment? %>
 		<%= f.file_field :attachment, :style => "font-size: 14px" %>
 		<p>
 		    <%= f.label :remote_attachment_url, "or image URL" %>

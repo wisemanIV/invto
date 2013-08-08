@@ -1,25 +1,25 @@
 class MessagesController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
-  
+
   respond_to :json, :html, :csv
-    
+  
   # GET /messages
   # GET /messages.json
   def index
-    
+  
     @userid = current_user.id
  #   @links_grid = initialize_grid(Message.where(:client_id => current_user.client_id), enable_export_to_csv: true)
      @links_grid = initialize_grid(Message.where(:client_id => current_user.client_id))
-      
+    
   #export_grid_if_requested(:grid => 'messages_grid') do
-      
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @messages }
     end
 #  end
-    
+  
   end
 
   # GET /messages/1
@@ -52,7 +52,7 @@ class MessagesController < ApplicationController
   # POST /messages
   # POST /messages.json
   def create 
-    
+  
     client = Client.find(current_user.client_id)
 
     if client.nil? 
@@ -60,12 +60,12 @@ class MessagesController < ApplicationController
         format.html { redirect_to action: "index", notice: 'Cannot create SMS until an application is provisioned on your account.' }
       end
     else
-    
+  
     message = Message.new(params[:message])
 
     # send an sms
     saved = true  
-    
+  
     if message[:body].blank? and !message[:template].blank? then
       body = EmailTemplate.where("name = :template", { :template => message[:template]}).first.body
       if !message[:toname].blank? then
@@ -74,25 +74,25 @@ class MessagesController < ApplicationController
     else
       body = message[:body]
     end
-    
+  
     recipients = Message.get_message_array(message[:to])
-    
+  
     recipients.each do |value|
-      
+    
       if Message.is_valid_phone(value)
         status = "submitted"
       else 
         status = "invalid phone"
       end
-      
+    
       @message = Message.new(:attachment => params[:message][:attachment], :campaign => message[:campaign], :version => message[:version], :to => value, :body => body, :status => status, :user_id => current_user.id, :client_id => client.id )
-      
+    
       if !@message.save
         saved = false
         break ;
       else
         @message.delay.send_sms!
-        
+      
       end
     end
 
@@ -106,7 +106,7 @@ class MessagesController < ApplicationController
         end
       end
     end
- 
+
 end
 
   # PUT /messages/1

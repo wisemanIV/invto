@@ -22,7 +22,7 @@ class SmsResponsesControllerTest < ActionController::TestCase
     
     @savedUser = User.where(:authentication_token => @user.authentication_token).first
    
-    sign_in User.first
+    sign_in :user, @user
   end
   
 end

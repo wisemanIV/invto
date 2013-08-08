@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130807030337) do
+ActiveRecord::Schema.define(:version => 20130808222118) do
 
   create_table "clicks", :force => true do |t|
     t.string   "targeturl"
@@ -19,10 +19,11 @@ ActiveRecord::Schema.define(:version => 20130807030337) do
     t.string   "device"
     t.string   "browser"
     t.string   "actualurl"
-    t.string   "ref"
-    t.integer  "client_id",  :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "client_id",    :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.integer  "shareable_id"
+    t.text     "user_agent"
   end
 
   create_table "client_numbers", :force => true do |t|
@@ -35,11 +36,14 @@ ActiveRecord::Schema.define(:version => 20130807030337) do
   create_table "clients", :force => true do |t|
     t.string   "title"
     t.string   "contactemail"
-    t.string   "urlscheme"
     t.string   "defaulturl"
     t.string   "domain"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.text     "default_android_url"
+    t.text     "default_ios_url"
+    t.string   "android_scheme"
+    t.string   "ios_scheme"
   end
 
   create_table "delayed_jobs", :force => true do |t|
@@ -116,12 +120,14 @@ ActiveRecord::Schema.define(:version => 20130807030337) do
   end
 
   create_table "shareables", :force => true do |t|
-    t.string   "input"
     t.string   "shareable"
-    t.string   "ref"
-    t.integer  "client_id",  :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "client_id",   :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.string   "campaign"
+    t.string   "version"
+    t.text     "destination"
+    t.string   "short"
   end
 
   create_table "sms_archives", :force => true do |t|

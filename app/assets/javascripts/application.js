@@ -13,6 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= require wice_grid
+//= require wice_grid.js
 //= require jquery.ui.datepicker
 //= require_tree .

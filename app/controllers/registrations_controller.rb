@@ -1,6 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
   skip_authorization_check
-  
+
   def update
     @user = User.find(current_user.id)
 
@@ -32,6 +32,6 @@ class RegistrationsController < Devise::RegistrationsController
     user.email != params[:user][:email] ||
       params[:user][:password].present?
   end
-  
- 
+
+
 end

@@ -10,7 +10,7 @@
 	<% if user_signed_in? %>
 	<li><a href="<%= messages_path %>">SMS</a></li>
 	<li><a href="<%= user_profiles_path %>">Account</a></li>
-	<li><a href="/users/logout" data-method="delete">Logout</a></li>
+	<li><a href="/a/users/logout" data-method="delete">Logout</a></li>
 
 	<% else %>
 	<li><%= link_to "Log In", new_user_session_url(:protocol => "https")  %></li>
