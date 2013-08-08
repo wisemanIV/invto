@@ -5,4 +5,8 @@ class Recipient < ActiveRecord::Base
   validates_presence_of :Phone, :client_id, :OptOut 
   belongs_to :client, :dependent => :destroy
   
+  def self.opted_out?(phone)
+    !Recipient.where(:OptOut => true, :Phone => phone).nil?
+  end
+  
 end

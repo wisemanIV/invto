@@ -2,6 +2,18 @@ require 'test_helper'
 
 class MessageTest < ActiveSupport::TestCase
   
+  setup :initialize_test
+  
+  test "archive test" do
+    @message.status = 'sent'
+    @message.save! 
+    assert Message.count == 1
+    assert SmsArchive.count == 0
+    Message.archive
+    assert Message.count == 0 
+    assert SmsArchive.count == 1
+  end
+  
   test "is valid phone" do 
     assert Message.is_valid_phone('4154200068')
     assert Message.is_valid_phone('14154200068')
@@ -33,5 +45,10 @@ class MessageTest < ActiveSupport::TestCase
     assert_equal Message.less_country_code('+14154200068'), "4154200068"
     assert_equal Message.less_country_code('4154200068'), "4154200068"
     assert_equal Message.less_country_code('+444154200068'), "44154200068"
+  end
+  
+  def initialize_test
+    @client = FactoryGirl.create(:client)
+    @message = FactoryGirl.create(:message, :client_id => @client.id, :user_id => 1)
   end
 end

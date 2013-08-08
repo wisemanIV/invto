@@ -22,15 +22,25 @@ class AttachmentUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
-  version :thumb do
-      process :resize_to_fill => [90,90]
+  version :thumb, :if => :image? do
+    process :resize_to_limit => [80, 80]
   end
+
+  protected
+    def image?(new_file)
+      new_file.content_type.start_with? 'image'
+    end
+    
   # Provide a default URL as a default if there hasn't been a file uploaded:
    def default_url
      # For Rails 3.1+ asset pipeline compatibility:
      # asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
   
      "/images/fallback/" + [version_name, "default.png"].compact.join('_')
+  end
+  
+  def max_file_size
+      25000000
   end
   
   # Process files as they are uploaded:

@@ -1,5 +1,5 @@
 class Client < ActiveRecord::Base
-  attr_accessible :title, :contactemail, :defaulturl, :urlscheme, :domain, :clients_attributes
+  attr_accessible :title, :contactemail, :default_url, :default_android_url, :android_scheme, :default_ios_url, :ios_scheme, :domain, :clients_attributes
   has_many :shareable 
   has_many :message 
   has_many :sms_response

@@ -1,7 +1,7 @@
-class SmsResponsesController < ApplicationController
+class Admin::SmsResponsesController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
-
+ 
   def index
     
     @user = User.find(current_user.id)
@@ -13,16 +13,7 @@ class SmsResponsesController < ApplicationController
       format.json { render json: @sms_responses }
     end
   end
-
-  def show
-    @sms_response = SmsResponse.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @sms_response }
-    end
-  end
-
+  
   def destroy
     @sms_response = SmsResponse.find(params[:id])
     @sms_response.destroy

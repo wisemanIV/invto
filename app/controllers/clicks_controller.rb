@@ -40,42 +40,6 @@ class ClicksController < ApplicationController
     @click = Click.find(params[:id])
   end
 
-  def create
-    
-    if iphone_device? 
-      device = 'iphone'
-    else
-      if ipad_device?
-        device = 'ipad'
-      else
-        device = 'other'
-      end
-    end
-    @client = Client.find(params[:client])
-    @click = Click.new(:actualurl => 'not set', :device => device, :targeturl => @client.urlscheme, :defaulturl => @client.defaulturl, :client_id => @client_id, :ref => params[:ref])
-    
-    respond_to do |format|
-    if @click.save
-      format.html { render 'clicks/response' }
-    end
-  end
-    
-  end
-  
-  def default
-    
-    @click = Click.find(params[:id])
-    
-    @click.actualurl = 'default'
-    
-    respond_to do |format|
-      if @click.save 
-        format.json { head :no_content }
-      else
-        format.json { render json: @click.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # PUT /clicks/1
   # PUT /clicks/1.json
