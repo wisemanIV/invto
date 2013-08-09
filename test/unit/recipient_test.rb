@@ -6,6 +6,7 @@ class RecipientTest < ActiveSupport::TestCase
   
   test "test opted out" do 
     assert Recipient.opted_out?("4154200068")
+    assert !Recipient.opted_out?("4154200568")
   end
   
   def initialize_test

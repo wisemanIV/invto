@@ -6,7 +6,7 @@ class Recipient < ActiveRecord::Base
   belongs_to :client, :dependent => :destroy
   
   def self.opted_out?(phone)
-    !Recipient.where(:OptOut => true, :Phone => phone).nil?
+    !Recipient.where(:OptOut => true, :Phone => phone).first.nil?
   end
   
 end
