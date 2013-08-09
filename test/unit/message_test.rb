@@ -16,14 +16,14 @@ class MessageTest < ActiveSupport::TestCase
   end
   
   test "send twilio" do
-    @message.status = $MESSAGE_STATUS[0]
+    @message.status = $MESSAGE_STATUS[1] #submitted
     @message.save! 
  #   @message.send_twilio
     assert_equal @message.status, $MESSAGE_STATUS[3]
   end
   
   test "twilio error" do
-    @message.status = $MESSAGE_STATUS[0]
+    @message.status = $MESSAGE_STATUS[1] #submitted
     @message.save! 
     @message.to = "123"
     assert_raise Twilio::REST::RequestError  do

@@ -80,7 +80,7 @@ class MessagesController < ApplicationController
     recipients.each do |value|
     
       if Message.is_valid_phone(value)
-        status = $MESSAGE_STATUS[0] #submitted
+        status = $MESSAGE_STATUS[1] #submitted
       else 
         status = $MESSAGE_STATUS[7] #invalid phone
       end
