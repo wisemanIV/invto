@@ -60,7 +60,7 @@ class Message < ActiveRecord::Base
   
   def send_sms!
    
-    if self.status == $MESSAGE_STATUS[1] #sent
+    if self.status == $MESSAGE_STATUS[1] #submitted
       self.status == $MESSAGE_STATUS[2] #processing 
       self.save!
 
