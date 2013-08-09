@@ -1,17 +1,35 @@
 require 'test_helper'
+require 'twilio-ruby'
 
 class MessageTest < ActiveSupport::TestCase
   
   setup :initialize_test
   
   test "archive test" do
-    @message.status = 'sent'
-    @message.save! 
+    @message.status = $MESSAGE_STATUS[4] #sent
+    @message.save!
     assert Message.count == 1
     assert SmsArchive.count == 0
     Message.archive
     assert Message.count == 0 
     assert SmsArchive.count == 1
+  end
+  
+  test "send twilio" do
+    @message.status = $MESSAGE_STATUS[0]
+    @message.save! 
+ #   @message.send_twilio
+    assert_equal @message.status, $MESSAGE_STATUS[3]
+  end
+  
+  test "twilio error" do
+    @message.status = $MESSAGE_STATUS[0]
+    @message.save! 
+    @message.to = "123"
+    assert_raise Twilio::REST::RequestError  do
+      @message.send_twilio
+    end
+    assert_equal @message.status, $MESSAGE_STATUS[8]
   end
   
   test "is valid phone" do 
@@ -49,6 +67,7 @@ class MessageTest < ActiveSupport::TestCase
   
   def initialize_test
     @client = FactoryGirl.create(:client)
+    @client_number = FactoryGirl.create(:client_number, :client_id => @client.id)
     @message = FactoryGirl.create(:message, :client_id => @client.id, :user_id => 1)
   end
 end

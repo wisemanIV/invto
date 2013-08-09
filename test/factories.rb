@@ -12,9 +12,9 @@ FactoryGirl.define do
   factory :sms_response do
     Body "a random message"
     AccountSid "233443434"
-    From '+14154200068'
+    From '+14155039151'
     SMSId "3434343535"
-    To '+14154200068'
+    To '+14155039151'
   end
   factory :recording do
     tag "A new messages for you"
@@ -31,7 +31,7 @@ FactoryGirl.define do
     ios_scheme "//"
   end
   factory :client_number do
-    phone '+14154200068'
+    phone '+14155039151'
   end
   factory :user do
     password "foobar1234"
