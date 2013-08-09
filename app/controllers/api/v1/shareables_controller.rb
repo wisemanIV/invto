@@ -8,10 +8,8 @@ module Api
       respond_to :json
 
       def create 
-    
-        client_id = params[:shareable][:client_id]
         
-        @shareable = Shareable.new(:campaign => params[:shareable][:campaign], :version => params[:shareable][:version], :client_id => client_id)
+        @shareable = Shareable.new(:campaign => params[:shareable][:campaign], :version => params[:shareable][:version], :client_id => current_user.client_id)
         @shareable.save!
         @shareable.shorten!
       
