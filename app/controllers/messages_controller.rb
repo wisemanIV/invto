@@ -80,9 +80,9 @@ class MessagesController < ApplicationController
     recipients.each do |value|
     
       if Message.is_valid_phone(value)
-        status = "submitted"
+        status = @@MESSAGE_STATUS[0] #submitted
       else 
-        status = "invalid phone"
+        status = @@MESSAGE_STATUS[7] #invalid phone
       end
     
       @message = Message.new(:attachment => params[:message][:attachment], :campaign => message[:campaign], :version => message[:version], :to => value, :body => body, :status => status, :user_id => current_user.id, :client_id => client.id )
@@ -99,10 +99,8 @@ class MessagesController < ApplicationController
       respond_to do |format|
         if saved
           format.html { redirect_to action: "index", notice: 'Message was successfully created.' }
-          format.json { render json: @message, status: :created, location: @message }
         else
           format.html { render action: "new" }
-          format.json { render json: @message.errors, status: :unprocessable_entity }
         end
       end
     end

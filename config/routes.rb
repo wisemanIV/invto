@@ -6,6 +6,7 @@ Jupiter::Application.routes.draw do
     scope module: :v1, constraints: ApiConstraints.new(version: 1) do
         resources :shareables, path: '/shareable', only: [:create] 
         devise_for :users, path_names: {sign_in: "login", sign_out: "logout"}
+        resources :messages, only: [:create, :index, :show] 
     end
     
     post '/sms/callback', to: 'callback#create'

@@ -40,7 +40,7 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   end
   
   def max_file_size
-      25000000
+      100000000
   end
   
   # Process files as they are uploaded:
@@ -57,9 +57,9 @@ class AttachmentUploader < CarrierWave::Uploader::Base
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
-  # def extension_white_list
-  #   %w(jpg jpeg gif png)
-  # end
+  def extension_white_list
+     %w(mpeg mpg mov qt mp4 m4v avi wmv 3gp 3gpp 3g2 flv tif jpg jpeg gif png aif aiff au m3u mid mp3 mp4 wav)
+  end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.

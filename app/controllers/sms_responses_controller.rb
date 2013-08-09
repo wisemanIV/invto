@@ -10,7 +10,6 @@ class SmsResponsesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @sms_responses }
     end
   end
 
@@ -19,7 +18,6 @@ class SmsResponsesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @sms_response }
     end
   end
 
@@ -29,7 +27,6 @@ class SmsResponsesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to sms_responses_url }
-      format.json { head :no_content }
     end
   end
 end
