@@ -25,7 +25,7 @@ module Api
       end
       end
       
-      @click = Click.new(:shareable_id => @shareable.id, :actualurl => 'not set', :device => device, :targeturl => "http://www.apple.com", :defaulturl => @client.defaulturl, :user_agent => request.user_agent, :client_id => @client_id)
+      @click = Click.new(:shareable_id => @shareable.id, :actualurl => 'not set', :device => device, :targeturl => targeturl, :defaulturl => defaulturl, :user_agent => request.user_agent, :client_id => @client_id)
       @click.save
       
       respond_to do |format|
