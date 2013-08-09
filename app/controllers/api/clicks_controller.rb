@@ -20,8 +20,8 @@ module Api
         defaulturl = @client.default_android_url
       else  
         device = 'other'
-        targeturl = @client.default_url
-        defaulturl = @client.default_url
+        targeturl = @client.defaulturl
+        defaulturl = @client.defaulturl
       end
       end
       
