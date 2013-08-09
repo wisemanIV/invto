@@ -66,7 +66,7 @@ class Message < ActiveRecord::Base
 
       begin 
        
-        if @Recipient.opted_out?(self.to)
+        if Recipient.opted_out?(self.to)
           puts "CANNOT SEND - PHONE IS OPTED OUT #{self.to}"
           self.status = $MESSAGE_STATUS[6]  # opted out
           self.save!
