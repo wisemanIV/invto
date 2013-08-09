@@ -6,25 +6,25 @@ module Api
 
     def create
       
-      puts "#{request.user_agent}"
-  
-      if iphone_device? 
-        device = 'iphone'
-      else
-        if ipad_device?
-          device = 'ipad'
-        else
-          device = 'other'
-        end
-      end
-      
-      puts "#{device}"
-      
       @shareable = Shareable.where(:short => params[:short]).first
       @client_id = @shareable.client_id
       @client = Client.find(@client_id)
-      puts "#{@shareable.id} #{@client.urlscheme} #{@client.defaulturl}"
-      @click = Click.new(:shareable_id => @shareable.id, :actualurl => 'not set', :device => device, :targeturl => "http://www.apple.com", :defaulturl => @client.defaulturl, :client_id => @client_id)
+  
+      if iphone_device? || ipad_device?
+        device = 'iphone'
+        targeturl = @client.ios_scheme
+        defaulturl = @client.default_ios_url
+      else if android_device?
+        device = 'android'
+        targeturl = @client.android_scheme
+        defaulturl = @client.default_android_url
+      else  
+        device = 'other'
+        targeturl = @client.default_url
+        defaulturl = @client.default_url
+      end
+      
+      @click = Click.new(:shareable_id => @shareable.id, :actualurl => 'not set', :device => device, :targeturl => "http://www.apple.com", :defaulturl => @client.defaulturl, :user_agent => request.user_agent, :client_id => @client_id)
       @click.save
       
       respond_to do |format|

@@ -18,6 +18,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :iphone_device?
   
+  def android_device?
+    request.user_agent =~ /Android/ 
+  end
+  helper_method :android_device?
+  
   def ipad_device?
     request.user_agent =~ /iPad/
   end
