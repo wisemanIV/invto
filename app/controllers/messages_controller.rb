@@ -80,9 +80,9 @@ class MessagesController < ApplicationController
     recipients.each do |value|
     
       if Message.is_valid_phone(value)
-        status = @@MESSAGE_STATUS[0] #submitted
+        status = $MESSAGE_STATUS[0] #submitted
       else 
-        status = @@MESSAGE_STATUS[7] #invalid phone
+        status = $MESSAGE_STATUS[7] #invalid phone
       end
     
       @message = Message.new(:attachment => params[:message][:attachment], :campaign => message[:campaign], :version => message[:version], :to => value, :body => body, :status => status, :user_id => current_user.id, :client_id => client.id )
