@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130808222118) do
+ActiveRecord::Schema.define(:version => 20130810072422) do
 
   create_table "clicks", :force => true do |t|
     t.string   "targeturl"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20130808222118) do
     t.text     "default_ios_url"
     t.string   "android_scheme"
     t.string   "ios_scheme"
+    t.string   "mogreet_campaign_id"
   end
 
   create_table "delayed_jobs", :force => true do |t|
@@ -89,14 +90,15 @@ ActiveRecord::Schema.define(:version => 20130808222118) do
     t.string   "from"
     t.string   "campaign"
     t.string   "version"
-    t.string   "status",         :default => "initial"
-    t.integer  "user_id",                               :null => false
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.string   "status",        :default => "initial"
+    t.integer  "user_id",                              :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.string   "SmsId"
-    t.string   "TwilioResponse"
     t.integer  "client_id"
     t.string   "attachment"
+    t.text     "response"
+    t.string   "response_code"
   end
 
   add_index "messages", ["SmsId"], :name => "index_messages_on_SmsId", :unique => true
@@ -144,6 +146,8 @@ ActiveRecord::Schema.define(:version => 20130808222118) do
     t.datetime "processed_date"
     t.integer  "client_id"
     t.integer  "user_id"
+    t.text     "response"
+    t.string   "response_code"
   end
 
   add_index "sms_archives", ["sms_id"], :name => "index_sms_archives_on_sms_id"
@@ -166,6 +170,7 @@ ActiveRecord::Schema.define(:version => 20130808222118) do
     t.datetime "updated_at",  :null => false
     t.integer  "user_id"
     t.integer  "client_id"
+    t.text     "image_url"
   end
 
   create_table "users", :force => true do |t|

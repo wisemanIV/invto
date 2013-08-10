@@ -1,6 +1,6 @@
 class Message < ActiveRecord::Base
   include FormatterModule, MogreetUtil, TwilioUtil
-  attr_accessible :body, :remote_attachment_url, :from, :to, :status, :attachment, :campaign, :version, :user_id, :SmsId, :TwilioResponse, :client_id
+  attr_accessible :body, :remote_attachment_url, :from, :to, :status, :attachment, :campaign, :version, :user_id, :SmsId, :response, :response_code, :client_id
   validates_presence_of :body, :to, :user_id, :client_id
   belongs_to :client, :dependent => :destroy
   mount_uploader :attachment, AttachmentUploader
@@ -47,11 +47,20 @@ class Message < ActiveRecord::Base
     @message.save
   end
   
+  def self.handle_sms_error(provider, sms_id, code, message)
+    puts "#{provider} REPORTING AN ERROR #{sms_id} , #{code} , #{message}"     
+    @message = Message.where(:SmsId => sms_id).first
+    @message.status = $MESSAGE_STATUS[5] #error
+    @message.response_code = code
+    @message.response = message
+    @message.save
+  end
+  
   def self.archive
     @messages = Message.where(:status => $MESSAGE_STATUS[4]) #sent
   
     @messages.each do |message|
-      @archive = SmsArchive.new(:campaign => message.campaign, :version => message.version, :from => message.from, :to => message.to, :body => message.body, :status => message.status, :user_id => message.user_id, :sms_id => message.SmsId, :client_id => message.client_id, :processed_date => message.updated_at, :entered_date => message.created_at)
+      @archive = SmsArchive.new(:campaign => message.campaign, :version => message.version, :from => message.from, :to => message.to, :body => message.body, :status => message.status, :user_id => message.user_id, :sms_id => message.SmsId, :client_id => message.client_id, :processed_date => message.updated_at, :entered_date => message.created_at, :response => message.response, :response_code => message.response_code)
       if @archive.save then
         message.delete
       end

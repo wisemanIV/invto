@@ -19,7 +19,7 @@ class MessageTest < ActiveSupport::TestCase
     @message.status = $MESSAGE_STATUS[1] #submitted
     @message.save! 
  #   @message.send_twilio
-    assert_equal @message.status, $MESSAGE_STATUS[3]
+ #   assert_equal @message.status, $MESSAGE_STATUS[3]
   end
   
   test "twilio error" do
@@ -30,6 +30,22 @@ class MessageTest < ActiveSupport::TestCase
       @message.send_twilio
     end
     assert_equal @message.status, $MESSAGE_STATUS[8]
+  end
+  
+  test "handle sms sent" do
+    @message.status = $MESSAGE_STATUS[3] #awaiting response
+    Message.handle_sms_sent(@message.SmsId)
+    @message = Message.find(@message.id)
+    assert_equal @message.status, $MESSAGE_STATUS[4] #sent
+  end
+  
+  test "handle sms error" do
+    @message.status = $MESSAGE_STATUS[3] #awaiting response
+    Message.handle_sms_error("MOGREET", @message.SmsId, "603", "an error")
+    @message = Message.find(@message.id)
+    assert_equal @message.status, $MESSAGE_STATUS[5] #error
+    assert_equal @message.response_code, "603"
+    assert_equal @message.response, "an error"
   end
   
   test "is valid phone" do 

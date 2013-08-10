@@ -16,7 +16,7 @@ module TwilioUtil
       :from => from,
       :to => self.to,
       :body => self.body,
-      :status_callback => ENV["CALLBACK_URL"]
+      :status_callback => ENV["TWILIO_CALLBACK_URL"]
       )
     rescue Twilio::REST::RequestError
       puts "TWILIO CLIENT ERROR"

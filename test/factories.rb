@@ -7,7 +7,6 @@ FactoryGirl.define do
     campaign "test"
     version "1.2"
     SmsId "34354545454"
-    TwilioResponse "working"
   end
   factory :sms_response do
     Body "a random message"
@@ -29,6 +28,7 @@ FactoryGirl.define do
     android_scheme "//"
     default_ios_url "http://www.apple.com"
     ios_scheme "//"
+    mogreet_campaign_id "55555"
   end
   factory :client_number do
     phone '+14155039151'

@@ -23,12 +23,27 @@ class SmsResponseTest < ActiveSupport::TestCase
     assert SmsResponse.opt_out_request("can you unsubscribe me?!")
   end
   
+  test "handle sms response twilio" do
+     assert_difference ->{ SmsResponse.count }, 1 do
+       SmsResponse.handle_twilio_response("TWILIO", @message.SmsId, "345", @client_number.phone, @message.from, @message.body, "SAN FRANCISCO", "CA", "94010", "US")
+     end
+  end
+  
+  test "handle sms response mogreet" do
+    
+    assert_difference ->{ SmsResponse.count }, 1 do
+      SmsResponse.handle_mogreet_response("MOGREET", @client.mogreet_campaign_id, @message.SmsId, @message.from, @message.to, @message.body, "http://www.bbc.co.uk")
+    end
+  
+    
+  end
+  
   def initialize_test
     @client = FactoryGirl.create(:client)
     @client_number = FactoryGirl.create(:client_number, :client_id => @client.id)
-    
+  
+    @message = FactoryGirl.create(:message, :client_id => @client.id, :user_id => 1, :SmsId => 23)  
     @sms_response = FactoryGirl.create(:sms_response, :client_id => @client.id)
-    
     @sms_response_opt_out = FactoryGirl.create(:sms_response, :client_id => @client.id, :Body => "Stop")
   end
 end
