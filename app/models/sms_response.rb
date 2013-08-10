@@ -2,7 +2,7 @@ class SmsResponse < ActiveRecord::Base
   include FormatterModule
   attr_accessible :AccountSid, :Body, :From, :FromCity, :FromCountry, :FromState, :FromZIP, :SMSId, :To, :ToCity, :ToCountry, :ToState, :ToZIP, :client_id, :image_url
   belongs_to :client, :dependent => :destroy
-  validates_presence_of :SMSId, :client_id
+  validates_presence_of :client_id
   before_save :check_opt_out
   before_save :check_help
 
