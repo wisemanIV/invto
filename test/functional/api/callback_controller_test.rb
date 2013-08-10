@@ -6,7 +6,7 @@ class Api::CallbackControllerTest < ActionController::TestCase
   setup :initialize_test
 
   test "test mogreet response" do
-      post :handle_mogreet_response, {"mogreet"=>{"event"=>"message-in", "campaign_id"=>"45817", "msisdn"=>"14154200068", "carrier"=>"Sprint", "message"=>"STELLADOT hello", "callback"=>{"event"=>"message-in", "campaign_id"=>"45817", "msisdn"=>"14154200068", "carrier"=>"Sprint", "message"=>"STELLADOT hello"}}}
+      post :handle_mogreet_response, {"event"=>"message-in", "campaign_id"=>"45817", "msisdn"=>"14154200068", "carrier"=>"Sprint", "message"=>"STELLADOT hello"}
       assert_response :success
   end
   
