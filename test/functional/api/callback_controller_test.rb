@@ -6,7 +6,7 @@ class Api::CallbackControllerTest < ActionController::TestCase
   setup :initialize_test
 
   test "test mogreet response" do
-      post :handle_mogreet_response, {"event"=>"message-in", "campaign_id"=>"45817", "msisdn"=>"14154200068", "carrier"=>"Sprint", "message"=>"STELLADOT hello"}
+      post :handle_mogreet_response, {"event"=>"message-in", "campaign_id"=>"45817", "msisdn"=>"14154200068", "carrier"=>"Sprint", "message"=>"STELLADOT hello",  "images"=>{"image"=>"http://d2c.bandcon.mogreet.com/mo-mms/images/623452_4302951.jpeg"}}
       assert_response :success
   end
   

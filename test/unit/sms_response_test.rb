@@ -32,9 +32,10 @@ class SmsResponseTest < ActiveSupport::TestCase
   test "handle sms response mogreet" do
     
     assert_difference ->{ SmsResponse.count }, 1 do
-      SmsResponse.handle_mogreet_response("MOGREET", @client.mogreet_campaign_id, @message.SmsId, @message.from, @message.to, @message.body, "http://www.bbc.co.uk")
+      SmsResponse.handle_mogreet_response("MOGREET", @client.mogreet_campaign_id, @message.SmsId, @message.from, @message.to, @message.body, "https://www.google.com/images/srpr/logo4w.png")
     end
-  
+    @sms_response = SmsResponse.order('created_at desc').first
+    assert_equal @sms_response.attachment_url, "https://www.google.com/images/srpr/logo4w.png"
     
   end
   
