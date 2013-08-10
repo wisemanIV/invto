@@ -19,6 +19,7 @@ class Api::V1::MessagesControllerTest < ActionController::TestCase
     set_request_headers
     get :index
     assert_response :success
+    assert_not_nil assigns(:messages)
   end
   
   def set_request_headers
