@@ -9,7 +9,10 @@ Jupiter::Application.routes.draw do
         resources :messages, only: [:create, :index, :show] 
     end
     
-    post '/sms/callback', to: 'callback#create'
+    post '/mogreet/callback', to: 'callback#mogreet_callback'
+    post '/mogreet/response', to: 'callback#handle_mogreet_response'
+    post '/twilio/callback', to: 'callback#twilio_callback'
+    
     resources :recordings do
       collection do 
         get 'handle' => 'recordings#handle'
@@ -39,8 +42,6 @@ Jupiter::Application.routes.draw do
     resources :recipients
 
     resources :sms_responses
-
-    post '/sms/callback', to: 'callback#create'
 
     devise_for :users, path_names: {sign_in: "login", sign_out: "logout"}
     

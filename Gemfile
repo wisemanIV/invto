@@ -25,8 +25,6 @@ gem 'google-analytics-rails'
 
 gem "wice_grid"
 
-gem "sinatra"
-
 gem 'pg'
 
 gem "therubyracer"
