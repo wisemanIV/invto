@@ -37,7 +37,7 @@ class SmsResponse < ActiveRecord::Base
       puts "ERROR: MOGREET CLIENT NOT RECOGNIZED #{campaign_id}"
     else
     
-      @sms = SmsResponse.new(:SMSId => sms_id, :To => to, :From => from, :Body => body, :client_id => client.id, :image_url => image)
+      @sms = SmsResponse.new(:SMSId => sms_id, :To => to, :From => from, :Body => body, :client_id => client.id, :attachment => image)
     
       if @sms.nil? || !@sms.save then
         puts "HANDLE RESPONSE ERROR! #{provider} , #{sms_id} "
