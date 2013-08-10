@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130810072422) do
+ActiveRecord::Schema.define(:version => 20130810230829) do
 
   create_table "clicks", :force => true do |t|
     t.string   "targeturl"
@@ -170,7 +170,7 @@ ActiveRecord::Schema.define(:version => 20130810072422) do
     t.datetime "updated_at",  :null => false
     t.integer  "user_id"
     t.integer  "client_id"
-    t.text     "image_url"
+    t.string   "attachment"
   end
 
   create_table "users", :force => true do |t|

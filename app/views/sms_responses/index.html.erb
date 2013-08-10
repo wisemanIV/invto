@@ -20,6 +20,10 @@
 	g.column :name => 'Body', :attribute => 'Body' do |sms_response|
 		sms_response.Body
 	end
+	
+	g.column :name => 'Attachment', :attribute => 'attachment' do |sms_response|
+		link_to(image_tag(sms_response.attachment.thumb.url), sms_response.attachment_url) if sms_response.attachment?
+	end
 			  
 	g.column :name => 'From City', :attribute => 'FromCity' do |sms_response|
 		sms_response.FromCity

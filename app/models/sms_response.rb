@@ -1,10 +1,11 @@
 class SmsResponse < ActiveRecord::Base
   include FormatterModule
-  attr_accessible :AccountSid, :Body, :From, :FromCity, :FromCountry, :FromState, :FromZIP, :SMSId, :To, :ToCity, :ToCountry, :ToState, :ToZIP, :client_id, :image_url
+  attr_accessible :AccountSid, :Body, :From, :FromCity, :FromCountry, :FromState, :FromZIP, :SMSId, :To, :ToCity, :ToCountry, :ToState, :ToZIP, :client_id, :attachment
   belongs_to :client, :dependent => :destroy
   validates_presence_of :client_id
   before_save :check_opt_out
   before_save :check_help
+  mount_uploader :attachment, AttachmentUploader
 
   def self.handle_twilio_response(provider, sms_id, account_sid, into, infrom, body, city, state, zip, country)
     

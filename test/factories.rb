@@ -14,6 +14,7 @@ FactoryGirl.define do
     From '+14155039151'
     SMSId "3434343535"
     To '+14155039151'
+    attachment 'https://www.google.com/images/srpr/logo4w.png'
   end
   factory :recording do
     tag "A new messages for you"
