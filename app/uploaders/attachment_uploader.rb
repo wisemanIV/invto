@@ -25,6 +25,10 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   version :thumb, :if => :image? do
     process :resize_to_limit => [80, 80]
   end
+  
+  version :mid_sized, :if => :image? do
+    process :resize_to_limit => [180, 180]
+  end
 
   protected
     def image?(new_file)
