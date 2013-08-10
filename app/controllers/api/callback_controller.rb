@@ -18,15 +18,17 @@ module Api
     def handle_mogreet_response
       puts "MOGREET RESPONSE INITIATED"
     
-      if !params[:mogreet][:event].blank?
+      if !params[:mogreet].blank? && !params[:mogreet][:event].blank?
           @res = params[:mogreet]
           images = @res[:images]
-          if !images.nil?
+          if !images.blank?
             image = images[:image] 
           else
             image = ""
           end
-          Message.delay.handle_mogreet_response("MOGREET", @res[:campaign_id], @res[:message_id], @res[:campaign_id], @res[:msisdn], @res[:message], image)
+          
+          SmsResponse.delay.handle_mogreet_response("MOGREET", @res[:campaign_id], @res[:message_id], @res[:campaign_id], @res[:msisdn], @res[:message], image)
+          
       else
           puts "MOGREET RESPONSE MALFORMED"     
       end
