@@ -1,6 +1,6 @@
 class SmsResponse < ActiveRecord::Base
   include FormatterModule
-  attr_accessible :AccountSid, :Body, :From, :FromCity, :FromCountry, :FromState, :FromZIP, :SMSId, :To, :ToCity, :ToCountry, :ToState, :ToZIP, :client_id, :attachment
+  attr_accessible :AccountSid, :Body, :From, :FromCity, :FromCountry, :FromState, :FromZIP, :SMSId, :To, :ToCity, :ToCountry, :ToState, :ToZIP, :client_id, :attachment, :remote_attachment_url
   belongs_to :client, :dependent => :destroy
   validates_presence_of :client_id
   before_save :check_opt_out
@@ -37,7 +37,7 @@ class SmsResponse < ActiveRecord::Base
       puts "ERROR: MOGREET CLIENT NOT RECOGNIZED #{campaign_id}"
     else
     
-      @sms = SmsResponse.new(:SMSId => sms_id, :To => to, :From => from, :Body => body, :client_id => client.id, :attachment => image)
+      @sms = SmsResponse.new(:SMSId => sms_id, :To => to, :From => from, :Body => body, :client_id => client.id, :remote_attachment_url => image)
     
       if @sms.nil? || !@sms.save then
         puts "HANDLE RESPONSE ERROR! #{provider} , #{sms_id} "
