@@ -27,6 +27,8 @@ gem "wice_grid"
 
 gem 'pg'
 
+gem 'rails_12factor'
+
 #gem 'sprockets-rails'
 
 gem 'turbolinks'
