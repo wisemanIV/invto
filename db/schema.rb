@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130810230829) do
+ActiveRecord::Schema.define(:version => 20130811232955) do
 
   create_table "clicks", :force => true do |t|
     t.string   "targeturl"
@@ -45,6 +45,11 @@ ActiveRecord::Schema.define(:version => 20130810230829) do
     t.string   "android_scheme"
     t.string   "ios_scheme"
     t.string   "mogreet_campaign_id"
+  end
+
+  create_table "community_feeds", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "delayed_jobs", :force => true do |t|

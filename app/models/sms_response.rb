@@ -5,6 +5,7 @@ class SmsResponse < ActiveRecord::Base
   validates_presence_of :client_id
   before_save :check_opt_out
   before_save :check_help
+  after_save :synch_firebase
   mount_uploader :attachment, AttachmentUploader
 
   def self.handle_twilio_response(provider, sms_id, account_sid, into, infrom, body, city, state, zip, country)
@@ -80,6 +81,27 @@ class SmsResponse < ActiveRecord::Base
   
   def check_help
     puts "CHECKING FOR HELP REQUESTED - #{:Body}"
+  end
+  
+  def synch_firebase 
+    
+    @res = SmsResponse.find(self.id)
+    
+    if !@res.attachment_url.include? "default.png" then
+      attachment =  @res.attachment_url
+    else
+      attachment = ""
+    end
+      
+      Firebase.base_uri = ENV["FIREBASE_URI"]
+      #Firebase.base_uri = 'https://inviter-dev.firebaseio.com/'
+
+      response = Firebase.push("article", { :submitter => self.From, :attachment => attachment, :city => self.FromCity, :state => self.FromState, :message => self.Body, :created_at => self.formatted_created_at })
+      response.success? # => true
+      response.code # => 200
+      response.body # => { 'name' => "-INOQPH-aV_psbk3ZXEX" }
+      response.raw_body # => '{"name":"-INOQPH-aV_psbk3ZXEX"}'
+
   end
 
 end

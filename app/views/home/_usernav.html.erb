@@ -9,6 +9,7 @@
 	
 	<% if user_signed_in? %>
 	<li><a href="<%= messages_path %>">SMS</a></li>
+	<li><a href="<%= community_feeds_path %>">Community</a></li>
 	<li><a href="<%= user_profiles_path %>">Account</a></li>
 	<li><a href="/a/users/logout" data-method="delete">Logout</a></li>
 

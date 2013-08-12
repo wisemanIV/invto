@@ -1,0 +1,101 @@
+<div id='frameLeft'></div>
+<div id='messagesDiv'></div>
+<div id='frameRight'></div>
+	
+<script>
+    var myDataRef = new Firebase('https://inviter.firebaseio.com/article');
+         myDataRef.on("child_added", function(snapshot) {
+           var message = snapshot.val();
+           displayChatMessage(message.message, message.attachment, message.created_at, message.submitter, message.city, message.state);
+         });
+         function displayChatMessage(message, attachment, created_at, submitter, city, state) {
+		   $('#messagesDiv').prepend('<div id="articleDiv" />')
+		   $('#articleDiv').append('<div id="imgDiv" />')
+		   $('#imgDiv').append('<img id="theImg" src="'+attachment+'" height=200px width=180px />')
+		   $('#articleDiv').append('<div id="articleRight" />')
+		   $('#articleRight').append($('<p>'+ message + '</p>'))
+ 		   $('#articleRight').append($('<p>'+ created_at + '</p>'))
+		   $('#articleRight').append($('<p>'+ submitter + '</p>'))
+		   if (city !== undefined )
+		   {
+		   	$('#articleRight').append($('<p>'+ city + ','+ state + '</p>'))
+		   }
+         };
+    </script>
+
+
+	<style>
+	
+	body{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	overflow: hidden;
+	height: 100%; 
+	max-height: 100%; 
+	}
+	
+	#articleDiv {
+		float: left;
+		width: 535px;
+		height: 100px;
+		
+	}
+	
+	#imgDiv {
+		height: 100px;
+		width: 300px;
+	}
+	
+	#articleRight {
+		font: 21px Helvetica, Arial, sans-serif;
+		float: right;
+		width: 350px;
+	}
+
+	#frameLeft, #frameRight{
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+	width: 350px; /*Width of left frame div*/
+	height: 100%;
+	overflow: hidden; /*Disable scrollbars. Set to "scroll" to enable*/
+	background-color: white;
+	color: white;
+	}
+
+	#frameRight{
+	left: auto;
+	right: 0; 
+	width: 250px; /*Width of right frame div*/
+	overflow: hidden; /*Disable scrollbars. Set to "scroll" to enable*/
+	background-color: white;
+	color: white;
+	}
+
+
+	#messagesDiv{
+	position: fixed; 
+	top: 0px; /*Set top value to HeightOfTopFrameDiv*/
+	bottom: 20px; /*Set bottom value to HeightOfBottomFrameDiv*/
+	left: 350px; /*Set left value to WidthOfLeftFrameDiv*/
+	right: 850px; /*Set right value to WidthOfRightFrameDiv*/
+	overflow: auto; 
+	background: #fff;
+	width: 850px;
+	}
+
+	.innertube{
+	margin: 15px; /*Margins for inner DIV inside each DIV (to provide padding)*/
+	}
+
+	* html body{ /*IE6 hack*/
+	padding: 0px 300px 20px 350px; /*Set value to (HeightOfTopFrameDiv WidthOfRightFrameDiv HeightOfBottomFrameDiv WidthOfLeftFrameDiv)*/
+	}
+
+	* html #messagesDiv{ /*IE6 hack*/
+	height: 100%; 
+	width: 100%; 
+	}
+	
+	</style>
