@@ -18,7 +18,7 @@ class SmsResponse < ActiveRecord::Base
       puts "ERROR: TWILIO CLIENT NOT RECOGNIZED #{into}"
     else
     
-      @sms = SmsResponse.new(:SMSId => sms_id, :AccountSid => account_sid, :To => to, :From => from, :Body => body, :FromCity => city, :FromState => state, :FromZIP => zip, :FromCountry => country, :client_id => client.id)
+      @sms = SmsResponse.new(:SMSId => sms_id, :AccountSid => account_sid, :To => to, :From => from, :Body => body, :FromCity => city, :FromState => state, :FromZIP => zip, :FromCountry => country, :client_id => client.client_id)
     
       if @sms.nil? || !@sms.save then
         puts "HANDLE RESPONSE ERROR! #{provider} , #{sms_id} "
