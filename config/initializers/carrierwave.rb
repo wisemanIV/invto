@@ -10,6 +10,6 @@ CarrierWave.configure do |config|
     :rackspace_region   => :ord                # optional, defaults to :dfw
   }
   config.fog_directory = 'inviter'
-  config.asset_host = 'http://a78a8e25849943c71c13-a57d35364126db633f9d675e21f31d77.r99.cf2.rackcdn.com'
+  config.asset_host = 'https://ed29ad00016495bc5af3-a57d35364126db633f9d675e21f31d77.ssl.cf2.rackcdn.com'
   config.enable_processing = true
 end
