@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource
 
-  respond_to :json, :html, :csv
+  respond_to :html, :csv
   
   # GET /messages
   # GET /messages.json
@@ -10,13 +10,13 @@ class MessagesController < ApplicationController
   
     @userid = current_user.id
  #   @links_grid = initialize_grid(Message.where(:client_id => current_user.client_id), enable_export_to_csv: true)
+ 
      @links_grid = initialize_grid(Message.where(:client_id => current_user.client_id))
     
   #export_grid_if_requested(:grid => 'messages_grid') do
     
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @messages }
     end
 #  end
   
