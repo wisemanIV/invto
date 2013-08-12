@@ -56,7 +56,7 @@ module Jupiter
     
     config.autoload_paths += %W(#{config.root}/lib)
     
-    config.assets.initialize_on_precompile = false
+    #config.assets.initialize_on_precompile = false
     
     config.force_ssl = (ENV["ENABLE_HTTPS"] == "yes")
     config.ssl_options = {:hsts => {:expires => 3600}}
