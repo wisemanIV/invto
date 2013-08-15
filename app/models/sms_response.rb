@@ -34,7 +34,7 @@ class SmsResponse < ActiveRecord::Base
     
     to = Message.clean_phone_number(into)
     from = Message.clean_phone_number(infrom)
-    client = Client.where(:mogreet_campaign_id => campaign_id).first
+    client = Client.where(:mogreet_campaign_id => campaign_id.to_s).first
     
     if client.nil? 
       puts "ERROR: MOGREET CLIENT NOT RECOGNIZED #{campaign_id}"
