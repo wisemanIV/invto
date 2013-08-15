@@ -6,7 +6,7 @@ class SmsResponsesController < ApplicationController
     
     @user = User.find(current_user.id)
     
-    @links_grid = initialize_grid(SmsResponse.where(:client_id => @user.client_id))
+    @links_grid = initialize_grid(SmsResponse.where(:client_id => @user.client_id).order("created_at DESC"))
 
     respond_to do |format|
       format.html # index.html.erb
