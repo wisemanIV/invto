@@ -20,7 +20,7 @@ class Message < ActiveRecord::Base
   end
   
   def self.clean_phone_number(phone)
-    phone.gsub(/\s+|\[|\]|\(|\)|\-|\_|\.|\{|\}|\@|\~|\<|\>|\?|\\|\/|\#|\!|\%|\*|\&/, "") #clean string
+    phone.to_s.gsub(/\s+|\[|\]|\(|\)|\-|\_|\.|\{|\}|\@|\~|\<|\>|\?|\\|\/|\#|\!|\%|\*|\&/, "") #clean string
   end
   
   def self.get_message_array(str)
@@ -44,7 +44,7 @@ class Message < ActiveRecord::Base
   def self.handle_sms_sent(sms_id)
     @message = Message.where(:SmsId => sms_id).first
     @message.status = $MESSAGE_STATUS[4] #sent
-    @message.save
+    @message.save!
   end
   
   def self.handle_sms_error(provider, sms_id, code, message)
@@ -53,7 +53,7 @@ class Message < ActiveRecord::Base
     @message.status = $MESSAGE_STATUS[5] #error
     @message.response_code = code
     @message.response = message
-    @message.save
+    @message.save!
   end
   
   def self.archive

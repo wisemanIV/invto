@@ -6,28 +6,37 @@ class Api::CallbackControllerTest < ActionController::TestCase
   setup :initialize_test
 
   test "test mogreet response" do
-      post :handle_mogreet_response, {"event"=>"message-in", "campaign_id"=>"45817", "msisdn"=>"14154200068", "carrier"=>"Sprint", "message"=>"STELLADOT hello",  "images"=>{"image"=>"http://d2c.bandcon.mogreet.com/mo-mms/images/623452_4302951.jpeg"}}
+    assert_difference ->{ SmsResponse.count }, 1 do
+      post :handle_mogreet_response, {"event"=>"message-in", "campaign_id"=>@client.mogreet_campaign_id, "msisdn"=>"14154200068", "carrier"=>"Sprint", "message"=>"STELLADOT hello",  "images"=>{"image"=>"http://d2c.bandcon.mogreet.com/mo-mms/images/623452_4302951.jpeg"}}
       assert_response :success
+    end
   end
   
   test "test mogreet callback" do
-      post :mogreet_callback, {"response"=>{"status"=>"success", "messages_id"=> @message.SmsId, "campaign_id"=>"45817", "msisdn"=>"14154200068", "message"=>"STELLADOT hello"}}
+      post :mogreet_callback, {"response"=>{"status"=>"success", "message_id"=> @message.SmsId, "campaign_id"=>"45817", "msisdn"=>"14154200068", "message"=>"STELLADOT hello"}}
       assert_response :success
+      @message = Message.find(@message.id)
+      assert_equal $MESSAGE_STATUS[4], @message.status
   end
   
   test "test twilio callback" do
-      post :twilio_callback, {"SmsStatus"=>"sent"}
+      post :twilio_callback, {"SmsStatus"=>"sent", "SmsSid"=>@message.SmsId}
       assert_response :success
+      @message = Message.find(@message.id)
+      assert_equal $MESSAGE_STATUS[4], @message.status
   end
   
   test "test twilio response" do
-      post :twilio_callback, {"SmsStatus"=>"received"}
+     assert_difference ->{ SmsResponse.count }, 1 do
+      post :twilio_callback, {"SmsStatus"=>"received", "To"=>@client_number.phone}
       assert_response :success
+    end
   end
 
   
   def initialize_test
     @client = FactoryGirl.create(:client)
+    @client_number = FactoryGirl.create(:client_number, :client_id => @client.id)
     @shareable = FactoryGirl.build(:shareable, :client_id => 1)
     @shareable.save!
     @shareable.shorten!

@@ -30,6 +30,8 @@ class SmsResponse < ActiveRecord::Base
   
   def self.handle_mogreet_response(provider, campaign_id, sms_id, into, infrom, body, image)
     
+    puts "HANDLE MOGREET RESPONSE"
+    
     to = Message.clean_phone_number(into)
     from = Message.clean_phone_number(infrom)
     client = Client.where(:mogreet_campaign_id => campaign_id).first
