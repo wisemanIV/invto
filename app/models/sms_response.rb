@@ -96,7 +96,7 @@ class SmsResponse < ActiveRecord::Base
       Firebase.base_uri = ENV["FIREBASE_URI"]
       #Firebase.base_uri = 'https://inviter-dev.firebaseio.com/'
 
-      response = Firebase.push("article", { :submitter => self.From, :attachment => attachment, :city => self.FromCity, :state => self.FromState, :message => self.Body, :created_at => self.formatted_created_at })
+      response = Firebase.push("articles", { :submitter => self.From, :attachment => attachment, :city => self.FromCity, :state => self.FromState, :message => self.Body, :created_at => self.formatted_created_at })
       response.success? # => true
       response.code # => 200
       response.body # => { 'name' => "-INOQPH-aV_psbk3ZXEX" }

@@ -11,7 +11,7 @@ class MessagesController < ApplicationController
     @userid = current_user.id
  #   @links_grid = initialize_grid(Message.where(:client_id => current_user.client_id), enable_export_to_csv: true)
  
-     @links_grid = initialize_grid(Message.where(:client_id => current_user.client_id))
+     @links_grid = initialize_grid(Message.where(:client_id => current_user.client_id).order("created_at DESC"))
     
   #export_grid_if_requested(:grid => 'messages_grid') do
     

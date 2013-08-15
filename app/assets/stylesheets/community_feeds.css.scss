@@ -1,3 +1,88 @@
-// Place all the styles related to the community_feeds controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+body {
+height: 100%;
+padding: 0;
+margin: 0;
+border: 0;
+font: 12px/21px Helvetica, Arial, sans-serif;
+color: #374953;
+background: #ecf6f8;
+}
+
+#articleDiv {
+	display: block;
+	position: relative;
+	background: #fff;
+	margin: 0 0 6px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-o-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	border-radius: 5px;
+	padding: 10px;
+	height: auto;
+	border: 1px solid #C3CED5;
+	font-size: 14px;
+	line-height: 17px;
+}
+
+ul {
+	list-style-type: none;
+}
+
+#imgDiv {
+	position: relative;
+	width: 110px;
+	float: left;
+	height: 75px;
+}
+
+#articleRight {
+	float: left;
+	width: 235px;
+}
+
+#content {
+padding: 75px 0 15px 10px;
+margin: 0 auto 0;
+width: 950px;
+overflow: hidden;
+min-height: 100%;
+font-size: 100%;
+font: inherit;
+vertical-align: baseline;
+}
+
+#frameLeft, #frameRight{
+top: 0; 
+left: 0; 
+overflow: hidden; /*Disable scrollbars. Set to "scroll" to enable*/
+}
+
+#frameRight{
+left: auto;
+right: 0; 
+overflow: hidden; /*Disable scrollbars. Set to "scroll" to enable*/
+background-color: white;
+color: white;
+vertical-align: baseline;
+}
+
+
+#messagesDiv{
+overflow: hidden;
+float: left;
+width: 100%;
+top: 0px; /*Set top value to HeightOfTopFrameDiv*/
+bottom: 20px; /*Set bottom value to HeightOfBottomFrameDiv*/
+left: 350px; /*Set left value to WidthOfLeftFrameDiv*/
+right: 850px; /*Set right value to WidthOfRightFrameDiv*/
+background: #fff;
+width: 850px;
+height: auto;
+min-height: 570px;
+}
+
+div {
+display: block;
+}

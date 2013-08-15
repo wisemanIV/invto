@@ -1,0 +1,140 @@
+<style>
+body {
+height: 100%;
+padding: 0;
+margin: 0;
+border: 0;
+font: 12px/21px Helvetica, Arial, sans-serif;
+color: #374953;
+background: #ecf6f8;
+}
+
+.articleDiv {
+	display: block;
+	position: relative;
+	background: #fff;
+	margin: 0 0 6px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-o-border-radius: 5px;
+	-ms-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	border-radius: 5px;
+	padding: 10px;
+	height: auto;
+	border: 1px solid #C3CED5;
+	font-size: 14px;
+	line-height: 17px;
+}
+
+ul {
+	list-style-type: none;
+}
+
+.imgDiv {
+	position: relative;
+	width: 110px;
+	float: left;
+	height: 75px;
+}
+
+.articleRight {
+	float: left;
+	width: 235px;
+}
+
+#content {
+padding: 75px 0 15px 10px;
+margin: 0 auto 0;
+width: 950px;
+overflow: hidden;
+min-height: 100%;
+font-size: 100%;
+font: inherit;
+vertical-align: baseline;
+}
+
+
+#messagesDiv{
+overflow: hidden;
+float: left;
+width: 100%;
+top: 0px; /*Set top value to HeightOfTopFrameDiv*/
+bottom: 20px; /*Set bottom value to HeightOfBottomFrameDiv*/
+left: 350px; /*Set left value to WidthOfLeftFrameDiv*/
+right: 850px; /*Set right value to WidthOfRightFrameDiv*/
+background: #fff;
+width: 850px;
+height: auto;
+min-height: 570px;
+}
+
+</style>
+<script>
+
+var myapp = angular.module('Inviter', ['firebase']);
+
+myapp.controller('MyCtrl', ['$scope', 'angularFire',
+  function MyCtrl($scope, angularFire) {
+    var url = 'https://inviter.firebaseio.com/article';
+    $scope.items = angularFire(url, $scope, 'article');
+  }
+]);
+
+    var myDataRef = new Firebase('https://inviter.firebaseio.com/article');
+         myDataRef.on("child_added", function(snapshot) {
+           var message = snapshot.val();
+           displayChatMessage(message.message, message.attachment, message.created_at, message.submitter, message.city, message.state);
+         });
+         function displayChatMessage(message, attachment, created_at, submitter, city, state) {
+			 var cList = $('ul.messagesList')
+			 uniq = created_at.substr(created_at.indexOf(' ')+1);
+			 
+			     var li = $('<div/>')
+			         .addClass('articleDiv')
+			         .attr('id', 'articleDiv'+uniq)
+			         .appendTo(cList);
+			     var imgDiv = $('<div/>')
+			         .addClass('imgDiv')
+			         .attr('id', 'imgDiv'+uniq)
+			         .appendTo(li);
+				 var img = $('<img/>')
+				     .addClass('imgDiv')
+				     .attr('src', attachment)
+				     .appendTo(imgDiv);
+				 var right = $('<div/>')
+				     .addClass('articleRight')
+				     .attr('id', 'articleRight'+uniq)
+				     .appendTo(li);
+		  
+		   
+		   $(right).append($('<div id="msg">'+ message + '</div>'))
+ 		   $(right).append($('<div id="created">'+ created_at + '</div>'))
+		   $(right).append($('<div id="submitter">'+ submitter + '</div>'))
+		   if (city !== undefined )
+		   {
+		   	$(right).append($('<div>'+ city + ','+ state + '</div>'))
+		   }
+		  
+		  
+         };
+    </script>
+	
+	
+	<div ng-controller="MyCtrl">
+
+	  <ul>
+	    <li ng-repeat="item in article">
+	      {{item.submitter}}, {{item.created_at}}
+	    </li>
+	  </ul>
+	</div>
+	
+	<div id='content'>
+		<div id='messagesDiv'><ul id='messagesList'></ul></div>
+	</div>
+	
+	
+	
+
+	

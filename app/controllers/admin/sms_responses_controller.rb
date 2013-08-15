@@ -18,7 +18,6 @@ class Admin::SmsResponsesController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to sms_responses_url }
-      format.json { head :no_content }
     end
   end
 end
