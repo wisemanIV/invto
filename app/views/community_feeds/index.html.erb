@@ -720,7 +720,7 @@ var myapp = angular.module('Inviter', ['firebase']).
 
 myapp.controller('MyCtrl', ['$scope', 'angularFire',
   function MyCtrl($scope, angularFire) {
-    var url = 'https://inviter-dev.firebaseio.com/articles';
+    var url = 'https://inviter.firebaseio.com/articles';
     $scope.items = angularFire(url, $scope, 'articles',  {});
   }
 ]);
