@@ -32,6 +32,8 @@
 .inside:before,
 .inside:after{content:" ";display:table}
 .inside:after{clear:both}
+html,body{height:100%}*{padding:0;margin:0}
+body{position:relative;text-align:center;background-color:#f3f8fb;font-size:14px;font-family:"adelle",Georgia,Helvetica,Arial,sans-serif;color:#000}
 h1,h2,h3,h4,h5,h6,input,select,option,textarea{font-size:28px;font-family:"adelle",Georgia,Helvetica,Arial,sans-serif}ul{list-style:none}
 p.copyright{color:#6b6b6b;font-size:12px;padding:10px 0}
 #prop{margin-top:0;margin-bottom:40px}

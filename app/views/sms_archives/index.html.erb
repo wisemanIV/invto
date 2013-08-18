@@ -35,11 +35,11 @@
 	end
 	
 	g.column :name => 'Entered at', :attribute => 'created_at', filter: false do |sms_archive|
-		sms_archive.entered_date
+		sms_archive.formatted_entered_date
 	end
 			  
 	g.column :name => 'Processed at', :attribute => 'updated_at', filter: false do |sms_archive|
-		sms_archive.processed_date
+		sms_archive.formatted_processed_date
 	end
 			  
 	g.column :name => 'Created', :attribute => 'created_at', filter: false do |sms_archive|

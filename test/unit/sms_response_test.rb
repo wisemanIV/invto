@@ -35,7 +35,27 @@ class SmsResponseTest < ActiveSupport::TestCase
       SmsResponse.handle_mogreet_response("MOGREET", @client.mogreet_campaign_id, @message.SmsId, @message.from, @message.to, @message.body, "https://www.google.com/images/srpr/logo4w.png")
     end
     @sms_response = SmsResponse.order('created_at desc').first
-    assert !@sms_response.attachment_url.blank?
+    assert !@sms_response.attach_url.blank?
+  end
+  
+  test "mogreet opt out" do
+    phone = Message.clean_phone_number(Faker::PhoneNumber.cell_phone)
+    assert_difference ->{ Recipient.count }, 1 do
+      SmsResponse.mogreet_opt_in_out(phone, @client.mogreet_campaign_id, true)
+    end
+    response = Recipient.where(:Phone => phone).first
+    assert_equal response.OptOut,true
+     
+  end
+  
+  test "mogreet opt in " do
+    phone = Message.clean_phone_number(Faker::PhoneNumber.cell_phone)
+    assert_difference ->{ Recipient.count }, 1 do
+      SmsResponse.mogreet_opt_in_out(phone, @client.mogreet_campaign_id, false)
+    end
+    response = Recipient.where(:Phone => phone).first
+    assert_equal response.OptOut,false
+     
   end
   
   def initialize_test

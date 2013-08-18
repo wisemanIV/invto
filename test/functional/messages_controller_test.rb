@@ -15,10 +15,31 @@ class MessagesControllerTest < ActionController::TestCase
     assert_response :success
   end
   
+  test "messages create" do
+    @message_params = FactoryGirl.attributes_for(:message, :SmsId => nil)
+    
+    sign_in @user
+    assert_difference ->{ Message.count }, 1 do
+      post :create, :message => @message_params, session
+      assert_response :success
+    end
+  end
+  
+  test "messages create multiple" do
+    @message_params = FactoryGirl.attributes_for(:message, :SmsId => nil, :to => "+14154200068, (415) 420 0068")
+    
+    sign_in @user
+    assert_difference ->{ Message.count }, 2 do
+      post :create, :message => @message_params, session
+      assert_response :success
+    end
+  end
+  
  
   def initialize_test
    
-    @user = FactoryGirl.create(:user)
+    @client = FactoryGirl.create(:client)
+    @user = FactoryGirl.create(:user, :role => "admin", :client_id => @client.id)
     
     @savedUser = User.where(:authentication_token => @user.authentication_token).first
    

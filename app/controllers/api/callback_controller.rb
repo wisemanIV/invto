@@ -16,7 +16,7 @@ module Api
     end
     
     def handle_mogreet_response
-      puts "MOGREET RESPONSE INITIATED"
+      puts "MOGREET RESPONSE INITIATED #{params}"
     
       if !params[:event].blank? && params[:event]=='message-in'
           images = params[:images]
@@ -30,8 +30,10 @@ module Api
           
       else if !params[:event].blank? && params[:event]=='reply-y'
           puts "MOGREET REPLY Y"
+          SmsResponse.delay.mogreet_opt_in_out(params[:msisdn],params[:campaign_id],false)
       else if !params[:event].blank? && params[:event]=='stop'
           puts "MOGREET STOP"
+          SmsResponse.delay.mogreet_opt_in_out(params[:msisdn],params[:campaign_id],true)
       else
           puts "MOGREET RESPONSE MALFORMED"     
       end
@@ -43,7 +45,7 @@ module Api
     end
     
     def twilio_callback
-      puts "TWILIO CALLBACK INITIATED"
+      puts "TWILIO CALLBACK INITIATED #{params}"
     
       if params[:SmsStatus].blank? || params[:SmsStatus]=='received'
           SmsResponse.delay.handle_twilio_response("TWILIO", params[:SmsSid], params[:AccountSid], params[:To], params[:From], params[:Body], params[:FromCity], params[:FromState], params[:FromZip], params[:FromCountry]) 

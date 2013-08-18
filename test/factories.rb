@@ -8,13 +8,16 @@ FactoryGirl.define do
     version "1.2"
     SmsId "34354545454"
   end
+  factory :attachment do
+    attached 'https://www.google.com/images/srpr/logo4w.png'
+  end
   factory :sms_response do
     Body "a random message"
     AccountSid "233443434"
     From '+14155039151'
     SMSId "3434343535"
     To '+14155039151'
-    attachment 'https://www.google.com/images/srpr/logo4w.png'
+    attach 'https://www.google.com/images/srpr/logo4w.png'
   end
   factory :recording do
     tag "A new messages for you"
