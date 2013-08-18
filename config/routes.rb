@@ -2,6 +2,8 @@ require 'api_constraints'
 
 Jupiter::Application.routes.draw do 
 
+  resources :attachments
+
   namespace :api, defaults: {format: 'json'} do
     scope module: :v1, constraints: ApiConstraints.new(version: 1) do
         resources :shareables, path: '/shareable', only: [:create] 
@@ -58,6 +60,8 @@ Jupiter::Application.routes.draw do
     end
   
     post '/clicks/default/:id', to:  "clicks#default"
+    
+    get '/contact_us', to:  "home#contact_us"
 
     resources :email_templates
   

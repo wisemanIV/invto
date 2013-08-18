@@ -1,6 +1,6 @@
 <%- model_class = SmsResponse -%>
 <div class="page-header">
-  <h1>SMS Responses</h1>
+  <h1>Inbound Messages</h1>
 </div>
 			
 <%= grid(@links_grid, :show_filters => :always)  do |g|
@@ -21,8 +21,8 @@
 		sms_response.Body
 	end
 	
-	g.column :name => 'Attachment', :attribute => 'attachment' do |sms_response|
-		link_to(image_tag(sms_response.attachment.thumb.url), sms_response.attachment_url) if sms_response.attachment?
+	g.column :name => 'Attachment', :attribute => 'attach' do |sms_response|
+		link_to(image_tag(sms_response.attach.thumb.url), sms_response.attach_url) if sms_response.attach?
 	end
 			  
 	g.column :name => 'From City', :attribute => 'FromCity' do |sms_response|

@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
   before_filter :authenticate_user!
-  load_and_authorize_resource
+  skip_authorization_check
 
   respond_to :html, :csv
   
@@ -37,6 +37,7 @@ class MessagesController < ApplicationController
   # GET /messages/new.json
   def new
     @message = Message.new
+    @message.attachment = Attachment.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -61,43 +62,26 @@ class MessagesController < ApplicationController
       end
     else
   
-    message = Message.new(params[:message])
+    recipients = Message.get_message_array(params[:message][:to])
+    @attachment = Attachment.create(params[:message][:attachment_attributes])
 
-    # send an sms
-    saved = true  
-  
-    if message[:body].blank? and !message[:template].blank? then
-      body = EmailTemplate.where("name = :template", { :template => message[:template]}).first.body
-      if !message[:toname].blank? then
-        body = body.sub("<toname>", message[:toname])
-      end
-    else
-      body = message[:body]
-    end
-  
-    recipients = Message.get_message_array(message[:to])
-  
+    @saved = true ;
+   
     recipients.each do |value|
-    
-      if Message.is_valid_phone(value)
-        status = $MESSAGE_STATUS[1] #submitted
-      else 
-        status = $MESSAGE_STATUS[7] #invalid phone
-      end
-    
-      @message = Message.new(:attachment => params[:message][:attachment], :campaign => message[:campaign], :version => message[:version], :to => value, :body => body, :status => status, :user_id => current_user.id, :client_id => client.id )
-    
+      
+      @message = Message.new(:campaign => params[:message][:campaign], :version => params[:message][:version], :to => value, :body => params[:message][:body], :status => status, :user_id => current_user.id, :client_id => client.id )
+      @message.attachment = @attachment
+     
       if !@message.save
-        saved = false
+        @saved = false
         break ;
       else
         @message.delay.send_sms!
-      
       end
     end
 
       respond_to do |format|
-        if saved
+        if @saved
           format.html { redirect_to action: "index", notice: 'Message was successfully created.' }
         else
           format.html { render action: "new" }

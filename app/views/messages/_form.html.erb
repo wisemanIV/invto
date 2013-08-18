@@ -1,36 +1,57 @@
 <%= form_for @message, :html => { :class => 'form-horizontal', 'data-type' => 'json', :multipart => true } do |f| %>
-<div class="control-group">
-  <%= f.label "Campaign (Optional)", :class => 'control-label' %>
+
+<div class="control-group">	
+  <%= f.label "Campaign", :class => 'control-label' %>
   <div class="controls">
-    <%= f.text_field :campaign %>
+    <%= f.text_field :campaign,  :class => 'input-xlarge', :placeholder=>"Campaign name..."%>
   </div>
 </div>
+
 <div class="control-group">
-	<%= f.label "Version (Optional)", :class => 'control-label' %>
+	<%= f.label "Version", :class => 'control-label' %>
 	<div class="controls">
-    	<%= f.text_field :version %>
+    	<%= f.text_field :version, :class => 'input-xlarge', :placeholder=>"Version..." %>
   	</div>
 </div>
+
 <div class="control-group">
-	<%= f.label "Attachment", :class => 'control-label'%>
+	
+	<%= f.fields_for :attachment, @message.attachment do |attachment_fields| %>
+	<%= attachment_fields.label "Attachment", :class => 'control-label'%>
+	
 	<div class="controls">
-		<%= f.file_field :attachment, :style => "font-size: 14px" %>
-		<p>
-		    <%= f.label :remote_attachment_url, "or image URL" %>
-		    <%= f.text_field :remote_attachment_url %>
-		  </p>
- 	</div>
+		 
+		 <div class="fileupload fileupload-new" data-provides="fileupload">
+	  	   <div class="input-append">
+			   	<div class="uneditable-input span3">
+					<i class="icon-file fileupload-exists"></i> 			
+					<span class="fileupload-preview"></span>
+				</div>
+				<span class="btn btn-file">
+					<span class="fileupload-new">Select file</span>
+					<span class="fileupload-exists">Change</span>
+					<!--<input type="file" />-->
+					<%= attachment_fields.file_field :attached, :style => "font-size: 14px" %>
+				</span>
+				<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+	  	   </div>
+		</div>
+		
+	</div>
+		
+	<% end %>
 </div>
+
 <div class="control-group">
-    <%= f.label :to, :class => 'control-label' %>
+    <%= f.label "To *", :class => 'control-label' %>
 	<div class="controls">
-    	<%= f.text_area :to, :cols => 15, :rows => 7, :style => "font-size: 12px" %>
+    	<%= f.text_area :to, :cols => 15, :rows => 7, :class => 'input-xlarge', :placeholder=>"Comma separated list of recipients..." %>
     </div>
 </div>
 <div class="control-group">
-    <%= f.label :body, :class => 'control-label' %>
+    <%= f.label "Message *", :class => 'control-label' %>
     <div class="controls">
-      <%= f.text_area :body, :cols => 15, :rows => 7, :maxlength=>"160", :style => "font-size: 12px" %>
+      <%= f.text_area :body, :cols => 15, :rows => 7, :maxlength=>"160", :class => 'input-xlarge', :placeholder=>"Message body..."%>
     </div>
   </div>
 

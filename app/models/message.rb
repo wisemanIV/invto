@@ -1,14 +1,16 @@
 class Message < ActiveRecord::Base
   include FormatterModule, MogreetUtil, TwilioUtil
-  attr_accessible :body, :remote_attachment_url, :from, :to, :status, :attachment, :campaign, :version, :user_id, :SmsId, :response, :response_code, :client_id
+  attr_accessible :body, :from, :to, :status, :campaign, :attachment_id, :version, :user_id, :SmsId, :response, :response_code, :client_id, :attachment_attributes
+  belongs_to :attachment
+  accepts_nested_attributes_for :attachment
   validates_presence_of :body, :to, :user_id, :client_id
   belongs_to :client, :dependent => :destroy
-  mount_uploader :attachment, AttachmentUploader
+  after_create :validate_phone
   
   $MESSAGE_STATUS = ["initial", "submitted", "processing", "awaiting response", "sent", "error", "opted-out", "invalid phone", "twilio api error"]
   
   def as_json(options={})
-    super(options.merge({ :only => [:body, :remote_attachment_url, :from, :to, :status, :attachment, :campaign, :version, :user_id, :SmsId, :TwilioResponse, :client_id]}))
+    super(options.merge({ :only => [:body, :from, :to, :status, :campaign, :version, :user_id, :SmsId, :TwilioResponse, :client_id]}))
   end
   
   def self.is_valid_phone(phone)
@@ -81,7 +83,7 @@ class Message < ActiveRecord::Base
           self.save!
         else
           
-          if self.attachment?    
+          if !self.attachment.nil?    
             send_mogreet
           else 
             send_twilio
@@ -94,6 +96,14 @@ class Message < ActiveRecord::Base
         self.save!
         raise 
       end
+    end
+  end
+  
+  def validate_phone
+    if Message.is_valid_phone(self.to)
+      status = $MESSAGE_STATUS[1] #submitted
+    else 
+      status = $MESSAGE_STATUS[7] #invalid phone
     end
   end
 end

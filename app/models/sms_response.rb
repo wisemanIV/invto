@@ -1,12 +1,12 @@
 class SmsResponse < ActiveRecord::Base
   include FormatterModule
-  attr_accessible :AccountSid, :Body, :From, :FromCity, :FromCountry, :FromState, :FromZIP, :SMSId, :To, :ToCity, :ToCountry, :ToState, :ToZIP, :client_id, :attachment, :remote_attachment_url
+  attr_accessible :AccountSid, :Body, :From, :FromCity, :FromCountry, :FromState, :FromZIP, :SMSId, :To, :ToCity, :ToCountry, :ToState, :ToZIP, :client_id, :attach, :remote_attach_url
   belongs_to :client, :dependent => :destroy
   validates_presence_of :client_id
   before_save :check_opt_out
   before_save :check_help
   after_save :synch_firebase
-  mount_uploader :attachment, AttachmentUploader
+  mount_uploader :attach, AttachmentUploader
 
   def self.handle_twilio_response(provider, sms_id, account_sid, into, infrom, body, city, state, zip, country)
     
@@ -30,25 +30,62 @@ class SmsResponse < ActiveRecord::Base
   
   def self.handle_mogreet_response(provider, campaign_id, sms_id, into, infrom, body, image)
     
-    puts "HANDLE MOGREET RESPONSE"
+    puts "HANDLE MOGREET RESPONSE #{body}"
     
     to = Message.clean_phone_number(into)
     from = Message.clean_phone_number(infrom)
-    client = Client.where(:mogreet_campaign_id => campaign_id.to_s).first
     
-    if client.nil? 
-      puts "ERROR: MOGREET CLIENT NOT RECOGNIZED #{campaign_id}"
+    if !body.nil? && body == "y"   #should be an opt in 
+      puts "SHOULD BE MOGREET Y"
+      mogreet_opt_in_out(from, campaign_id, false)
     else
     
-      @sms = SmsResponse.new(:SMSId => sms_id, :To => to, :From => from, :Body => body, :client_id => client.id, :remote_attachment_url => image)
+      to = Message.clean_phone_number(into)
+      from = Message.clean_phone_number(infrom)
+      client = Client.where(:mogreet_campaign_id => campaign_id.to_s).first
     
-      if @sms.nil? || !@sms.save then
-        puts "HANDLE RESPONSE ERROR! #{provider} , #{sms_id} "
-        puts @sms.errors.full_messages
+      if client.nil? 
+        puts "ERROR: MOGREET CLIENT NOT RECOGNIZED #{campaign_id}"
+      else
+    
+        @sms = SmsResponse.new(:SMSId => sms_id, :To => to, :From => from, :Body => body, :client_id => client.id, :remote_attach_url => image)
+    
+        if @sms.nil? || !@sms.save then
+          puts "HANDLE RESPONSE ERROR! #{provider} , #{sms_id} "
+          puts @sms.errors.full_messages
+        end
       end
     end
   
   end
+  
+  def self.mogreet_opt_in_out(from, campaign_id, opt_out)
+    recipient = Recipient.where(:Phone => from).first 
+    
+    cc = Message.get_country_code(from) 
+    from = Message.less_country_code(from)
+    
+    client = Client.where(:mogreet_campaign_id => campaign_id)
+    
+    if client.nil? 
+      puts "ERROR: CLIENT NOT RECOGNIZED: campaign_id: #{campaign_id}"
+    else
+  
+      if recipient.nil? 
+        puts "MOGREET OPT IN OUT NEW RECIPIENT #{opt_out} #{from}"
+        recipient = Recipient.new(:CountryCode => cc, :Phone => from, :client_id => client.first.id)
+      end
+      recipient.OptOut = opt_out
+    end
+       
+    if recipient.nil? || !recipient.save   then
+      puts "MOGREET OPT IN OUT ERROR! #{from} , #{opt_out} "
+      puts recipient.errors.full_messages
+    end
+    
+  end 
+
+  
 
   def check_opt_out
     
@@ -89,10 +126,10 @@ class SmsResponse < ActiveRecord::Base
     
     @res = SmsResponse.find(self.id)
     
-    if !@res.attachment_url.include? "default.png" then
-      attachment =  @res.attachment_url
+    if !@res.attach.nil? && !@res.attach_url.include?("default.png") then
+      attachment =  @res.attach_url
     else
-      attachment = ""
+      attachment = nil
     end
       
       Firebase.base_uri = ENV["FIREBASE_URI"]

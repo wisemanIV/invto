@@ -33,7 +33,7 @@ module Api
             status = $MESSAGE_STATUS[7] #invalid phone
           end
   
-          @message = Message.new(:attachment => params[:message][:attachment], :campaign => params[:message][:campaign], :version => params[:message][:version], :to => params[:message][:to], :body => params[:message][:body], :status => status, :user_id => current_user.id, :client_id => current_user.client_id )
+          @message = Message.new(:campaign => params[:message][:campaign], :version => params[:message][:version], :to => params[:message][:to], :body => params[:message][:body], :status => status, :user_id => current_user.id, :client_id => current_user.client_id )
   
           if !@message.save
             respond_with "error saving message".to_json
