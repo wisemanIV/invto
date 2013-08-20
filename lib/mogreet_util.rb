@@ -4,12 +4,14 @@ module MogreetUtil
    
     begin 
       client = Mogreet::Client.new(ENV["MOGREET_CLIENT_ID"], ENV["MOGREET_SECRET_TOKEN"])
-
+      
+      puts "ATTACHMENT URL #{self.attachment.attached_url}"
+      
       res = client.transaction.send(
         :campaign_id => ENV["MOGREET_MMS_CAMPAIGN_ID"], 
         :to          => self.to, 
         :message     => self.body, 
-        :content_url => self.attachment,
+        :content_url => self.attachment.attached_url,
         :callback    => ENV["MOGREET_CALLBACK_URL"]
       )
     rescue => e
