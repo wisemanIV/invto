@@ -7,17 +7,20 @@ module Api
     def mogreet_callback
       puts "MOGREET CALLBACK INITIATED #{params}"
       puts "Request #{request.body.read}"
-      puts "RAW #{request.raw_post}"
       
-      doc = Nokogiri::XML.fragment(request.body.read)
+      rb = request.body.read.to_s.gsub(/\s/, "")
+      
+      doc = Nokogiri::XML.fragment(rb)
+      
+      puts "Request #{rb}"
+     
       
       puts "Status #{doc.xpath('//@status').inner_text}"
-      puts "Status #{params[:status]}"
     
-      if !params[:status].blank? && params[:status]=='success'
-          Message.delay.handle_sms_sent(params[:message_id])
+      if !doc.xpath('//@status').inner_text.blank? && doc.xpath('//@status').inner_text=='success'
+          Message.delay.handle_sms_sent(doc.xpath('//message_id').inner_text)
       else
-          Message.delay.handle_sms_error("MOGREET", params[:message_id], params[:code], params[:message])
+          Message.delay.handle_sms_error("MOGREET", doc.xpath('//message_id').inner_text, doc.xpath('//@code').inner_text, doc.xpath('//message').inner_text)
       end
     
       render nothing: true
