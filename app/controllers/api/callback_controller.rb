@@ -8,7 +8,7 @@ module Api
       puts "MOGREET CALLBACK INITIATED #{params}"
       puts "Request #{request.body.read}"
       
-      doc = Nokogiri::XML::Document.parse(request.body.read) 
+      doc = Nokogiri::XML.fragment(request.body.read)
       
       puts "Status #{doc.xpath('//@status').inner_text}"
     
