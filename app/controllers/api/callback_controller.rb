@@ -1,15 +1,19 @@
 module Api
   class CallbackController < ApplicationController
     skip_authorization_check
+    
+    respond_to :xml, :json
   
     def mogreet_callback
       puts "MOGREET CALLBACK INITIATED #{params}"
       puts "Request #{request.body.read}"
+      
+      doc = Nokogiri::XML(request.body.read)
     
-      if !params[:response][:status].blank? && params[:response][:status]=='success'
-          Message.delay.handle_sms_sent(params[:response][:message_id])
+      if !doc.node['status'].blank? && doc.node['status']=='success'
+          Message.delay.handle_sms_sent(doc.node['message_id'])
       else
-          Message.delay.handle_sms_error("MOGREET", params[:response][:message_id], params[:response][:code], params[:response][:message])
+          Message.delay.handle_sms_error("MOGREET", doc.node['message_id'], doc.node['code'], doc.node['message'])
       end
     
       render nothing: true
@@ -19,23 +23,25 @@ module Api
     def handle_mogreet_response
       puts "MOGREET RESPONSE INITIATED #{params}"
       puts "Request #{request.body.read}"
+      
+      doc = Nokogiri::XML(request.body.read)
     
-      if !params[:event].blank? && params[:event]=='message-in'
-          images = params[:images]
+      if !doc.node['event'].blank? && doc.node['event']=='message-in'
+          images = doc.node['images']
           if !images.blank?
-            image = images[:image] 
+            image = doc.node['images']
           else
             image = ""
           end
           
-          SmsResponse.delay.handle_mogreet_response("MOGREET", params[:campaign_id].to_s, params[:message_id], params[:campaign_id].to_s, params[:msisdn], params[:message], image)
+          SmsResponse.delay.handle_mogreet_response("MOGREET", doc.node['campaign_id'].to_s, doc.node['message_id'], doc.node['campaign_id'].to_s, doc.node['msisdn'], doc.node['message'], image)
           
-      else if !params[:event].blank? && params[:event]=='reply-y'
+      else if !doc.node['event'].blank? && doc.node['event']=='reply-y'
           puts "MOGREET REPLY Y"
-          SmsResponse.delay.mogreet_opt_in_out(params[:msisdn],params[:campaign_id].to_s,false)
-      else if !params[:event].blank? && params[:event]=='stop'
+          SmsResponse.delay.mogreet_opt_in_out(doc.node['msisdn'],doc.node['campaign_id'].to_s,false)
+      else if !doc.node['event'].blank? && doc.node['event']=='stop'
           puts "MOGREET STOP"
-          SmsResponse.delay.mogreet_opt_in_out(params[:msisdn],params[:campaign_id].to_s,true)
+          SmsResponse.delay.mogreet_opt_in_out(doc.node['msisdn'],doc.node['campaign_id'].to_s,true)
       else
           puts "MOGREET RESPONSE MALFORMED"     
       end
