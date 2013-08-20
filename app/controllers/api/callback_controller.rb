@@ -8,7 +8,7 @@ module Api
       puts "MOGREET CALLBACK INITIATED #{params}"
       puts "Request #{request.body.read}"
       
-      doc = Nokogiri::XML(request.body.read) 
+      doc = Nokogiri::XML::Document.parse(request.body.read) 
     
       if !doc.xpath('//@status').inner_text.blank? && doc.xpath('//@status').inner_text=='success'
           Message.delay.handle_sms_sent(doc.xpath('//message_id').inner_text)
