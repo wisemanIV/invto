@@ -26,14 +26,14 @@ module Api
             image = ""
           end
           
-          SmsResponse.delay.handle_mogreet_response("MOGREET", params[:campaign_id], params[:message_id], params[:campaign_id], params[:msisdn], params[:message], image)
+          SmsResponse.delay.handle_mogreet_response("MOGREET", params[:campaign_id].to_s, params[:message_id], params[:campaign_id].to_s, params[:msisdn], params[:message], image)
           
       else if !params[:event].blank? && params[:event]=='reply-y'
           puts "MOGREET REPLY Y"
-          SmsResponse.delay.mogreet_opt_in_out(params[:msisdn],params[:campaign_id],false)
+          SmsResponse.delay.mogreet_opt_in_out(params[:msisdn],params[:campaign_id].to_s,false)
       else if !params[:event].blank? && params[:event]=='stop'
           puts "MOGREET STOP"
-          SmsResponse.delay.mogreet_opt_in_out(params[:msisdn],params[:campaign_id],true)
+          SmsResponse.delay.mogreet_opt_in_out(params[:msisdn],params[:campaign_id].to_s,true)
       else
           puts "MOGREET RESPONSE MALFORMED"     
       end
