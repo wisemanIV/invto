@@ -7,6 +7,7 @@ module Api
     def mogreet_callback
       puts "MOGREET CALLBACK INITIATED #{params}"
       puts "Request #{request.body.read}"
+      puts "RAW #{request.raw_post}"
       
       doc = Nokogiri::XML.fragment(request.body.read)
       
