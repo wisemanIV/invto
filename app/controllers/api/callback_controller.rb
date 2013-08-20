@@ -4,7 +4,7 @@ module Api
   
     def mogreet_callback
       puts "MOGREET CALLBACK INITIATED #{params}"
-      puts "Request #{request}"
+      puts "Request #{request.body.read}"
     
       if !params[:response][:status].blank? && params[:response][:status]=='success'
           Message.delay.handle_sms_sent(params[:response][:message_id])
@@ -18,7 +18,7 @@ module Api
     
     def handle_mogreet_response
       puts "MOGREET RESPONSE INITIATED #{params}"
-      puts "Request #{request}"
+      puts "Request #{request.body.read}"
     
       if !params[:event].blank? && params[:event]=='message-in'
           images = params[:images]
