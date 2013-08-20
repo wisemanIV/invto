@@ -7,7 +7,7 @@ class Api::CallbackControllerTest < ActionController::TestCase
 
   test "test mogreet response" do
     assert_difference ->{ SmsResponse.count }, 1 do
-      post :handle_mogreet_response, {"event"=>"message-in", "campaign_id"=>@client.mogreet_campaign_id, "msisdn"=>"14154200068", "carrier"=>"Sprint", "message"=>"STELLADOT hello",  "images"=>{"image"=>"http://d2c.bandcon.mogreet.com/mo-mms/images/623452_4302951.jpeg"}}
+      post :handle_mogreet_response, {"event"=>"message-in", "campaign_id"=>@client.mogreet_campaign_id.to_i, "msisdn"=>"14154200068", "carrier"=>"Sprint", "message"=>"STELLADOT hello",  "images"=>{"image"=>"http://d2c.bandcon.mogreet.com/mo-mms/images/623452_4302951.jpeg"}}
       assert_response :success
     end
   end
@@ -16,7 +16,7 @@ class Api::CallbackControllerTest < ActionController::TestCase
     phone = Message.clean_phone_number(Faker::PhoneNumber.cell_phone)
     assert_difference ->{ SmsResponse.count }, 0 do
       assert_difference ->{ Recipient.count }, 1 do
-        post :handle_mogreet_response, {"event"=>"message-in", "campaign_id"=>@client.mogreet_campaign_id, "msisdn"=>phone, "carrier"=>"Sprint", "message"=>"y"}
+        post :handle_mogreet_response, {"event"=>"message-in", "campaign_id"=>@client.mogreet_campaign_id.to_i, "msisdn"=>phone, "carrier"=>"Sprint", "message"=>"y"}
         assert_response :success
       end
     end
@@ -29,10 +29,10 @@ class Api::CallbackControllerTest < ActionController::TestCase
     phone = Message.clean_phone_number(Faker::PhoneNumber.cell_phone)
     assert_difference ->{ SmsResponse.count }, 0 do
       assert_difference ->{ Recipient.count }, 1 do
-        post :handle_mogreet_response, {"event"=>"reply-y", "campaign_id"=>@client.mogreet_campaign_id, "msisdn"=>phone, "carrier"=>"Sprint", "message"=>"y"}
+        post :handle_mogreet_response, {"event"=>"reply-y", "campaign_id"=>@client.mogreet_campaign_id.to_i, "msisdn"=>phone, "carrier"=>"Sprint", "message"=>"y"}
         assert_response :success
+        end
       end
-    end
     response = Recipient.where(:Phone => Message.less_country_code(phone)).first
     assert_equal response.OptOut,false
     
@@ -42,7 +42,7 @@ class Api::CallbackControllerTest < ActionController::TestCase
     phone = Message.clean_phone_number(Faker::PhoneNumber.cell_phone)
     assert_difference ->{ SmsResponse.count }, 0 do
       assert_difference ->{ Recipient.count }, 1 do
-        post :handle_mogreet_response, {"event"=>"stop", "campaign_id"=>@client.mogreet_campaign_id, "msisdn"=>phone, "carrier"=>"Sprint", "message"=>"Please STOP"}
+        post :handle_mogreet_response, {"event"=>"stop", "campaign_id"=>@client.mogreet_campaign_id.to_i, "msisdn"=>phone, "carrier"=>"Sprint", "message"=>"Please STOP"}
         assert_response :success
       end
     end

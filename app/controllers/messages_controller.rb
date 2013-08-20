@@ -69,6 +69,12 @@ class MessagesController < ApplicationController
    
     recipients.each do |value|
       
+      if (Message.is_valid_phone(value))
+        status = $MESSAGE_STATUS[0] #initial
+      else
+        status = $MESSAGE_STATUS[7] #invalid phone
+      end
+      
       @message = Message.new(:campaign => params[:message][:campaign], :version => params[:message][:version], :to => value, :body => params[:message][:body], :status => status, :user_id => current_user.id, :client_id => client.id )
       @message.attachment = @attachment
      
