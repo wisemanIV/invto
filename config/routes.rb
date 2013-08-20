@@ -11,7 +11,7 @@ Jupiter::Application.routes.draw do
         resources :messages, only: [:create, :index, :show] 
     end
     
-    post '/mogreet/callback', to: 'callback#mogreet_callback'
+    post '/mogreet/callback', to: 'callback#mogreet_callback', :defaults => { :format => 'xml' }
     post '/mogreet/response', to: 'callback#handle_mogreet_response'
     post '/twilio/callback', to: 'callback#twilio_callback'
     
