@@ -8,12 +8,12 @@ module Api
       puts "MOGREET CALLBACK INITIATED #{params}"
       puts "Request #{request.body.read}"
       
-      doc = Nokogiri::XML(request.body.read)
+      doc = Nokogiri::XML(request.body.read) 
     
-      if !doc.xpath('//status').blank? && doc.xpath('//status')=='success'
+      if !doc.xpath('//response/@status').blank? && doc.xpath('//response/@status')=='success'
           Message.delay.handle_sms_sent(doc.xpath('//message_id'))
       else
-          Message.delay.handle_sms_error("MOGREET", doc.xpath('//message_id'), doc.xpath('//code'), doc.xpath('//message'))
+          Message.delay.handle_sms_error("MOGREET", doc.xpath('//message_id').inner_text, doc.xpath('//response/@code'), doc.xpath('//message').inner_text)
       end
     
       render nothing: true
@@ -23,25 +23,23 @@ module Api
     def handle_mogreet_response
       puts "MOGREET RESPONSE INITIATED #{params}"
       puts "Request #{request.body.read}"
-      
-      doc = Nokogiri::XML(request.body.read)
     
-      if !doc.xpath('//event').blank? && doc.xpath('//event')=='message-in'
-          images = doc.xpath('//images')
+      if !params[:event].blank? && params[:event]=='message-in'
+          images = params[:images]
           if !images.blank?
-            image = doc.xpath('//images')
+            image = images[:image] 
           else
             image = ""
           end
           
-          SmsResponse.delay.handle_mogreet_response("MOGREET", doc.xpath('//campaign_id').to_s, doc.xpath('//message_id'), doc.xpath('//campaign_id').to_s, doc.xpath('//msisdn'), doc.xpath('//message'), image)
+          SmsResponse.delay.handle_mogreet_response("MOGREET", params[:campaign_id].to_s, params[:message_id], params[:campaign_id].to_s, params[:msisdn], params[:message], image)
           
-      else if !doc.xpath('//event').blank? && doc.xpath('//event')=='reply-y'
+      else if !params[:event].blank? && params[:event]=='reply-y'
           puts "MOGREET REPLY Y"
-          SmsResponse.delay.mogreet_opt_in_out(doc.xpath('//msisdn'),doc.xpath('//campaign_id').to_s,false)
-      else if !doc.xpath('//event').blank? && doc.xpath('//event')=='stop'
+          SmsResponse.delay.mogreet_opt_in_out(params[:msisdn],params[:campaign_id].to_s,false)
+      else if !params[:event].blank? && params[:event]=='stop'
           puts "MOGREET STOP"
-          SmsResponse.delay.mogreet_opt_in_out(doc.xpath('//msisdn'),doc.xpath('//campaign_id').to_s,true)
+          SmsResponse.delay.mogreet_opt_in_out(params[:msisdn],params[:campaign_id].to_s,true)
       else
           puts "MOGREET RESPONSE MALFORMED"     
       end
