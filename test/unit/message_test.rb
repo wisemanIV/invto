@@ -81,6 +81,16 @@ class MessageTest < ActiveSupport::TestCase
     assert_equal Message.less_country_code('+444154200068'), "44154200068"
   end
   
+  test "xml" do
+    doc = Nokogiri::XML::Document.parse('<?xml version="1.0"?><response code="1" status="success"><message><![CDATA[QUEUED]]></message\><message_id>263327880</message_id><hash>ibkes16u</hash\></response>')
+
+    assert !doc.xpath('//@status').blank? 
+    assert_equal doc.xpath('//@status').inner_text, 'success'
+    assert !doc.xpath('//message_id').blank? 
+    assert_equal doc.xpath('//message_id').inner_text, '263327880'
+    
+  end
+  
   def initialize_test
     @client = FactoryGirl.create(:client)
     @client_number = FactoryGirl.create(:client_number, :client_id => @client.id)
