@@ -20,9 +20,21 @@ class MessagesControllerTest < ActionController::TestCase
     
     sign_in @user
     assert_difference ->{ Message.count }, 1 do
-      post :create, :message => @message_params, session
-      assert_response :success
+      post :create, :message => @message_params
+     # assert_response :success
     end
+    assert_equal Message.last.status, $MESSAGE_STATUS[0] # processing
+  end
+  
+  test "messages invalid phone" do
+    @message_params = FactoryGirl.attributes_for(:message, :SmsId => nil, :to => '33 455')
+    
+    sign_in @user
+    assert_difference ->{ Message.count }, 1 do
+      post :create, :message => @message_params
+    #  assert_response :success
+    end
+    assert_equal Message.last.status, $MESSAGE_STATUS[7] # invalid phone
   end
   
   test "messages create multiple" do
@@ -30,8 +42,8 @@ class MessagesControllerTest < ActionController::TestCase
     
     sign_in @user
     assert_difference ->{ Message.count }, 2 do
-      post :create, :message => @message_params, session
-      assert_response :success
+      post :create, :message => @message_params
+      #assert_response :success
     end
   end
   
