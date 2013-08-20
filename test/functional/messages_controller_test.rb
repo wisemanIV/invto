@@ -23,7 +23,7 @@ class MessagesControllerTest < ActionController::TestCase
       post :create, :message => @message_params
      # assert_response :success
     end
-    assert_equal Message.last.status, $MESSAGE_STATUS[0] # processing
+    assert_equal Message.last.status, $MESSAGE_STATUS[1] # submitted
   end
   
   test "messages invalid phone" do
