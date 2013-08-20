@@ -10,10 +10,10 @@ module Api
       
       doc = Nokogiri::XML(request.body.read) 
     
-      if !doc.xpath('//response/@status').blank? && doc.xpath('//response/@status')=='success'
-          Message.delay.handle_sms_sent(doc.xpath('//message_id'))
+      if !doc.xpath('//@status').inner_text.blank? && doc.xpath('//@status').inner_text=='success'
+          Message.delay.handle_sms_sent(doc.xpath('//message_id').inner_text)
       else
-          Message.delay.handle_sms_error("MOGREET", doc.xpath('//message_id').inner_text, doc.xpath('//response/@code'), doc.xpath('//message').inner_text)
+          Message.delay.handle_sms_error("MOGREET", doc.xpath('//message_id').inner_text, doc.xpath('//@code').inner_text, doc.xpath('//message').inner_text)
       end
     
       render nothing: true
