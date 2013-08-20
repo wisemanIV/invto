@@ -9,6 +9,8 @@ module Api
       puts "Request #{request.body.read}"
       
       doc = Nokogiri::XML::Document.parse(request.body.read) 
+      
+      puts "Status #{doc.xpath('//@status').inner_text}"
     
       if !doc.xpath('//@status').inner_text.blank? && doc.xpath('//@status').inner_text=='success'
           Message.delay.handle_sms_sent(doc.xpath('//message_id').inner_text)
