@@ -42,7 +42,7 @@ module Api
       if !doc.xpath('//@status').blank? && doc.xpath('//@status').inner_text=='success'
           Message.delay.handle_sms_sent(doc.xpath('//message_id').inner_text)
       else if !doc.xpath('//@status').blank?
-          Message.delay.handle_sms_error("MOGREET", doc.xpath('//message_id').inner_text, doc.xpath('//@code').inner_text, doc.xpath('//message').inner_text
+          Message.delay.handle_sms_error("MOGREET", doc.xpath('//message_id').inner_text, doc.xpath('//@code').inner_text, doc.xpath('//message').inner_text)
       else if !params[:event].blank? && params[:event]=='message-in'
           images = params[:images]
           if !images.blank?
