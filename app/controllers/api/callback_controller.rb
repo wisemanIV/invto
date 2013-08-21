@@ -4,34 +4,39 @@ module Api
     
     respond_to :xml, :json
   
+   # def mogreet_callback
+  #    puts "MOGREET CALLBACK INITIATED #{params}"
+  #    puts "Request #{request.body.read}"
+      
+  #    rb = request.body.read.to_s.gsub(/\s/, "")
+      
+  #    doc = Nokogiri::XML.fragment(rb)
+      
+  #    puts "Request #{rb}"
+     
+      
+  #    puts "Status #{doc.xpath('//@status').inner_text}"
+    
+  #    if !doc.xpath('//@status').inner_text.blank? && doc.xpath('//@status').inner_text=='success'
+  #        Message.delay.handle_sms_sent(doc.xpath('//message_id').inner_text)
+  #    else
+  #        Message.delay.handle_sms_error("MOGREET", doc.xpath('//message_id').inner_text, doc.xpath('//@code').inner_text, doc.xpath('//message').inner_text)
+  #    end
+    
+  #    render nothing: true
+    
+  #  end
+    
     def mogreet_callback
       puts "MOGREET CALLBACK INITIATED #{params}"
       puts "Request #{request.body.read}"
-      
-      rb = request.body.read.to_s.gsub(/\s/, "")
-      
-      doc = Nokogiri::XML.fragment(rb)
-      
-      puts "Request #{rb}"
-     
-      
-      puts "Status #{doc.xpath('//@status').inner_text}"
     
-      if !doc.xpath('//@status').inner_text.blank? && doc.xpath('//@status').inner_text=='success'
-          Message.delay.handle_sms_sent(doc.xpath('//message_id').inner_text)
-      else
-          Message.delay.handle_sms_error("MOGREET", doc.xpath('//message_id').inner_text, doc.xpath('//@code').inner_text, doc.xpath('//message').inner_text)
-      end
     
-      render nothing: true
-    
-    end
-    
-    def handle_mogreet_response
-      puts "MOGREET RESPONSE INITIATED #{params}"
-      puts "Request #{request.body.read}"
-    
-      if !params[:event].blank? && params[:event]=='message-in'
+      if !params[:response][:status].blank? && params[:response][:status]=='success'
+          Message.delay.handle_sms_sent(params[:response][:message_id])
+      else if !params[:response][:status].blank?
+          Message.delay.handle_sms_error("MOGREET", params[:response][:message_id], params[:response][:code].inner_text, params[:response][:message].inner_text)
+      else if !params[:event].blank? && params[:event]=='message-in'
           images = params[:images]
           if !images.blank?
             image = images[:image] 
@@ -52,6 +57,8 @@ module Api
       end
       end
       end
+    end
+    end
     
       render nothing: true
     

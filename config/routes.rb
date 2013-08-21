@@ -12,7 +12,6 @@ Jupiter::Application.routes.draw do
     end
     
     post '/mogreet/callback', to: 'callback#mogreet_callback', :defaults => { :format => 'xml' }
-    post '/mogreet/response', to: 'callback#handle_mogreet_response'
     post '/twilio/callback', to: 'callback#twilio_callback'
     
     resources :recordings do

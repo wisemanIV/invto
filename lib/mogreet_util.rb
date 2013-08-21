@@ -11,8 +11,7 @@ module MogreetUtil
         :campaign_id => ENV["MOGREET_MMS_CAMPAIGN_ID"], 
         :to          => self.to, 
         :message     => self.body, 
-        :content_url => self.attachment.attached_url,
-        :callback    => ENV["MOGREET_CALLBACK_URL"]
+        :content_url => self.attachment.attached_url
       )
     rescue => e
       puts "MOGREET ERROR #{e}"
