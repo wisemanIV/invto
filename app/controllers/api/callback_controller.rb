@@ -4,49 +4,33 @@ module Api
     
     respond_to :xml, :json
   
-   # def mogreet_callback
-  #    puts "MOGREET CALLBACK INITIATED #{params}"
-  #    puts "Request #{request.body.read}"
-      
-  #    rb = request.body.read.to_s.gsub(/\s/, "")
-      
-  #    doc = Nokogiri::XML.fragment(rb)
-      
-  #    puts "Request #{rb}"
-     
-      
-  #    puts "Status #{doc.xpath('//@status').inner_text}"
-    
-  #    if !doc.xpath('//@status').inner_text.blank? && doc.xpath('//@status').inner_text=='success'
-  #        Message.delay.handle_sms_sent(doc.xpath('//message_id').inner_text)
-  #    else
-  #        Message.delay.handle_sms_error("MOGREET", doc.xpath('//message_id').inner_text, doc.xpath('//@code').inner_text, doc.xpath('//message').inner_text)
-  #    end
-    
-  #    render nothing: true
-    
-  #  end
-    
     def mogreet_callback
       puts "MOGREET CALLBACK INITIATED #{params}"
       puts "Request body #{request.body.read}"
       puts "Content type #{request.headers['Content-Type']}"
-      puts "Request params #{request.request_parameters}"
-      puts "Raw post #{request.raw_post}"
-      
+   
       rb = request.body.read.to_s.gsub(/\s,\\n,\n/, "")
-      
+   
       doc = Nokogiri::XML(rb,nil, 'UTF-8')
-      
+   
       puts "Scope #{doc.xpath('//@status').inner_text}"
-    
+ 
       if !doc.xpath('//@status').blank? && doc.xpath('//@status').inner_text=='success'
-          puts "MOGREET SUCCESS" 
-          Message.delay.handle_sms_sent(doc.xpath('//message_id').inner_text)
+         puts "MOGREET SUCCESS" 
+         Message.delay.handle_sms_sent(doc.xpath('//message_id').inner_text)
       else if !doc.xpath('//@status').blank?
-          puts "MOGREET ERROR" 
-          Message.delay.handle_sms_error("MOGREET", doc.xpath('//message_id').inner_text, doc.xpath('//@code').inner_text, doc.xpath('//message').inner_text)
-      else if !params[:event].blank? && params[:event]=='message-in'
+         puts "MOGREET ERROR" 
+         Message.delay.handle_sms_error("MOGREET", doc.xpath('//message_id').inner_text, doc.xpath('//@code').inner_text, doc.xpath('//message').inner_text)
+      end
+    
+      render nothing: true
+    
+    end
+    
+    def handle_mogreet_response 
+      puts "MOGREET RESPONSE INITIATED #{params}"
+      
+      if !params[:event].blank? && params[:event]=='message-in'
           images = params[:images]
           if !images.blank?
             image = images[:image] 
