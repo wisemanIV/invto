@@ -40,6 +40,7 @@ module Api
       
       puts "Scope #{doc.xpath('//@status').inner_text)}"
     
+    
       if !doc.xpath('//@status').blank? && doc.xpath('//@status').inner_text=='success'
           puts "MOGREET SUCCESS" 
           Message.delay.handle_sms_sent(doc.xpath('//message_id').inner_text)
