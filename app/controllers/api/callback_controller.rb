@@ -31,8 +31,6 @@ module Api
       puts "MOGREET CALLBACK INITIATED #{params}"
       puts "Request body #{request.body.read}"
       puts "Content type #{request.headers['Content-Type']}"
-      puts "Request params #{request.request_parameters}"
-      puts "Raw post #{request.raw_post}"
       
       rb = request.body.read.to_s.gsub(/\s,\\n,\n/, "")
       
@@ -42,9 +40,9 @@ module Api
     
     
       if !doc.xpath('//@status').blank? && doc.xpath('//@status').inner_text=='success'
-          Message.delay.handle_sms_sent(params[:response][:message_id])
-      else if !params[:response][:status].blank?
-          Message.delay.handle_sms_error("MOGREET", params[:response][:message_id], params[:response][:code].inner_text, params[:response][:message].inner_text)
+          Message.delay.handle_sms_sent(doc.xpath('//message_id').inner_text)
+      else if !doc.xpath('//@status').blank?
+          Message.delay.handle_sms_error("MOGREET", doc.xpath('//message_id').inner_text, doc.xpath('//@code').inner_text, doc.xpath('//message').inner_text
       else if !params[:event].blank? && params[:event]=='message-in'
           images = params[:images]
           if !images.blank?
