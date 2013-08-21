@@ -38,7 +38,7 @@ module Api
       
       doc = Nokogiri::XML(rb,nil, 'UTF-8')
       
-      puts "Scope #{doc.xpath('//@status').inner_text)}"
+      puts "Scope #{doc.xpath('//@status').inner_text}"
     
     
       if !doc.xpath('//@status').blank? && doc.xpath('//@status').inner_text=='success'
