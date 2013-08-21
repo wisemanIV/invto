@@ -29,10 +29,19 @@ module Api
     
     def mogreet_callback
       puts "MOGREET CALLBACK INITIATED #{params}"
-      puts "Request #{request.body.read}"
+      puts "Request body #{request.body.read}"
+      puts "Content type #{request.headers['Content-Type']}"
+      puts "Request params #{request.request_parameters}"
+      puts "Raw post #{request.raw_post}"
+      
+      rb = request.body.read.to_s.gsub(/\s,\\n,\n/, "")
+      
+      doc = Nokogiri::XML(rb,nil, 'UTF-8')
+      
+      puts "Scope #{doc.xpath('//@status').inner_text)}"
     
     
-      if !params[:response][:status].blank? && params[:response][:status]=='success'
+      if !doc.xpath('//@status').blank? && doc.xpath('//@status').inner_text=='success'
           Message.delay.handle_sms_sent(params[:response][:message_id])
       else if !params[:response][:status].blank?
           Message.delay.handle_sms_error("MOGREET", params[:response][:message_id], params[:response][:code].inner_text, params[:response][:message].inner_text)
